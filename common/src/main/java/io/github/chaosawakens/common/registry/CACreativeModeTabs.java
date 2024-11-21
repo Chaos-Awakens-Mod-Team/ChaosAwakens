@@ -32,7 +32,7 @@ public final class CACreativeModeTabs {
             .build());
     public static final Supplier<CreativeModeTab> CHAOS_AWAKENS_ITEMS = registerCreativeModeTab("chaos_awakens_items", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
             .title(Component.translatable("creativemodetab.chaosawakens.chaos_awakens_items"))
-            .icon(() -> CABlocks.URANIUM_BLOCK.get().asItem().getDefaultInstance())
+            .icon(() -> CAItems.URANIUM_INGOT.get().asItem().getDefaultInstance())
             .displayItems((displayParams, curOutput) -> curOutput.acceptAll(CAItems.getItems()
                     .stream()
                     .map(Supplier::get)

@@ -377,14 +377,14 @@ public final class RecipeUtil {
         return (resultItemSup) -> SimpleCookingRecipeBuilder.smelting(Ingredient.of(oreILReference), RecipeCategory.MISC, resultItemSup.get(), 0.35F, 200)
                 .group(RegistryUtil.getItemModId(oreILReference))
                 .unlockedBy("has_" + RegistryUtil.getItemName(oreILReference), PredicateUtil.has(oreILReference))
-                .save(recipeConsumer, new ResourceLocation(RegistryUtil.getItemModId(resultItemSup.get()), RegistryUtil.getItemName(resultItemSup.get()) + "_from_smelting"));
+                .save(recipeConsumer, new ResourceLocation(RegistryUtil.getItemModId(resultItemSup.get()), RegistryUtil.getItemName(resultItemSup.get()) + "_from_smelting_" + RegistryUtil.getItemName(oreILReference)));
     }
 
     public static Consumer<Supplier<Item>> oreToIngotBlasting(Consumer<FinishedRecipe> recipeConsumer, ItemLike oreILReference) {
         return (resultItemSup) -> SimpleCookingRecipeBuilder.blasting(Ingredient.of(oreILReference), RecipeCategory.MISC, resultItemSup.get(), 0.35F, 100)
                 .group(RegistryUtil.getItemModId(oreILReference))
                 .unlockedBy("has_" + RegistryUtil.getItemName(oreILReference), PredicateUtil.has(oreILReference))
-                .save(recipeConsumer, new ResourceLocation(RegistryUtil.getItemModId(resultItemSup.get()), RegistryUtil.getItemName(resultItemSup.get()) + "_from_blasting"));
+                .save(recipeConsumer, new ResourceLocation(RegistryUtil.getItemModId(resultItemSup.get()), RegistryUtil.getItemName(resultItemSup.get()) + "_from_blasting_" + RegistryUtil.getItemName(oreILReference)));
     }
 
     public static Consumer<Supplier<Item>> materialBlockToIngot(Consumer<FinishedRecipe> recipeConsumer, ItemLike materialBlockILReference) {
@@ -405,6 +405,10 @@ public final class RecipeUtil {
             if (RegistryUtil.getOreFromIngot(resultItemSup) != null) {
                 oreToIngotSmelting(recipeConsumer, RegistryUtil.getOreFromIngot(resultItemSup).get()).accept(resultItemSup);
                 oreToIngotBlasting(recipeConsumer, RegistryUtil.getOreFromIngot(resultItemSup).get()).accept(resultItemSup);
+            }
+            if (RegistryUtil.getDeepslateOreFromIngot(resultItemSup) != null) {
+                oreToIngotSmelting(recipeConsumer, RegistryUtil.getDeepslateOreFromIngot(resultItemSup).get()).accept(resultItemSup);
+                oreToIngotBlasting(recipeConsumer, RegistryUtil.getDeepslateOreFromIngot(resultItemSup).get()).accept(resultItemSup);
             }
         };
     }

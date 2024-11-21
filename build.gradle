@@ -70,11 +70,6 @@ subprojects {
         }
 
         maven {
-            name = "CubicInterpolation Maven"
-            url = "https://cubicinterpolation.net/maven/"
-        }
-
-        maven {
             name = "BlameJared maven"
             url = "https://maven.blamejared.com/"
         }
@@ -87,6 +82,11 @@ subprojects {
         maven {
             name = "TerraformersMC Maven"
             url = "https://maven.terraformersmc.com/releases"
+        }
+
+        maven {
+            name = "CubicInterpolation Maven"
+            url = "https://cubicinterpolation.net/maven/"
         }
     }
 

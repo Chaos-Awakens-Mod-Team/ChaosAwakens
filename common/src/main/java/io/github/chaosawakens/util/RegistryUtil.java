@@ -354,9 +354,11 @@ public final class RegistryUtil {
         Supplier<Item> assumedCookedFood = () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(StringUtils.substringAfter(copiedPath, "cooked_")));
 
         return targetItemKey.getPath().startsWith("cooked_")
-                ? assumedCookedFood.get().getDescriptionId().equals("block.minecraft.air")
+                ? !BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedPath.replace("cooked_", "raw_"))).getDescriptionId().equals("item.minecraft.air")
                 ? () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedPath.replace("cooked_", "raw_")))
-                : assumedCookedFood
+                : !assumedCookedFood.get().getDescriptionId().equals("item.minecraft.air")
+                ? assumedCookedFood
+                : null
                 : null;
     }
 
@@ -440,6 +442,7 @@ public final class RegistryUtil {
         String copiedBlockPath = getItemName(targetBlock.get());
 
         return targetBlockKey.getPath().endsWith(targetRegNameSuffix)
+                && !BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(copiedBlockPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("block.minecraft.air")
                 ? () -> BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(copiedBlockPath.replace(targetRegNameSuffix, suffixReplacement)))
                 : null;
     }
@@ -450,7 +453,21 @@ public final class RegistryUtil {
         String copiedItemPath = getItemName(targetItem.get());
 
         return targetItemKey.getPath().endsWith(targetRegNameSuffix)
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("item.minecraft.air")
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("block.minecraft.air")
                 ? () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement)))
+                : null;
+    }
+
+    @Nullable
+    public static Supplier<Item> getItemBasedOnPrefixBySuffix(Supplier<Item> targetItem, String targetRegNameSuffix, String addedPrefix, String suffixReplacement) {
+        ResourceLocation targetItemKey = getItemKey(targetItem.get());
+        String copiedItemPath = getItemName(targetItem.get());
+
+        return targetItemKey.getPath().endsWith(targetRegNameSuffix)
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement)).withPrefix(addedPrefix)).getDescriptionId().equals("item.minecraft.air")
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("block.minecraft.air")
+                ? () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement)).withPrefix(addedPrefix))
                 : null;
     }
 
@@ -477,6 +494,16 @@ public final class RegistryUtil {
     @Nullable
     public static Supplier<Item> getOreFrom(Supplier<Item> targetItem, String targetRegNameSuffix) {
         return getItemBasedOnSuffix(targetItem, targetRegNameSuffix, "_ore");
+    }
+
+    @Nullable
+    public static Supplier<Item> getDeepslateOreFrom(Supplier<Item> targetItem, String targetRegNameSuffix) {
+        return getItemBasedOnPrefixBySuffix(targetItem, targetRegNameSuffix, "deepslate_", "_ore");
+    }
+
+    @Nullable
+    public static Supplier<Item> getDeepslateOreFromIngot(Supplier<Item> targetItem) {
+        return getItemBasedOnPrefixBySuffix(targetItem, "_ingot", "deepslate_", "_ore");
     }
 
     @Nullable

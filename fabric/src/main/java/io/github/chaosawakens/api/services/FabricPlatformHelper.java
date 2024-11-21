@@ -91,7 +91,6 @@ public class FabricPlatformHelper implements IPlatformHelper {
                     ClassVisitor visitor = new ClassVisitor(Opcodes.ASM9) {
                         private String className;
 
-
                         @Override
                         public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
                             this.className = name.replace('/', '.');

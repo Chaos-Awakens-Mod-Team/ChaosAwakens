@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "category": "misc",
-  "cookingtime": 200,
-  "experience": 0.35,
-  "group": "minecraft",
-  "ingredient": [],
-  "result": "chaosawakens:uranium_ingot"
-}
