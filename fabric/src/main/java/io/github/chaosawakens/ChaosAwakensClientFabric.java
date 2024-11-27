@@ -4,9 +4,13 @@ import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
 import io.github.chaosawakens.api.datagen.block.BlockModelDefinition;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.level.block.Block;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Needed for some loader-specific optimizations/implementations
@@ -16,6 +20,7 @@ public class ChaosAwakensClientFabric implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         handleBlockRenderLayers();
+        registerBlockColorProviders();
     }
 
     private static void handleBlockRenderLayers() {
@@ -41,6 +46,15 @@ public class ChaosAwakensClientFabric implements ClientModInitializer {
                     }
                 });
             }
+        });
+    }
+
+    private static void registerBlockColorProviders() {
+        BlockPropertyWrapper.getMappedBpws().entrySet().stream().filter(curBwpEntry -> curBwpEntry.getValue().getBlockColorMappingFunc() != null).forEach(curBwpEntry -> {
+            Supplier<Block> blockSupEntry = curBwpEntry.getKey();
+            BlockColor curMappedBlockColor = curBwpEntry.getValue().getBlockColorMappingFunc().apply(blockSupEntry);
+
+            ColorProviderRegistry.BLOCK.register(curMappedBlockColor, blockSupEntry.get());
         });
     }
 }

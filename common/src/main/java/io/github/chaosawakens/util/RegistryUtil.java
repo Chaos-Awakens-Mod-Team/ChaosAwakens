@@ -4,10 +4,13 @@ import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.common.registry.CABlocks;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import org.apache.commons.lang3.StringUtils;
@@ -18,8 +21,10 @@ import java.io.IOException;
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,14 +32,14 @@ import java.util.stream.Stream;
  * Utility class providing shortcut methods for commonly used registry operations (primarily arbitrary).
  */
 public final class RegistryUtil {
-    private static final ObjectArrayList<File> CACHED_PNG_TEXTURES = new ObjectArrayList<>(); // Cache datagen found textures instead of creating a new list for each iteration/method call
+    private static final ObjectArrayList<ResourceLocation> CACHED_PNG_TEXTURES = new ObjectArrayList<>(); // Cache datagen found textures instead of creating a new list for each iteration/method call
 
     private RegistryUtil() {
         throw new IllegalAccessError("Attempted to construct Utility Class!");
     }
 
     /**
-     * Retrieves the registry name of the provided {@link ItemLike} via {@link DefaultedRegistry#getKey(Object)} (from the {@link BuiltInRegistries#ITEM}} registry).
+     * Retrieves the registry name of the provided {@link ItemLike} via {@link DefaultedRegistry#getKey(Object)} (from the {@link BuiltInRegistries#ITEM} registry).
      *
      * @param targetItemLike The {@link ItemLike} to retrieve the registry name for.
      *
@@ -48,7 +53,7 @@ public final class RegistryUtil {
     }
 
     /**
-     * Retrieves the modid of the provided {@link ItemLike} via {@link DefaultedRegistry#getKey(Object)} (from the {@link BuiltInRegistries#ITEM}} registry).
+     * Retrieves the modid of the provided {@link ItemLike} via {@link DefaultedRegistry#getKey(Object)} (from the {@link BuiltInRegistries#ITEM} registry).
      *
      * @param targetItemLike The {@link ItemLike} to retrieve the registry name for.
      *
@@ -93,7 +98,6 @@ public final class RegistryUtil {
      */
     @Nullable
     public static ResourceLocation getItemTexture(String modid, String targetItemFileName) {
-        String formattedRegName = targetItemFileName.concat(".png");
         String classpath = System.getProperty("java.class.path");
 
         if (CACHED_PNG_TEXTURES.isEmpty()) {
@@ -101,10 +105,45 @@ public final class RegistryUtil {
                 File curFile = new File(curClassPath);
 
                 if (curFile.isDirectory()) {
-                    try (Stream<Path> allExistingPaths = Files.walk(curFile.toPath(), FileVisitOption.FOLLOW_LINKS)) {
+                    try (Stream<Path> allExistingPaths = Files.walk(curFile.toPath(), FileVisitOption.FOLLOW_LINKS)) { // Literal files
                         allExistingPaths.filter(Files::isRegularFile)
                                 .filter(curPath -> curPath.toString().endsWith(".png"))
-                                .forEach(curVerifiedPath -> CACHED_PNG_TEXTURES.add(curVerifiedPath.toFile()));
+                                .forEach(curVerifiedPath -> {
+                                    File curVerifiedFile = curVerifiedPath.toFile();
+
+                                    if (curVerifiedFile.getPath().contains("textures\\item")) {
+                                        String name = curVerifiedFile.getPath().replace("\\", "/");
+                                        name = name.substring(name.indexOf("item") + "item/".length(), name.indexOf(".png"));
+
+                                        CACHED_PNG_TEXTURES.add(new ResourceLocation(modid, name));
+                                    } else if (curVerifiedFile.getPath().contains("textures\\block")) {
+                                        String name = curVerifiedFile.getPath().replace("\\", "/");
+                                        name = name.substring(name.indexOf("block") + "block/".length(), name.indexOf(".png"));
+
+                                        CACHED_PNG_TEXTURES.add(new ResourceLocation(modid, name));
+                                    }
+                                });
+                    } catch (IOException e) {
+                        CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
+                    }
+                } else {
+                    try (JarFile curJarFile = new JarFile(curFile)) { // Files nested within JARs
+                        curJarFile.stream()
+                                .filter(curJarEntry -> curJarEntry.getName().endsWith(".png"))
+                                .forEach(curVerifiedJarEntry -> {
+                                    String entryPath = curVerifiedJarEntry.getName();
+
+                                    if (entryPath.contains("/textures/item/")) {
+                                        String[] pathParts = entryPath.split("/");
+
+                                        if (pathParts.length >= 4) {
+                                            String modId = pathParts[1];
+                                            String relativePath = String.join("/", Arrays.copyOfRange(pathParts, 3, pathParts.length));
+
+                                            CACHED_PNG_TEXTURES.add(new ResourceLocation(modId, relativePath.replace(".png", "")));
+                                        }
+                                    }
+                                });
                     } catch (IOException e) {
                         CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
                     }
@@ -112,16 +151,7 @@ public final class RegistryUtil {
             }
         }
 
-        for (File curFile : CACHED_PNG_TEXTURES) {
-            if (curFile.getName().equals(formattedRegName) && curFile.getPath().contains(modid) && curFile.getPath().contains("textures\\item")) {
-                String name = curFile.getPath().replace("\\", "/");
-                name = name.substring(name.indexOf("item") + "item/".length(), name.indexOf(".png"));
-
-                return new ResourceLocation(modid, name);
-            }
-        }
-
-        return null;
+        return CACHED_PNG_TEXTURES.stream().filter(curRL -> !modid.isBlank() && curRL.getPath().endsWith(targetItemFileName) && curRL.getNamespace().equals(modid)).findFirst().orElse(null);
     }
 
     /**
@@ -142,7 +172,6 @@ public final class RegistryUtil {
      */
     @Nullable
     public static ResourceLocation getBlockTexture(String modid, String targetBlockFileName) {
-        String formattedRegName = targetBlockFileName.concat(".png");
         String classpath = System.getProperty("java.class.path");
 
         if (CACHED_PNG_TEXTURES.isEmpty()) {
@@ -150,10 +179,45 @@ public final class RegistryUtil {
                 File curFile = new File(curClassPath);
 
                 if (curFile.isDirectory()) {
-                    try (Stream<Path> allExistingPaths = Files.walk(curFile.toPath(), FileVisitOption.FOLLOW_LINKS)) {
+                    try (Stream<Path> allExistingPaths = Files.walk(curFile.toPath(), FileVisitOption.FOLLOW_LINKS)) { // Literal files
                         allExistingPaths.filter(Files::isRegularFile)
                                 .filter(curPath -> curPath.toString().endsWith(".png"))
-                                .forEach(curVerifiedPath -> CACHED_PNG_TEXTURES.add(curVerifiedPath.toFile()));
+                                .forEach(curVerifiedPath -> {
+                                    File curVerifiedFile = curVerifiedPath.toFile();
+
+                                    if (curVerifiedFile.getPath().contains("textures\\item")) {
+                                        String name = curVerifiedFile.getPath().replace("\\", "/");
+                                        name = name.substring(name.indexOf("item") + "item/".length(), name.indexOf(".png"));
+
+                                        CACHED_PNG_TEXTURES.add(new ResourceLocation(modid, name));
+                                    } else if (curVerifiedFile.getPath().contains("textures\\block")) {
+                                        String name = curVerifiedFile.getPath().replace("\\", "/");
+                                        name = name.substring(name.indexOf("block") + "block/".length(), name.indexOf(".png"));
+
+                                        CACHED_PNG_TEXTURES.add(new ResourceLocation(modid, name));
+                                    }
+                                });
+                    } catch (IOException e) {
+                        CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
+                    }
+                } else {
+                    try (JarFile curJarFile = new JarFile(curFile)) { // Files nested within JARs
+                        curJarFile.stream()
+                                .filter(curJarEntry -> curJarEntry.getName().endsWith(".png"))
+                                .forEach(curVerifiedJarEntry -> {
+                                    String entryPath = curVerifiedJarEntry.getName();
+
+                                    if (entryPath.contains("/textures/block/")) {
+                                        String[] pathParts = entryPath.split("/");
+
+                                        if (pathParts.length >= 4) {
+                                            String modId = pathParts[1];
+                                            String relativePath = String.join("/", Arrays.copyOfRange(pathParts, 3, pathParts.length));
+
+                                            CACHED_PNG_TEXTURES.add(new ResourceLocation(modId, relativePath.replace(".png", "")));
+                                        }
+                                    }
+                                });
                     } catch (IOException e) {
                         CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
                     }
@@ -161,16 +225,7 @@ public final class RegistryUtil {
             }
         }
 
-        for (File curFile : CACHED_PNG_TEXTURES) {
-            if (curFile.getName().equals(formattedRegName) && curFile.getPath().contains(modid) && curFile.getPath().contains("textures\\block")) {
-                String name = curFile.getPath().replace("\\", "/");
-                name = name.substring(name.indexOf("block") + "block/".length(), name.indexOf(".png"));
-
-                return new ResourceLocation(modid, name);
-            }
-        }
-
-        return null;
+        return CACHED_PNG_TEXTURES.stream().filter(curRL -> !modid.isBlank() && curRL.getPath().endsWith(targetBlockFileName) && curRL.getNamespace().equals(modid)).findFirst().orElse(null);
     }
 
     /**
@@ -311,7 +366,10 @@ public final class RegistryUtil {
         String copiedPath = getItemName(targetBlock.get());
 
         return targetBlockKey.getPath().endsWith("leaf_carpet")
+                && !BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(copiedPath.replace("leaf_carpet", "leaves"))).getDescriptionId().equals("block.minecraft.air")
                 ? () -> BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(copiedPath.replace("leaf_carpet", "leaves")))
+                : !BuiltInRegistries.BLOCK.get(new ResourceLocation(copiedPath.replace("leaf_carpet", "leaves"))).getDescriptionId().equals("block.minecraft.air")
+                ? () -> BuiltInRegistries.BLOCK.get(new ResourceLocation(copiedPath.replace("leaf_carpet", "leaves")))
                 : null;
     }
 
@@ -571,5 +629,26 @@ public final class RegistryUtil {
     @Nullable
     public static Supplier<Item> getMaterialBlockFromNugget(Supplier<Item> targetItem) {
         return getMaterialBlockFrom(targetItem, "_nugget");
+    }
+
+    @Nullable
+    public static BlockColor getVanillaLeafColorFor(Supplier<Block> targetBlock) {
+        return getItemModId(getLeavesFrom(targetBlock).get()).equals("minecraft") ? (targetState, tintGetter, targetPos, tint) -> {
+            String targetBlockItemName = getItemName(getLeavesFrom(targetBlock).get());
+
+            boolean isBirch = targetBlockItemName.startsWith("birch");
+            boolean isMangrove = targetBlockItemName.startsWith("mangrove");
+            boolean isSpruce = targetBlockItemName.startsWith("spruce");
+
+            int birchColor = FoliageColor.getBirchColor();
+            int defaultFoliageColor = tintGetter != null && targetPos != null ? BiomeColors.getAverageFoliageColor(tintGetter, targetPos) : FoliageColor.getDefaultColor();
+            int mangroveColor = FoliageColor.getMangroveColor();
+            int spruceColor = FoliageColor.getEvergreenColor();
+
+            return isBirch ? birchColor
+                    : isMangrove ? mangroveColor
+                    : isSpruce ? spruceColor
+                    : defaultFoliageColor;
+        } : null;
     }
 }

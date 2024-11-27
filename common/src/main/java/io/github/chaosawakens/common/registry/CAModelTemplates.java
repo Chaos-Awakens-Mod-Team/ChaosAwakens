@@ -10,7 +10,7 @@ import java.util.Optional;
 public class CAModelTemplates {
     // Blocks
     public static final ModelTemplate LEAF_CARPET = createTemplate("leaf_carpet", TextureSlot.TEXTURE);
-    public static final ModelTemplate LEAF_CARPET_INVENTORY = createTemplate("leaf_carpet", "_inventory", TextureSlot.TEXTURE);
+    public static final ModelTemplate LEAF_CARPET_INVENTORY = createTemplate("leaf_carpet_inventory", "_inventory", TextureSlot.TEXTURE);
 
     private static ModelTemplate createTemplate(String templateModelFileName, TextureSlot... textureSlots) {
         return createTemplate(templateModelFileName, "", textureSlots);

@@ -2696,13 +2696,15 @@ public final class ModelUtil {
 
     public static BlockModelDefinition leafCarpetDefault(ResourceLocation leafCarpetTexture, ResourceLocation leafCarpetItemModelParent) {
         return BlockModelDefinition.of(CAModelTemplates.LEAF_CARPET)
-                .withTextureMapping(TextureMapping.defaultTexture(leafCarpetTexture.withPrefix("block/")))
+                .withBlockRenderType(new ResourceLocation(RenderType.cutoutMipped().name))
+                .withTextureMapping(TextureMapping.defaultTexture(RegistryUtil.pickBlockPrefix(leafCarpetTexture)))
                 .withCustomItemModel(ItemModelDefinition.of(CAModelTemplates.of(leafCarpetItemModelParent)));
     }
 
     public static BlockModelDefinition leafCarpetInventory(ResourceLocation leafCarpetTexture, ResourceLocation leafCarpetItemModelParent) {
         return BlockModelDefinition.of(CAModelTemplates.LEAF_CARPET_INVENTORY)
-                .withTextureMapping(TextureMapping.defaultTexture(leafCarpetTexture.withPrefix("block/")))
+                .withBlockRenderType(new ResourceLocation(RenderType.cutoutMipped().name))
+                .withTextureMapping(TextureMapping.defaultTexture(RegistryUtil.pickBlockPrefix(leafCarpetTexture)))
                 .withCustomItemModel(ItemModelDefinition.of(CAModelTemplates.of(leafCarpetItemModelParent)));
     }
 

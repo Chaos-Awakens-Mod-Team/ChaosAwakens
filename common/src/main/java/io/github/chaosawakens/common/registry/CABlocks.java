@@ -7,6 +7,7 @@ import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
 import io.github.chaosawakens.api.platform.CAServices;
 import io.github.chaosawakens.common.block.dungeon.general.DungeonGateBlock;
 import io.github.chaosawakens.common.block.vegetation.general.FruitableLeavesBlock;
+import io.github.chaosawakens.common.block.vegetation.general.LeafCarpetBlock;
 import io.github.chaosawakens.util.PredicateUtil;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Direction;
@@ -152,6 +153,23 @@ public final class CABlocks {
     public static final Supplier<Block> MESOZOIC_LEAVES = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAVES, registerBlock("mesozoic_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)))).getParentBlock();
     public static final Supplier<Block> PEACH_LEAVES = BlockPropertyWrapper.of(CABlockPropertyWrappers.FRUITABLE_LEAVES, registerBlock("peach_leaves", () -> new FruitableLeavesBlock(CAItems.PEACH, BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)))).getParentBlock();
     public static final Supplier<Block> SKYWOOD_LEAVES = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAVES, registerBlock("skywood_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)))).getParentBlock();
+
+    // Leaf Carpets
+    public static final Supplier<Block> APPLE_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("apple_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(APPLE_LEAVES.get()).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> DENSEWOOD_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("densewood_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(DENSEWOOD_LEAVES.get()).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> DUPLICATOR_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("duplicator_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(DUPLICATOR_LEAVES.get()).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> GINKGO_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("ginkgo_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(GINKGO_LEAVES.get()).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> MESOZOIC_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("mesozoic_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(MESOZOIC_LEAVES.get()).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> PEACH_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("peach_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(PEACH_LEAVES.get()).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> SKYWOOD_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("skywood_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(SKYWOOD_LEAVES.get()).strength(0.1F)))).getParentBlock();
+
+    public static final Supplier<Block> ACACIA_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("acacia_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_LEAVES).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> BIRCH_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("birch_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_LEAVES).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> CHERRY_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("cherry_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_LEAVES).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> DARK_OAK_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("dark_oak_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_LEAVES).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> MANGROVE_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("mangrove_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_LEAVES).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> OAK_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("oak_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).strength(0.1F)))).getParentBlock();
+    public static final Supplier<Block> SPRUCE_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("spruce_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_LEAVES).strength(0.1F)))).getParentBlock();
 
     // Dungeon Blocks
     public static final Supplier<Block> APPLE_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("apple_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(APPLE_PLANKS.get()))))

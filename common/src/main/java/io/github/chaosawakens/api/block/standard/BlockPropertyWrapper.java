@@ -8,6 +8,7 @@ import io.github.chaosawakens.common.registry.CABlocks;
 import io.github.chaosawakens.util.LootUtil;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.TagKey;
@@ -326,10 +327,10 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
     }
 
     /**
-     * Gets the {@code Function<Consumer<FinishedRecipe>, Consumer<Supplier<Block>>>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * Gets the {@code Function<Consumer<FinishedRecipe>, Consumer<Supplier<Block>>>>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
      * May be {@code null}.
      *
-     * @return The {@code Function<Consumer<FinishedRecipe>, Consumer<Supplier<Block>>>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     * @return The {@code Function<Consumer<FinishedRecipe>, Consumer<Supplier<Block>>>>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
      */
     @Nullable
     public Function<Consumer<FinishedRecipe>, Consumer<Supplier<Block>>> getRecipeMappingFunction() {
@@ -344,6 +345,17 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
      */
     public List<Supplier<CreativeModeTab>> getParentCreativeModeTabs() {
         return builder == null ? ObjectArrayList.of() : builder.parentTabs;
+    }
+
+    /**
+     * Gets the {@code Function<Supplier<Block>, BlockColor>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Block>, BlockColor>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Block>, BlockColor> getBlockColorMappingFunc() {
+        return builder == null ? null : builder.blockColorMappingFunc;
     }
 
     /**
@@ -386,6 +398,8 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         @Nullable
         private Function<Supplier<Block>, List<BlockModelDefinition>> bmdMappingFunc;
         private List<Supplier<CreativeModeTab>> parentTabs = new ObjectArrayList<>(); // Not datagen-related but whatever
+        @Nullable
+        private Function<Supplier<Block>, BlockColor> blockColorMappingFunc;
 
         private BPWBuilder(BlockPropertyWrapper ownerWrapper, Supplier<Block> parentBlock) {
             this.ownerWrapper = ownerWrapper;
@@ -632,6 +646,18 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         public BPWBuilder withSetParentCreativeModeTabs(List<Supplier<CreativeModeTab>> parentTabs) {
             this.parentTabs.clear();
             this.parentTabs.addAll(parentTabs);
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Block Block's} optional {@link BlockColor}.
+         *
+         * @param blockColorMappingFunc The mapping function accepting a representation of the parent {@linkplain Block Block's} optional {@link BlockColor}.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder withBlockColor(Function<Supplier<Block>, BlockColor> blockColorMappingFunc) {
+            this.blockColorMappingFunc = blockColorMappingFunc;
             return this;
         }
 

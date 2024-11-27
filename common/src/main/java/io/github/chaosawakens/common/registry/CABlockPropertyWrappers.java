@@ -7,6 +7,7 @@ import io.github.chaosawakens.util.ModelUtil;
 import io.github.chaosawakens.util.RecipeUtil;
 import io.github.chaosawakens.util.RegistryUtil;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.data.models.model.ModelLocationUtils;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 
@@ -233,6 +234,14 @@ public final class CABlockPropertyWrappers {
             .withTags(ObjectArrayList.of(BlockTags.LEAVES, ItemTags.LEAVES))
             .withCustomModelDefinitions(parentBlock -> ModelUtil.fruitableLeaves(RegistryUtil.getBlockTexture(parentBlock)))
             .withBlockStateDefinition(ModelUtil::fruitableLeaves)
+            .build();
+
+    public static final BlockPropertyWrapper LEAF_CARPET = BlockPropertyWrapper.createTemplate()
+            .builder()
+            .withLootTable(LootUtil::dropMultiFace)
+            .withCustomModelDefinitions(parentBlock -> ModelUtil.leafCarpet(RegistryUtil.getBlockTexture(RegistryUtil.getLeavesFrom(parentBlock)), ModelLocationUtils.getModelLocation(parentBlock.get()).withSuffix("_inventory")))
+            .withBlockStateDefinition(ModelUtil::leafCarpet)
+            .withBlockColor(RegistryUtil::getVanillaLeafColorFor)
             .build();
 
     // Solid

@@ -5,13 +5,11 @@ import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.SlabType;
@@ -332,5 +330,17 @@ public final class LootUtil {
                         .hasProperty(FruitableLeavesBlock.RIPE, true)))
                 .add(LootItem.lootTableItem(((FruitableLeavesBlock) targetBlock.get()).getFruitItem().get())
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(((FruitableLeavesBlock) targetBlock.get()).calculateRandomFruitDrop())))));
+    }
+
+    public static LootTable.Builder dropMultiFace(Supplier<Block> targetBlock) {
+        return LootTable.lootTable().withPool(LootPool.lootPool()
+                .apply(ApplyExplosionDecay.explosionDecay())
+                .add(LootItem.lootTableItem(targetBlock.get())
+                        .when(HAS_SHEARS_OR_SILK_TOUCH)
+                        .apply(Direction.values(), (curDir) -> SetItemCountFunction.setCount(ConstantValue.exactly(1.0F), true)
+                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(targetBlock.get())
+                                        .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                .hasProperty(MultifaceBlock.getFaceProperty(curDir), true))))
+                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(-1.0F), true))));
     }
 }

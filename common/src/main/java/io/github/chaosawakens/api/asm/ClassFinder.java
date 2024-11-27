@@ -14,7 +14,7 @@ public final class ClassFinder {
     public static Class<?> forName(String targetClassName) {
         try {
             return Class.forName(targetClassName);
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | ExceptionInInitializerError e) {
             CAConstants.LOGGER.error("Failed to load: {}, no such class was found.", targetClassName, e);
             return null;
         }

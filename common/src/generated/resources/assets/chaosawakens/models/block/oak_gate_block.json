@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "bottom": "chaosawakens:block/wood/oak/oak_gate_block_top",
-    "side": "chaosawakens:block/wood/oak/oak_gate_block",
-    "top": "chaosawakens:block/wood/oak/oak_gate_block_top"
+    "bottom": "chaosawakens:block/wood/dark_oak/dark_oak_gate_block_top",
+    "side": "chaosawakens:block/wood/dark_oak/dark_oak_gate_block",
+    "top": "chaosawakens:block/wood/dark_oak/dark_oak_gate_block_top"
   }
 }

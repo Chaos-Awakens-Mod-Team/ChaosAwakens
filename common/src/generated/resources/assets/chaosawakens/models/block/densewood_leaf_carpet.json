@@ -1,0 +1,7 @@
+{
+  "parent": "chaosawakens:block/leaf_carpet",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "texture": "chaosawakens:block/leaves/densewood/densewood_leaves"
+  }
+}

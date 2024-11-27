@@ -147,6 +147,8 @@ public class CATags {
                 .withTagEntries(ObjectArrayList.of(FOSSILS_STONE, FOSSILS_GRAVEL, FOSSILS_SAND, FOSSILS_SANDSTONE, FOSSILS_ICE, FOSSILS_NETHERRACK, FOSSILS_BLACKSTONE, FOSSILS_SOUL_SOIL, FOSSILS_END_STONE, FOSSILS_KYANITE))
                 .getParentTag();
 
+        public static final TagKey<Block> LEAF_CARPETS = createBlockTag("leaf_carpets");
+
         private static TagWrapper<Block, TagKey<Block>> createWrappedBlockTag(String name) {
             return TagWrapper.create(createBlockTag(name));
         }

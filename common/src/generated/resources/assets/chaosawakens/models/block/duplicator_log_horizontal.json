@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column_horizontal",
   "textures": {
-    "end": "chaosawakens:block/wood/duplicator/duplicator_log_top",
-    "side": "chaosawakens:block/wood/duplicator/duplicator_log"
+    "end": "chaosawakens:block/wood/duplicator/dead/dead_duplicator_log_top",
+    "side": "chaosawakens:block/wood/duplicator/dead/dead_duplicator_log"
   }
 }

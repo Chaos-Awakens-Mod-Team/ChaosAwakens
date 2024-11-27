@@ -11,7 +11,6 @@ public class ChaosAwakens {
      */
     public static void setup() {
         CAServices.PLATFORM.discoverAnnotatedClasses(LoadEarly.class);
-
         CAServices.REGISTRAR.setupRegistrar();
 
         if (CAServices.PLATFORM.getPlatform().equals(ModLoader.FABRIC)) CAServices.NETWORK_MANAGER.setupNetworkHandler();

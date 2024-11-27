@@ -1,13 +1,11 @@
 package io.github.chaosawakens.common.block.vegetation.general;
 
+import io.github.chaosawakens.common.registry.CATags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.MultifaceBlock;
-import net.minecraft.world.level.block.MultifaceSpreader;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -16,12 +14,16 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+
 public class LeafCarpetBlock extends MultifaceBlock implements SimpleWaterloggedBlock {
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    private static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION;
     private final MultifaceSpreader leafCarpetSpreader = new MultifaceSpreader(this);
 
     public LeafCarpetBlock(Properties properties) {
         super(properties);
+        registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -32,19 +34,19 @@ public class LeafCarpetBlock extends MultifaceBlock implements SimpleWaterlogged
 
     @Override
     public BlockState updateShape(BlockState targetState, Direction facingDir, BlockState neighbourState, LevelAccessor curLevel, BlockPos targetPos, BlockPos neighbourPos) {
-        if (targetState.getValue(WATERLOGGED)) curLevel.scheduleTick(targetPos, Fluids.WATER, Fluids.WATER.getTickDelay(curLevel));
+        if (isWaterLogged(targetState)) curLevel.scheduleTick(targetPos, Fluids.WATER, Fluids.WATER.getTickDelay(curLevel));
 
         return super.updateShape(targetState, facingDir, neighbourState, curLevel, targetPos, neighbourPos);
     }
 
     @Override
     public boolean canBeReplaced(BlockState targetState, BlockPlaceContext ctx) {
-        return !ctx.getItemInHand().is(asItem()) || super.canBeReplaced(targetState, ctx);
+        return !ctx.getItemInHand().is(CATags.CAItemTags.LEAF_CARPETS) || super.canBeReplaced(targetState, ctx);
     }
 
     @Override
     public FluidState getFluidState(BlockState targetState) {
-        return targetState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(targetState);
+        return isWaterLogged(targetState) ? Fluids.WATER.getSource(false) : super.getFluidState(targetState);
     }
 
     @NotNull
@@ -63,5 +65,9 @@ public class LeafCarpetBlock extends MultifaceBlock implements SimpleWaterlogged
 
     public static BlockState setWaterlogged(BlockState targetState) {
         return setWaterlogged(targetState, true);
+    }
+
+    public static Map<Direction, BooleanProperty> getMappedFaces() {
+        return PROPERTY_BY_DIRECTION;
     }
 }

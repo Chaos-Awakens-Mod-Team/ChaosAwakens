@@ -1,0 +1,7 @@
+{
+  "parent": "chaosawakens:block/leaf_carpet_inventory",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "texture": "chaosawakens:block/leaves/peach/peach_leaves"
+  }
+}
