@@ -633,7 +633,7 @@ public final class RegistryUtil {
 
     @Nullable
     public static BlockColor getVanillaLeafColorFor(Supplier<Block> targetBlock) {
-        return getItemModId(getLeavesFrom(targetBlock).get()).equals("minecraft") ? (targetState, tintGetter, targetPos, tint) -> {
+        return getItemModId(getLeavesFrom(targetBlock).get()).equals("minecraft") && !getItemName(targetBlock.get()).startsWith("cherry") ? (targetState, tintGetter, targetPos, tint) -> {
             String targetBlockItemName = getItemName(getLeavesFrom(targetBlock).get());
 
             boolean isBirch = targetBlockItemName.startsWith("birch");

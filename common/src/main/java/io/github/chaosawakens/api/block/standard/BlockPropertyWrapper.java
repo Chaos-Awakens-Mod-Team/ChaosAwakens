@@ -127,6 +127,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
                     .withBlockStateDefinition(parentTemplateWrapper.builder.blockStateDefinition)
                     .withRecipe(parentTemplateWrapper.builder.recipeBuilderFunction)
                     .withSetParentCreativeModeTabs(List.copyOf(parentTemplateWrapper.builder.parentTabs))
+                    .withBlockColor(parentTemplateWrapper.builder.blockColorMappingFunc)
                     .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied BPW afterward
 
             return newTemplateWrapper;
@@ -162,6 +163,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
                     .withBlockStateDefinition(parentWrapper.builder.blockStateDefinition)
                     .withRecipe(parentWrapper.builder.recipeBuilderFunction)
                     .withSetParentCreativeModeTabs(List.copyOf(parentWrapper.builder.parentTabs))
+                    .withBlockColor(parentWrapper.builder.blockColorMappingFunc)
                     .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied BPW afterward
 
             return newWrapper;
@@ -198,6 +200,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
                     .withBlockStateDefinition(originalWrapper.builder.blockStateDefinition)
                     .withRecipe(originalWrapper.builder.recipeBuilderFunction)
                     .withSetParentCreativeModeTabs(List.copyOf(originalWrapper.builder.parentTabs))
+                    .withBlockColor(originalWrapper.builder.blockColorMappingFunc)
                     .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied BPW afterward
 
             return newWrapper;

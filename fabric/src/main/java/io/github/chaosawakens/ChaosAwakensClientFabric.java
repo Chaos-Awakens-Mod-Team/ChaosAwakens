@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Block;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -21,11 +22,15 @@ public class ChaosAwakensClientFabric implements ClientModInitializer {
     public void onInitializeClient() {
         handleBlockRenderLayers();
         registerBlockColorProviders();
+    //    registerItemColorProviders();
     }
 
     private static void handleBlockRenderLayers() {
         BlockPropertyWrapper.getMappedBpws().forEach((blockSupEntry, curBwp) -> {
             List<BlockModelDefinition> allPresentModels = curBwp.getBlockModelDefinitions();
+            Function<Supplier<Block>, List<BlockModelDefinition>> bmdMappingFunc = curBwp.getBMDMappingFunction();
+
+            if (bmdMappingFunc != null) allPresentModels.addAll(bmdMappingFunc.apply(blockSupEntry));
 
             if (!allPresentModels.isEmpty()) {
                 allPresentModels.forEach((curBmd) -> {
@@ -55,6 +60,15 @@ public class ChaosAwakensClientFabric implements ClientModInitializer {
             BlockColor curMappedBlockColor = curBwpEntry.getValue().getBlockColorMappingFunc().apply(blockSupEntry);
 
             ColorProviderRegistry.BLOCK.register(curMappedBlockColor, blockSupEntry.get());
+        });
+    }
+
+    private static void registerItemColorProviders() {
+        BlockPropertyWrapper.getMappedBpws().entrySet().stream().filter(curBwpEntry -> curBwpEntry.getValue().getBlockColorMappingFunc() != null).forEach(curBwpEntry -> { // Need to isolate both methods (in terms of blocks), cuz otherwise block is null within the same method's scope when retrieved from the ColorProviderRegistry
+            Supplier<Block> blockSupEntry = curBwpEntry.getKey();
+            BlockColor curMappedBlockColor = ColorProviderRegistry.BLOCK.get(blockSupEntry.get());
+
+            ColorProviderRegistry.ITEM.register((curStack, tintIdx) -> curMappedBlockColor.getColor(blockSupEntry.get().defaultBlockState(), null, null, tintIdx), blockSupEntry.get());
         });
     }
 }

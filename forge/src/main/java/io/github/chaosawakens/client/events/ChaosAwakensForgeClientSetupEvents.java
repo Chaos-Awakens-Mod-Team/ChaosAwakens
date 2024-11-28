@@ -22,4 +22,13 @@ public class ChaosAwakensForgeClientSetupEvents {
             event.register(curMappedBlockColor, blockSupEntry.get());
         });
     }
+
+    @SubscribeEvent
+    public static void onRegisterBlockColorHandlersEvent(RegisterColorHandlersEvent.Item event) {
+        BlockPropertyWrapper.getMappedBpws().entrySet().stream().filter(curBwpEntry -> curBwpEntry.getValue().getBlockColorMappingFunc() != null).forEach(curBwpEntry -> {
+            Supplier<Block> blockSupEntry = curBwpEntry.getKey();
+
+            event.register((curStack, tintIdx) -> event.getBlockColors().getColor(blockSupEntry.get().defaultBlockState(), null, null, tintIdx), blockSupEntry.get());
+        });
+    }
 }
