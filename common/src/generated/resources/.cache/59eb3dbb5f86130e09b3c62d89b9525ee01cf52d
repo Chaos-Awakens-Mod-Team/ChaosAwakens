@@ -1,6 +1,7 @@
-// 1.20.1	2024-11-27T22:40:32.5135013	Loot Tables
+// 1.20.1	2024-12-18T23:42:53.3408614	Loot Tables
 fd5e1bc80521d0475feba0a763a4477dafb97aa2 data/chaosawakens/loot_tables/blocks/acacia_gate_block.json
 da9b4c2ed45126af19c82b0d58a8c8627c8fef0f data/chaosawakens/loot_tables/blocks/acacia_leaf_carpet.json
+ee77f01f0b63fbd97ac78ea731b6631de45ae5cb data/chaosawakens/loot_tables/blocks/amethyst_block.json
 e0ee511bca34f9c60bdb2af23a96292e96f0a64c data/chaosawakens/loot_tables/blocks/apple_button.json
 129675638aede2a57513342e984c863d5f6fd889 data/chaosawakens/loot_tables/blocks/apple_door.json
 6de1cbe7f909970121a2193e802885c0ebce5883 data/chaosawakens/loot_tables/blocks/apple_fence.json
@@ -102,7 +103,7 @@ a43910a755dfc06047e1861f8f27b911bfb48523 data/chaosawakens/loot_tables/blocks/pe
 954c71788c69ff45552aa285c1b64a84a831a541 data/chaosawakens/loot_tables/blocks/peach_fence_gate.json
 efbdeaa20d75c7306666f2848d798ea42701e61f data/chaosawakens/loot_tables/blocks/peach_gate_block.json
 508fa0b59183e2a490880559f2f1af45fad37dcc data/chaosawakens/loot_tables/blocks/peach_leaf_carpet.json
-dbb0af2166ed1d01ed6245b33530a579208f4b85 data/chaosawakens/loot_tables/blocks/peach_leaves.json
+6089d1e47bef6a839bbf5a119cc488e597b1296f data/chaosawakens/loot_tables/blocks/peach_leaves.json
 62a338bf3606ba3201021906193190f8eacb0bd7 data/chaosawakens/loot_tables/blocks/peach_log.json
 458c561463dbe339b162d5dc0a970665a8c97d59 data/chaosawakens/loot_tables/blocks/peach_planks.json
 f7ab17393096621b95f2cf598e2aa48638e84516 data/chaosawakens/loot_tables/blocks/peach_pressure_plate.json
@@ -110,6 +111,7 @@ d85cf7a8e6c72f74c286cc71868241b696ee41a4 data/chaosawakens/loot_tables/blocks/pe
 949435d42e4fc508c4fd1983b67a59d80577d241 data/chaosawakens/loot_tables/blocks/peach_stairs.json
 16c8cbc6e78714d2ed616127b18e451cee282abe data/chaosawakens/loot_tables/blocks/peach_trapdoor.json
 de5073476cda0d4cff0f9a0d808421a746bc77e5 data/chaosawakens/loot_tables/blocks/peach_wood.json
+bb69793afa1aaca60c440c6093d3e86061a75998 data/chaosawakens/loot_tables/blocks/ruby_block.json
 d441417e569f233516e675b49ccdf4745343e5c4 data/chaosawakens/loot_tables/blocks/skywood.json
 c1f8254124f9f597004af7efc3bb8c8308a55ef6 data/chaosawakens/loot_tables/blocks/skywood_button.json
 4fcd96228c88da71af3f9ffa671a0972ef67e2ac data/chaosawakens/loot_tables/blocks/skywood_door.json

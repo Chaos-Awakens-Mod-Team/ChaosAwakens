@@ -39,4 +39,9 @@ public class CAItemPropertyWrappers {
             .cachedBuilder()
             .withRecipe(RecipeUtil::standardNugget)
             .build();
+
+    public static final ItemPropertyWrapper STANDARD_MINERAL = ItemPropertyWrapper.ofTemplate(BASIC_GENERATED)
+            .cachedBuilder()
+            .withRecipe(RecipeUtil::standardMineral)
+            .build();
 }

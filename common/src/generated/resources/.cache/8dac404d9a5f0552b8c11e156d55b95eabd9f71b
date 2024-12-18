@@ -1,6 +1,7 @@
-// 1.20.1	2024-11-27T22:40:32.5033388	Chaos Awakens: Block States
+// 1.20.1	2024-12-18T23:31:59.7828808	Chaos Awakens: Block States
 5c81494d06a5589da8afe9c24272dddb04a88d14 assets/chaosawakens/blockstates/acacia_gate_block.json
 807de6368ec3d2d151f9683203f9b05493f6600e assets/chaosawakens/blockstates/acacia_leaf_carpet.json
+ad233823cd659fa4a9ec5a5f4f4404dbfb34180a assets/chaosawakens/blockstates/amethyst_block.json
 df2f1e8fa81c1f360358a98fa2fc7dc23ca6f0e3 assets/chaosawakens/blockstates/apple_button.json
 c93a856954b2d70855cccf32b8282351ecd1fd66 assets/chaosawakens/blockstates/apple_door.json
 94d85c83ab2daa5f0032f1b41e9627fe41fe677d assets/chaosawakens/blockstates/apple_fence.json
@@ -110,6 +111,7 @@ dc88a9f452248a6399bacbd8ea0c506f903e8e94 assets/chaosawakens/blockstates/peach_p
 8b475336c395250d84fd8e8f21e8feed4971adf1 assets/chaosawakens/blockstates/peach_stairs.json
 82949efde9bc81bb9c33eed273c8ad1a54a08854 assets/chaosawakens/blockstates/peach_trapdoor.json
 f881697081002c35c685018e9383aaf86906ad2c assets/chaosawakens/blockstates/peach_wood.json
+aeefe57522d7fa1bfae56f6f9d550bdcf7894f92 assets/chaosawakens/blockstates/ruby_block.json
 4d16f3381d8c955ea88b3b61e03931f09d0b7dea assets/chaosawakens/blockstates/skywood.json
 b93383e4761d2f5f6de3ceb14818736686dac46e assets/chaosawakens/blockstates/skywood_button.json
 c65266e649a38d7a2603d4138232e6c5300cf49b assets/chaosawakens/blockstates/skywood_door.json

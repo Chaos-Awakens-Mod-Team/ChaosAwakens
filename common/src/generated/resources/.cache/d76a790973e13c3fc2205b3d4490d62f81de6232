@@ -1,7 +1,8 @@
-// 1.20.1	2024-11-27T22:40:32.5175168	Chaos Awakens: Block & Block Item Models
+// 1.20.1	2024-12-18T23:31:59.8128779	Chaos Awakens: Block & Block Item Models
 545cc7a8d51438ddca6429e9262d81c625d1162d assets/chaosawakens/models/block/acacia_gate_block.json
 8d130b2889cdfedadd99deba33ebbc7ef31085f7 assets/chaosawakens/models/block/acacia_leaf_carpet.json
 f700a074b4699cc3621d597ffe655047e0bf4a44 assets/chaosawakens/models/block/acacia_leaf_carpet_inventory.json
+6dbe55d83bd6c47dd8b1331a4eb2092dbe59144a assets/chaosawakens/models/block/amethyst_block.json
 32bed3330bf18b5cf782cdc679df40a9845fcaad assets/chaosawakens/models/block/apple_button.json
 0b3671b602abeed4f6588f981e2e792c7403ad64 assets/chaosawakens/models/block/apple_button_inventory.json
 3238b44f02d0639abb168fe9b423a2264f6cc0c4 assets/chaosawakens/models/block/apple_button_pressed.json
@@ -272,6 +273,7 @@ b19b5c5ffb4dc7590621259ecd1bdb1737c0224c assets/chaosawakens/models/block/peach_
 5473311f1549c2e7cc35e649a82064d8530e5fb5 assets/chaosawakens/models/block/peach_trapdoor_open.json
 477c3c187e3eca860395e6152f9720ffcf6e1ca8 assets/chaosawakens/models/block/peach_trapdoor_top.json
 03e5fa84305bab64c9fc1ba50206702c697e2cf4 assets/chaosawakens/models/block/peach_wood.json
+4afec2fc556609881154220afcada9861700a244 assets/chaosawakens/models/block/ruby_block.json
 77ad05a32603b809b2e017adc0b9e09c26c33121 assets/chaosawakens/models/block/skywood.json
 3e196060b3ddb1f14231bc1c480dcc05d6f57442 assets/chaosawakens/models/block/skywood_button.json
 e7a61b1f3eb380fb3d61d8e12ff9fad26626fa1e assets/chaosawakens/models/block/skywood_button_inventory.json
@@ -343,6 +345,7 @@ a80df4bcbcb7c766c97d930e1502957e266391ff assets/chaosawakens/models/block/titani
 544686ad9bf5d9cad899763ce758a22877d73212 assets/chaosawakens/models/block/warped_gate_block.json
 4398c0094d13f927d4feb21a22738b79a358fb12 assets/chaosawakens/models/item/acacia_gate_block.json
 a7995f606f1373adabc89c2f87b59b57f61e925e assets/chaosawakens/models/item/acacia_leaf_carpet.json
+4005f49801866764e852b3f7227765960355f813 assets/chaosawakens/models/item/amethyst_block.json
 acb0081869fc8c4558c2baf9cfad0a1781e30ead assets/chaosawakens/models/item/apple_button.json
 405b798b72eed17f54b698f08ed155aa48be9b26 assets/chaosawakens/models/item/apple_door.json
 dc166fafea3c9233d943fb927936a0cb0e45106d assets/chaosawakens/models/item/apple_fence.json
@@ -452,6 +455,7 @@ d6fe40004ec0c699b84a5092c6bd6cf20074a9ce assets/chaosawakens/models/item/peach_s
 d2dda2b523ccd9a0b01edd9e74c69507d2d4ba80 assets/chaosawakens/models/item/peach_stairs.json
 bb79d1c64e3eba44ae4e20dace9fbcc4fe147b7d assets/chaosawakens/models/item/peach_trapdoor.json
 73d7cd0f521f59d9d46f313852a2a8a508298bf1 assets/chaosawakens/models/item/peach_wood.json
+5fa67ee169276eb2bfc987ff0872931c9860b8ce assets/chaosawakens/models/item/ruby_block.json
 c1146c53fe6e5d2729402f0b40fb621e22c278b8 assets/chaosawakens/models/item/skywood.json
 8c985434714e6e50045482009d648cb26655ab9d assets/chaosawakens/models/item/skywood_button.json
 82d139d3e173a356d7490b56446f2f3ab880cc29 assets/chaosawakens/models/item/skywood_door.json

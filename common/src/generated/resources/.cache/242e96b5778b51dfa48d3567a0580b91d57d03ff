@@ -1,4 +1,5 @@
-// 1.20.1	2024-10-03T17:57:20.8736206	Chaos Awakens: Item Models
+// 1.20.1	2024-12-18T23:31:59.8098776	Chaos Awakens: Item Models
+b1ef68839717c7cf25d72a6a94b976d9c113168b assets/chaosawakens/models/item/amethyst.json
 116ba16f2c38441701e46ddc6529d51385ff1239 assets/chaosawakens/models/item/blt_sandwich.json
 94e1f2c5fc83cb085eee91919be466e6eedc2310 assets/chaosawakens/models/item/blue_fish.json
 75c61853bc548eb17e6f58617c597352ffde52a8 assets/chaosawakens/models/item/butter.json
@@ -34,6 +35,7 @@ c67e7108b9c25dc3ff252d1229784684308aef32 assets/chaosawakens/models/item/raw_cra
 b2672becf559b15466a770df6b5a8103d06c0386 assets/chaosawakens/models/item/raw_peacock_leg.json
 e87ada66035e29e7e0efde671cd2922c8f5011e4 assets/chaosawakens/models/item/raw_venison.json
 c1aa47b81b3a0a1e7a1c3f577fc59173f8da71bf assets/chaosawakens/models/item/rock_fish.json
+c280c81ea7b71b0d546e2ca4c4da5803b6f0cb45 assets/chaosawakens/models/item/ruby.json
 d6d66efdab41f85b3b6400d26102dcf1cc0897b7 assets/chaosawakens/models/item/seafood_patty.json
 f61ec0bb5ba7fe991df9bb78c382a3c876ad1ded assets/chaosawakens/models/item/spark_fish.json
 2881bff84fdd7f538863cdef9bc8321870bea61f assets/chaosawakens/models/item/strawberry.json

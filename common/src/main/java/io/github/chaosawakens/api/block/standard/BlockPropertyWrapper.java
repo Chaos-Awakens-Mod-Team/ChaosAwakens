@@ -298,9 +298,11 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
 
     /**
      * Gets the {@link List} of {@linkplain BlockModelDefinition BlockModelDefinitions} from the {@link #builder()} if the builder exists, and it is defined within said builder.
-     * May be {@code null}.
+     * May be {@code null}. Usually needs to be populated before use (see references below).
      *
      * @return The {@link List} of {@linkplain BlockModelDefinition BlockModelDefinitions}, or an empty {@link ObjectArrayList} if the {@link #builder()} is {@code null}.
+     *
+     * @see #getBMDMappingFunction()
      */
     public List<BlockModelDefinition> getBlockModelDefinitions() {
         return builder == null ? ObjectArrayList.of() : builder.blockModelDefinitions;

@@ -1,4 +1,4 @@
-// 1.20.1	2024-09-09T17:34:25.4109787	Chaos Awakens: Block Tags
+// 1.20.1	2024-12-18T23:31:59.7968782	Chaos Awakens: Block Tags
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_crystal.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_mining.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_village.json
@@ -55,8 +55,8 @@ dfd1a4679b33bcc613029d46b05f5ea2e882c5d7 data/chaosawakens/tags/blocks/wood/logs
 539c63c2e9813b8dde94400c01cf7869f0822dad data/minecraft/tags/blocks/leaves.json
 2c3a4af37be58291aadbee3781c0fd38c6aa1ded data/minecraft/tags/blocks/logs_that_burn.json
 c3b00ae107dbd0f5689ebd1f8622bca88d077106 data/minecraft/tags/blocks/mineable/axe.json
-4b14eb2420cc42cf0cd2c35d056a047f364e4f0f data/minecraft/tags/blocks/mineable/pickaxe.json
-4b14eb2420cc42cf0cd2c35d056a047f364e4f0f data/minecraft/tags/blocks/needs_diamond_tool.json
+8cdc8f1f415b634f46c851ac0d4cef5b1bb91684 data/minecraft/tags/blocks/mineable/pickaxe.json
+8cdc8f1f415b634f46c851ac0d4cef5b1bb91684 data/minecraft/tags/blocks/needs_diamond_tool.json
 7030e8eab3b9a7e1f1103635de23ae822665395f data/minecraft/tags/blocks/planks.json
 f15ff21a8eb277c8ce6b8fce2782d5bfe3d4f33c data/minecraft/tags/blocks/wooden_buttons.json
 c73f48340acd02386faa456c2f390fad2c17be3e data/minecraft/tags/blocks/wooden_doors.json

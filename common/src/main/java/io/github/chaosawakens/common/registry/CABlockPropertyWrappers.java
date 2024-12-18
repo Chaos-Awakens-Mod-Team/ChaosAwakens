@@ -245,22 +245,6 @@ public final class CABlockPropertyWrappers {
             .build();
 
     // Solid
-    public static final BlockPropertyWrapper SOLID_BLOCK = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK_PICKAXE)
-            .cachedBuilder()
-            .withRecipe(RecipeUtil::solidBlockRecipe)
-            .build();
-
-    public static final BlockPropertyWrapper SOLID_ROTATED_PILLAR_BLOCK = BlockPropertyWrapper.ofTemplate(BASIC_ROTATED_PILLAR_BLOCK)
-            .cachedBuilder()
-            .withRecipe(RecipeUtil::solidBlockRecipe)
-            .withTag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .build();
-    public static final BlockPropertyWrapper SOLID_AXIS_ALIGNED_BLOCK = BlockPropertyWrapper.ofTemplate(BASIC_AXIS_ALIGNED_BLOCK)
-            .cachedBuilder()
-            .withRecipe(RecipeUtil::solidBlockRecipe)
-            .withTag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .build();
-
     public static final BlockPropertyWrapper SOLID_SLAB = BlockPropertyWrapper.ofTemplate(WOODEN_SLAB)
             .cachedBuilder()
             .withRecipe(RecipeUtil::solidSlabRecipe)
@@ -280,7 +264,13 @@ public final class CABlockPropertyWrappers {
             .withLootTable(LootUtil::dropSelf)
             .withRecipe(RecipeUtil::solidWallRecipe)
             .withTags(ObjectArrayList.of(BlockTags.WALLS, ItemTags.WALLS, BlockTags.MINEABLE_WITH_PICKAXE))
-            .withCustomModelDefinitions(parentBlock -> ModelUtil.wall(RegistryUtil.getBlockTexture(RegistryUtil.getItemModId(parentBlock.get()), RegistryUtil.getItemName(parentBlock.get()).replace("_wall", "_block")), CAConstants.prefix(RegistryUtil.getItemName(parentBlock.get()).concat("_inventory")).withPrefix("block/")))
+            .withCustomModelDefinitions(parentBlock -> ModelUtil.wall(RegistryUtil.getBlockTexture(RegistryUtil.getSolidBlockFromWall(parentBlock)), ModelLocationUtils.getModelLocation(parentBlock.get()).withSuffix("_inventory")))
             .withBlockStateDefinition(ModelUtil::wall)
+            .build();
+
+    public static final BlockPropertyWrapper SOLID_ROTATED_PILLAR_BLOCK = BlockPropertyWrapper.ofTemplate(BASIC_ROTATED_PILLAR_BLOCK)
+            .cachedBuilder()
+            .withRecipe(RecipeUtil::solidPillarRecipe)
+            .withTag(BlockTags.MINEABLE_WITH_PICKAXE)
             .build();
 }

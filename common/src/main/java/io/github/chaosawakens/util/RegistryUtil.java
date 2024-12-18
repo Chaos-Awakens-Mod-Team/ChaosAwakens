@@ -1,5 +1,6 @@
 package io.github.chaosawakens.util;
 
+import com.google.common.base.Suppliers;
 import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.common.registry.CABlocks;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -97,7 +98,7 @@ public final class RegistryUtil {
      * @see #getBlockTexture(Supplier)
      */
     @Nullable
-    public static ResourceLocation getItemTexture(String modid, String targetItemFileName) {
+    public static ResourceLocation getItemTexture(String modid, String targetItemFileName) { //TODO Group this into a common method
         String classpath = System.getProperty("java.class.path");
 
         if (CACHED_PNG_TEXTURES.isEmpty()) {
@@ -134,6 +135,15 @@ public final class RegistryUtil {
                                     String entryPath = curVerifiedJarEntry.getName();
 
                                     if (entryPath.contains("/textures/item/")) {
+                                        String[] pathParts = entryPath.split("/");
+
+                                        if (pathParts.length >= 4) {
+                                            String modId = pathParts[1];
+                                            String relativePath = String.join("/", Arrays.copyOfRange(pathParts, 3, pathParts.length));
+
+                                            CACHED_PNG_TEXTURES.add(new ResourceLocation(modId, relativePath.replace(".png", "")));
+                                        }
+                                    } else if (entryPath.contains("/textures/block/")) {
                                         String[] pathParts = entryPath.split("/");
 
                                         if (pathParts.length >= 4) {
@@ -208,6 +218,15 @@ public final class RegistryUtil {
                                     String entryPath = curVerifiedJarEntry.getName();
 
                                     if (entryPath.contains("/textures/block/")) {
+                                        String[] pathParts = entryPath.split("/");
+
+                                        if (pathParts.length >= 4) {
+                                            String modId = pathParts[1];
+                                            String relativePath = String.join("/", Arrays.copyOfRange(pathParts, 3, pathParts.length));
+
+                                            CACHED_PNG_TEXTURES.add(new ResourceLocation(modId, relativePath.replace(".png", "")));
+                                        }
+                                    } else if (entryPath.contains("/textures/item/")) {
                                         String[] pathParts = entryPath.split("/");
 
                                         if (pathParts.length >= 4) {
@@ -511,8 +530,8 @@ public final class RegistryUtil {
         String copiedItemPath = getItemName(targetItem.get());
 
         return targetItemKey.getPath().endsWith(targetRegNameSuffix)
-                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("item.minecraft.air")
-                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("block.minecraft.air")
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetRegNameSuffix.isBlank() ? copiedItemPath.concat(suffixReplacement) : copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("item.minecraft.air")
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetRegNameSuffix.isBlank() ? copiedItemPath.concat(suffixReplacement) : copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("block.minecraft.air")
                 ? () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement)))
                 : null;
     }
@@ -523,8 +542,8 @@ public final class RegistryUtil {
         String copiedItemPath = getItemName(targetItem.get());
 
         return targetItemKey.getPath().endsWith(targetRegNameSuffix)
-                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement)).withPrefix(addedPrefix)).getDescriptionId().equals("item.minecraft.air")
-                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("block.minecraft.air")
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetRegNameSuffix.isBlank() ? copiedItemPath.concat(suffixReplacement) : copiedItemPath.replace(targetRegNameSuffix, suffixReplacement)).withPrefix(addedPrefix)).getDescriptionId().equals("item.minecraft.air")
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetRegNameSuffix.isBlank() ? copiedItemPath.concat(suffixReplacement) : copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("block.minecraft.air")
                 ? () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement)).withPrefix(addedPrefix))
                 : null;
     }
@@ -569,6 +588,25 @@ public final class RegistryUtil {
         return getOreFrom(targetItem, "_ingot");
     }
 
+    public static ObjectArrayList<Supplier<Block>> getBlocksFrom(Supplier<Item> targetItem, String targetBlockRegNameSuffix, String targetItemAbrogatedRegNameSuffix) {
+        return BuiltInRegistries.BLOCK.stream()
+                .filter(curBlock -> getItemName(curBlock).endsWith(targetBlockRegNameSuffix) && getItemName(curBlock).contains(getItemName(targetItem.get()).replace(targetItemAbrogatedRegNameSuffix, "")))
+                .map(Suppliers::ofInstance)
+                .collect(Collectors.toCollection(ObjectArrayList::new));
+    }
+
+    public static ObjectArrayList<Supplier<Block>> getOresFrom(Supplier<Item> targetItem, String targetAbrogatedRegNameSuffix) {
+        return getBlocksFrom(targetItem, "_ore", targetAbrogatedRegNameSuffix);
+    }
+
+    public static ObjectArrayList<Supplier<Block>> getOresFromIngot(Supplier<Item> targetItem) {
+        return getOresFrom(targetItem, "_ingot");
+    }
+
+    public static ObjectArrayList<Supplier<Block>> getOresFromLump(Supplier<Item> targetItem) {
+        return getOresFrom(targetItem, "_lump");
+    }
+
     @Nullable
     public static Supplier<Item> getOreFromNugget(Supplier<Item> targetItem) {
         return getOreFrom(targetItem, "_nugget");
@@ -597,7 +635,9 @@ public final class RegistryUtil {
     @Nullable
     public static Supplier<Item> getMaterialFromMaterialBlock(Supplier<Item> targetItem) {
         return getIngotFromMaterialBlock(targetItem) == null
-                ? getLumpFromMaterialBlock(targetItem)
+                ? getItemBasedOnSuffix(targetItem, "_block", "") != null
+                ? getItemBasedOnSuffix(targetItem, "_block", "")
+                : getLumpFromMaterialBlock(targetItem)
                 : getIngotFromMaterialBlock(targetItem);
     }
 

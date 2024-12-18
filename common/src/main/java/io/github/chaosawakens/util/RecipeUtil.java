@@ -319,7 +319,7 @@ public final class RecipeUtil {
 
     public static Consumer<Supplier<Block>> solidBlockRecipe(Consumer<FinishedRecipe> recipeConsumer) {
         return (resultBlockSup) -> {
-
+            // They don't have any by default since they're mined and stuff, just leaving this here in case we need it again or smth idk
         };
     }
 
@@ -359,6 +359,12 @@ public final class RecipeUtil {
         };
     }
 
+    public static Consumer<Supplier<Block>> solidPillarRecipe(Consumer<FinishedRecipe> recipeConsumer) {
+        return (resultBlockSup) -> {
+
+        };
+    }
+
     public static Consumer<Supplier<Item>> nuggetsToIngot(Consumer<FinishedRecipe> recipeConsumer, ItemLike nuggetILReference) {
         return (resultItemSup) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, resultItemSup.get())
                 .define('N', nuggetILReference)
@@ -373,21 +379,21 @@ public final class RecipeUtil {
         return (resultItemSup) -> nuggetsToIngot(recipeConsumer, RegistryUtil.getNuggetFromIngot(resultItemSup).get()).accept(resultItemSup);
     }
 
-    public static Consumer<Supplier<Item>> oreToIngotSmelting(Consumer<FinishedRecipe> recipeConsumer, ItemLike oreILReference) {
+    public static Consumer<Supplier<Item>> oreToMaterialSmelting(Consumer<FinishedRecipe> recipeConsumer, ItemLike oreILReference) {
         return (resultItemSup) -> SimpleCookingRecipeBuilder.smelting(Ingredient.of(oreILReference), RecipeCategory.MISC, resultItemSup.get(), 0.35F, 200)
                 .group(RegistryUtil.getItemModId(oreILReference))
                 .unlockedBy("has_" + RegistryUtil.getItemName(oreILReference), PredicateUtil.has(oreILReference))
                 .save(recipeConsumer, new ResourceLocation(RegistryUtil.getItemModId(resultItemSup.get()), RegistryUtil.getItemName(resultItemSup.get()) + "_from_smelting_" + RegistryUtil.getItemName(oreILReference)));
     }
 
-    public static Consumer<Supplier<Item>> oreToIngotBlasting(Consumer<FinishedRecipe> recipeConsumer, ItemLike oreILReference) {
+    public static Consumer<Supplier<Item>> oreToMaterialBlasting(Consumer<FinishedRecipe> recipeConsumer, ItemLike oreILReference) {
         return (resultItemSup) -> SimpleCookingRecipeBuilder.blasting(Ingredient.of(oreILReference), RecipeCategory.MISC, resultItemSup.get(), 0.35F, 100)
                 .group(RegistryUtil.getItemModId(oreILReference))
                 .unlockedBy("has_" + RegistryUtil.getItemName(oreILReference), PredicateUtil.has(oreILReference))
                 .save(recipeConsumer, new ResourceLocation(RegistryUtil.getItemModId(resultItemSup.get()), RegistryUtil.getItemName(resultItemSup.get()) + "_from_blasting_" + RegistryUtil.getItemName(oreILReference)));
     }
 
-    public static Consumer<Supplier<Item>> materialBlockToIngot(Consumer<FinishedRecipe> recipeConsumer, ItemLike materialBlockILReference) {
+    public static Consumer<Supplier<Item>> materialBlockToMaterial(Consumer<FinishedRecipe> recipeConsumer, ItemLike materialBlockILReference) {
         return (resultItemSup) -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, resultItemSup.get(), 9)
                 .requires(materialBlockILReference)
                 .unlockedBy("has_" + RegistryUtil.getItemName(materialBlockILReference), PredicateUtil.has(materialBlockILReference))
@@ -395,21 +401,18 @@ public final class RecipeUtil {
     }
 
     public static Consumer<Supplier<Item>> materialBlockToIngot(Consumer<FinishedRecipe> recipeConsumer) {
-        return (resultItemSup) -> materialBlockToIngot(recipeConsumer, RegistryUtil.getMaterialBlockFromIngot(resultItemSup).get()).accept(resultItemSup);
+        return (resultItemSup) -> materialBlockToMaterial(recipeConsumer, RegistryUtil.getMaterialBlockFromIngot(resultItemSup).get()).accept(resultItemSup);
     }
 
     public static Consumer<Supplier<Item>> standardIngot(Consumer<FinishedRecipe> recipeConsumer) {
         return (resultItemSup) -> {
             if (RegistryUtil.getNuggetFromIngot(resultItemSup) != null) nuggetsToIngot(recipeConsumer).accept(resultItemSup);
             if (RegistryUtil.getMaterialBlockFromIngot(resultItemSup) != null) materialBlockToIngot(recipeConsumer).accept(resultItemSup);
-            if (RegistryUtil.getOreFromIngot(resultItemSup) != null) {
-                oreToIngotSmelting(recipeConsumer, RegistryUtil.getOreFromIngot(resultItemSup).get()).accept(resultItemSup);
-                oreToIngotBlasting(recipeConsumer, RegistryUtil.getOreFromIngot(resultItemSup).get()).accept(resultItemSup);
-            }
-            if (RegistryUtil.getDeepslateOreFromIngot(resultItemSup) != null) {
-                oreToIngotSmelting(recipeConsumer, RegistryUtil.getDeepslateOreFromIngot(resultItemSup).get()).accept(resultItemSup);
-                oreToIngotBlasting(recipeConsumer, RegistryUtil.getDeepslateOreFromIngot(resultItemSup).get()).accept(resultItemSup);
-            }
+
+            RegistryUtil.getOresFromIngot(resultItemSup).forEach(curOre -> {
+                oreToMaterialSmelting(recipeConsumer, curOre.get()).accept(resultItemSup);
+                oreToMaterialBlasting(recipeConsumer, curOre.get()).accept(resultItemSup);
+            });
         };
     }
 
@@ -426,7 +429,18 @@ public final class RecipeUtil {
 
     public static Consumer<Supplier<Item>> standardNugget(Consumer<FinishedRecipe> recipeConsumer) {
         return (resultItemSup) -> {
-            if (RegistryUtil.getIngotFromNugget(resultItemSup) != null) ingotToNuggets(recipeConsumer, RegistryUtil.getIngotFromNugget(resultItemSup).get()).accept(resultItemSup);
+            if (RegistryUtil.getIngotFromNugget(resultItemSup) != null) ingotToNuggets(recipeConsumer).accept(resultItemSup);
+        };
+    }
+
+    public static Consumer<Supplier<Item>> standardMineral(Consumer<FinishedRecipe> recipeConsumer) {
+        return (resultItemSup) -> {
+            if (RegistryUtil.getMaterialBlockFrom(resultItemSup, " ") != null) materialBlockToMaterial(recipeConsumer, RegistryUtil.getMaterialBlockFrom(resultItemSup, " ").get()).accept(resultItemSup);
+
+            RegistryUtil.getOresFrom(resultItemSup, "").forEach(curOre -> {
+                oreToMaterialSmelting(recipeConsumer, curOre.get()).accept(resultItemSup);
+                oreToMaterialBlasting(recipeConsumer, curOre.get()).accept(resultItemSup);
+            });
         };
     }
 }

@@ -22,7 +22,7 @@ public class ChaosAwakensClientFabric implements ClientModInitializer {
     public void onInitializeClient() {
         handleBlockRenderLayers();
         registerBlockColorProviders();
-    //    registerItemColorProviders();
+        registerItemColorProviders();
     }
 
     private static void handleBlockRenderLayers() {
@@ -66,9 +66,8 @@ public class ChaosAwakensClientFabric implements ClientModInitializer {
     private static void registerItemColorProviders() {
         BlockPropertyWrapper.getMappedBpws().entrySet().stream().filter(curBwpEntry -> curBwpEntry.getValue().getBlockColorMappingFunc() != null).forEach(curBwpEntry -> { // Need to isolate both methods (in terms of blocks), cuz otherwise block is null within the same method's scope when retrieved from the ColorProviderRegistry
             Supplier<Block> blockSupEntry = curBwpEntry.getKey();
-            BlockColor curMappedBlockColor = ColorProviderRegistry.BLOCK.get(blockSupEntry.get());
 
-            ColorProviderRegistry.ITEM.register((curStack, tintIdx) -> curMappedBlockColor.getColor(blockSupEntry.get().defaultBlockState(), null, null, tintIdx), blockSupEntry.get());
+            ColorProviderRegistry.ITEM.register((curStack, tintIdx) -> ColorProviderRegistry.BLOCK.get(blockSupEntry.get()).getColor(blockSupEntry.get().defaultBlockState(), null, null, tintIdx), blockSupEntry.get());
         });
     }
 }
