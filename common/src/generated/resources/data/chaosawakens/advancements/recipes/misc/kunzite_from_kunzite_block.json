@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_amethyst": {
+    "has_kunzite_block": {
       "conditions": {
         "items": [
           {
             "items": [
-              "chaosawakens:amethyst"
+              "chaosawakens:kunzite_block"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "chaosawakens:amethyst_to_amethyst_block"
+        "recipe": "chaosawakens:kunzite_from_kunzite_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_amethyst",
+      "has_kunzite_block",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "chaosawakens:amethyst_to_amethyst_block"
+      "chaosawakens:kunzite_from_kunzite_block"
     ]
   },
   "sends_telemetry_event": false

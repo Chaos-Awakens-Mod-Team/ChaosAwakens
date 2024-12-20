@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "chaosawakens:amethyst_block"
+          "name": "chaosawakens:kunzite_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "chaosawakens:blocks/amethyst_block"
+  "random_sequence": "chaosawakens:blocks/kunzite_block"
 }

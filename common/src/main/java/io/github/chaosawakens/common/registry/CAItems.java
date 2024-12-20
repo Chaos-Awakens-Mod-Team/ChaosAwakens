@@ -73,7 +73,7 @@ public final class CAItems {
     // Special
 
     // Minerals
-    public static final Supplier<Item> AMETHYST = ItemPropertyWrapper.of(CAItemPropertyWrappers.STANDARD_MINERAL, registerItem("amethyst", () -> new Item(new Item.Properties()))).getParentItem();
+    public static final Supplier<Item> KUNZITE = ItemPropertyWrapper.of(CAItemPropertyWrappers.STANDARD_MINERAL, registerItem("kunzite", () -> new Item(new Item.Properties()))).getParentItem();
     public static final Supplier<Item> RUBY = ItemPropertyWrapper.of(CAItemPropertyWrappers.STANDARD_MINERAL, registerItem("ruby", () -> new Item(new Item.Properties().fireResistant()))).getParentItem();
 
     public static final Supplier<Item> TITANIUM_NUGGET = ItemPropertyWrapper.of(CAItemPropertyWrappers.STANDARD_NUGGET, registerItem("titanium_nugget", () -> new Item(new Item.Properties().fireResistant()))).getParentItem();

@@ -1,8 +1,7 @@
-// 1.20.1	2024-12-18T23:31:59.8128779	Chaos Awakens: Block & Block Item Models
+// 1.20.1	2024-12-20T20:01:13.8769518	Chaos Awakens: Block & Block Item Models
 545cc7a8d51438ddca6429e9262d81c625d1162d assets/chaosawakens/models/block/acacia_gate_block.json
 8d130b2889cdfedadd99deba33ebbc7ef31085f7 assets/chaosawakens/models/block/acacia_leaf_carpet.json
 f700a074b4699cc3621d597ffe655047e0bf4a44 assets/chaosawakens/models/block/acacia_leaf_carpet_inventory.json
-6dbe55d83bd6c47dd8b1331a4eb2092dbe59144a assets/chaosawakens/models/block/amethyst_block.json
 32bed3330bf18b5cf782cdc679df40a9845fcaad assets/chaosawakens/models/block/apple_button.json
 0b3671b602abeed4f6588f981e2e792c7403ad64 assets/chaosawakens/models/block/apple_button_inventory.json
 3238b44f02d0639abb168fe9b423a2264f6cc0c4 assets/chaosawakens/models/block/apple_button_pressed.json
@@ -194,6 +193,7 @@ fa93bb108301158e0af3678e537b9efe4200db97 assets/chaosawakens/models/block/ginkgo
 c743128628aa86f7f1492e227f26787c19300c18 assets/chaosawakens/models/block/ginkgo_trapdoor_open.json
 6b23d1677315212d32c4767f84c915a26c9c6d10 assets/chaosawakens/models/block/ginkgo_trapdoor_top.json
 fb91ae47d3b6f16d1d399b9a51ba03458f62865e assets/chaosawakens/models/block/ginkgo_wood.json
+a34b04a05db26bb1f30e122a29d4ed555e4a70ba assets/chaosawakens/models/block/kunzite_block.json
 7f120d6d4cd6746a5838de47eceeb45ad6b27315 assets/chaosawakens/models/block/mangrove_gate_block.json
 6196acf2bbfcfb8eb169a143486163e17d981fb6 assets/chaosawakens/models/block/mangrove_leaf_carpet.json
 3d780695e743f686fb42b138812818da53a77aec assets/chaosawakens/models/block/mangrove_leaf_carpet_inventory.json
@@ -345,7 +345,6 @@ a80df4bcbcb7c766c97d930e1502957e266391ff assets/chaosawakens/models/block/titani
 544686ad9bf5d9cad899763ce758a22877d73212 assets/chaosawakens/models/block/warped_gate_block.json
 4398c0094d13f927d4feb21a22738b79a358fb12 assets/chaosawakens/models/item/acacia_gate_block.json
 a7995f606f1373adabc89c2f87b59b57f61e925e assets/chaosawakens/models/item/acacia_leaf_carpet.json
-4005f49801866764e852b3f7227765960355f813 assets/chaosawakens/models/item/amethyst_block.json
 acb0081869fc8c4558c2baf9cfad0a1781e30ead assets/chaosawakens/models/item/apple_button.json
 405b798b72eed17f54b698f08ed155aa48be9b26 assets/chaosawakens/models/item/apple_door.json
 dc166fafea3c9233d943fb927936a0cb0e45106d assets/chaosawakens/models/item/apple_fence.json
@@ -423,6 +422,7 @@ e15ddddeb6c938155f3652b80841b040bcdb04c4 assets/chaosawakens/models/item/ginkgo_
 acf6f958eead32bfe3e34412c2fea4d7ff8e7b7f assets/chaosawakens/models/item/ginkgo_stairs.json
 c71c34a8c05091ee8a28d56c6a16989f6a16cca8 assets/chaosawakens/models/item/ginkgo_trapdoor.json
 c8836fc216fd8060666664ba73da9b0cea154366 assets/chaosawakens/models/item/ginkgo_wood.json
+44e984125e9493d8517024af9fb3c58ae339f401 assets/chaosawakens/models/item/kunzite_block.json
 0a9ceab5b4afa0a2f22fe774e3ed90d515077035 assets/chaosawakens/models/item/mangrove_gate_block.json
 998b669a6851c9ee7c10043b2238147d40b289ba assets/chaosawakens/models/item/mangrove_leaf_carpet.json
 67c34f59cb909eb9537f0f09ed9769e55715ebc0 assets/chaosawakens/models/item/mesozoic_button.json

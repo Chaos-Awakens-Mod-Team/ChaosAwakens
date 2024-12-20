@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "M": {
-      "item": "chaosawakens:amethyst"
+      "item": "chaosawakens:kunzite"
     }
   },
   "pattern": [
@@ -12,7 +12,7 @@
     "MMM"
   ],
   "result": {
-    "item": "chaosawakens:amethyst_block"
+    "item": "chaosawakens:kunzite_block"
   },
   "show_notification": true
 }

@@ -1,7 +1,6 @@
-// 1.20.1	2024-12-18T23:31:59.7828808	Chaos Awakens: Block States
+// 1.20.1	2024-12-20T20:01:13.8481164	Chaos Awakens: Block States
 5c81494d06a5589da8afe9c24272dddb04a88d14 assets/chaosawakens/blockstates/acacia_gate_block.json
 807de6368ec3d2d151f9683203f9b05493f6600e assets/chaosawakens/blockstates/acacia_leaf_carpet.json
-ad233823cd659fa4a9ec5a5f4f4404dbfb34180a assets/chaosawakens/blockstates/amethyst_block.json
 df2f1e8fa81c1f360358a98fa2fc7dc23ca6f0e3 assets/chaosawakens/blockstates/apple_button.json
 c93a856954b2d70855cccf32b8282351ecd1fd66 assets/chaosawakens/blockstates/apple_door.json
 94d85c83ab2daa5f0032f1b41e9627fe41fe677d assets/chaosawakens/blockstates/apple_fence.json
@@ -79,6 +78,7 @@ a3802b96c0c8f0467590408d9ceb482eca163453 assets/chaosawakens/blockstates/ginkgo_
 c1e2898753224e46f846b9e63e8d49553b46696b assets/chaosawakens/blockstates/ginkgo_stairs.json
 abf3b2dd072a4318023d3d174a2abfa3b64fcc36 assets/chaosawakens/blockstates/ginkgo_trapdoor.json
 76482c8b3077b9f5dba8ef211d7520a3128ed8bd assets/chaosawakens/blockstates/ginkgo_wood.json
+4545e1a67cc5393bd46fec24b4788188e373f777 assets/chaosawakens/blockstates/kunzite_block.json
 e1084a344e14b957b2fcd20964167cf0fbf3db8f assets/chaosawakens/blockstates/mangrove_gate_block.json
 d5df3def2ffed521dfb02641a2717fa9a5f174fb assets/chaosawakens/blockstates/mangrove_leaf_carpet.json
 98c3aa8ccd18f4946392b9c129489d09f9259b2f assets/chaosawakens/blockstates/mesozoic_button.json

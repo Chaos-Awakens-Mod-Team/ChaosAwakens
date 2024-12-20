@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "chaosawakens:block/mineral/amethyst_block"
+    "all": "chaosawakens:block/mineral/kunzite_block"
   }
 }

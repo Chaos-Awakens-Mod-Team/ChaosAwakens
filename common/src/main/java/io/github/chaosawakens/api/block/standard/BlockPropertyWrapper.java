@@ -117,20 +117,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         if (parentTemplateWrapper != null) {
             BlockPropertyWrapper newTemplateWrapper = new BlockPropertyWrapper();
 
-            newTemplateWrapper.builder()
-                    .withCustomName(parentTemplateWrapper.builder.manuallyLocalizedBlockName)
-                    .withCustomSeparatorWords(parentTemplateWrapper.builder.definedSeparatorWords)
-                    .withSetTags(parentTemplateWrapper.builder.parentTags)
-                    .withLootTable(parentTemplateWrapper.builder.blockLootTableBuilder)
-                    .withSetCustomModelDefinitions(parentTemplateWrapper.builder.blockModelDefinitions)
-                    .withCustomModelDefinitions(parentTemplateWrapper.builder.bmdMappingFunc)
-                    .withBlockStateDefinition(parentTemplateWrapper.builder.blockStateDefinition)
-                    .withRecipe(parentTemplateWrapper.builder.recipeBuilderFunction)
-                    .withSetParentCreativeModeTabs(List.copyOf(parentTemplateWrapper.builder.parentTabs))
-                    .withBlockColor(parentTemplateWrapper.builder.blockColorMappingFunc)
-                    .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied BPW afterward
-
-            return newTemplateWrapper;
+            return copyProperties(parentTemplateWrapper, newTemplateWrapper);
         } else return createTemplate();
     }
 
@@ -153,20 +140,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         if (parentWrapper != null) {
             BlockPropertyWrapper newWrapper = new BlockPropertyWrapper(newBlock);
 
-            newWrapper.builder()
-                    .withCustomName(parentWrapper.builder.manuallyLocalizedBlockName)
-                    .withCustomSeparatorWords(parentWrapper.builder.definedSeparatorWords)
-                    .withSetTags(List.copyOf(parentWrapper.builder.parentTags))
-                    .withLootTable(parentWrapper.builder.blockLootTableBuilder)
-                    .withSetCustomModelDefinitions(List.copyOf(parentWrapper.builder.blockModelDefinitions))
-                    .withCustomModelDefinitions(parentWrapper.builder.bmdMappingFunc)
-                    .withBlockStateDefinition(parentWrapper.builder.blockStateDefinition)
-                    .withRecipe(parentWrapper.builder.recipeBuilderFunction)
-                    .withSetParentCreativeModeTabs(List.copyOf(parentWrapper.builder.parentTabs))
-                    .withBlockColor(parentWrapper.builder.blockColorMappingFunc)
-                    .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied BPW afterward
-
-            return newWrapper;
+            return copyProperties(parentWrapper, newWrapper);
         } else return create(newBlock);
     }
 
@@ -190,20 +164,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
             BlockPropertyWrapper originalWrapper = MAPPED_BPWS.get(parentBlock);
             BlockPropertyWrapper newWrapper = new BlockPropertyWrapper(newBlock);
 
-            newWrapper.builder()
-                    .withCustomName(originalWrapper.builder.manuallyLocalizedBlockName)
-                    .withCustomSeparatorWords(originalWrapper.builder.definedSeparatorWords)
-                    .withSetTags(List.copyOf(originalWrapper.builder.parentTags))
-                    .withLootTable(originalWrapper.builder.blockLootTableBuilder)
-                    .withSetCustomModelDefinitions(List.copyOf(originalWrapper.builder.blockModelDefinitions))
-                    .withCustomModelDefinitions(originalWrapper.builder.bmdMappingFunc)
-                    .withBlockStateDefinition(originalWrapper.builder.blockStateDefinition)
-                    .withRecipe(originalWrapper.builder.recipeBuilderFunction)
-                    .withSetParentCreativeModeTabs(List.copyOf(originalWrapper.builder.parentTabs))
-                    .withBlockColor(originalWrapper.builder.blockColorMappingFunc)
-                    .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied BPW afterward
-
-            return newWrapper;
+            return copyProperties(originalWrapper, newWrapper);
         } else return create(newBlock);
     }
 
@@ -223,6 +184,29 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
      */
     public static BlockPropertyWrapper of(String newBlockRegName, Supplier<Block> parentBlock) {
         return of(parentBlock, CABlocks.registerExternalBlock(newBlockRegName, () -> new Block(BlockBehaviour.Properties.copy(parentBlock.get()))));
+    }
+
+    /**
+     * Shortcut utility method centered around copying builder properties over from one BPW instance to another.
+     *
+     * @param from The BPW instance to copy properties from.
+     * @param to The BPW instance to copy properties to.
+     *
+     * @return The provided BPW instance with copied properties.
+     */
+    public static BlockPropertyWrapper copyProperties(BlockPropertyWrapper from, BlockPropertyWrapper to) {
+        return to.builder()
+                .withCustomName(from.builder.manuallyLocalizedBlockName)
+                .withCustomSeparatorWords(from.builder.definedSeparatorWords)
+                .withSetTags(List.copyOf(from.builder.parentTags))
+                .withLootTable(from.builder.blockLootTableBuilder)
+                .withSetCustomModelDefinitions(List.copyOf(from.builder.blockModelDefinitions))
+                .withCustomModelDefinitions(from.builder.bmdMappingFunc)
+                .withBlockStateDefinition(from.builder.blockStateDefinition)
+                .withRecipe(from.builder.recipeBuilderFunction)
+                .withSetParentCreativeModeTabs(List.copyOf(from.builder.parentTabs))
+                .withBlockColor(from.builder.blockColorMappingFunc)
+                .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied BPW afterward
     }
 
     /**

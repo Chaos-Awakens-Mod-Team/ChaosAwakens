@@ -107,17 +107,7 @@ public class ItemPropertyWrapper {
         if (parentTemplateWrapper != null) {
             ItemPropertyWrapper newTemplateWrapper = new ItemPropertyWrapper();
 
-            newTemplateWrapper.builder()
-                    .withCustomName(parentTemplateWrapper.builder.manuallyLocalizedItemName)
-                    .withCustomSeparatorWords(parentTemplateWrapper.builder.definedSeparatorWords)
-                    .withSetTags(List.copyOf(parentTemplateWrapper.builder.parentTags))
-                    .withSetCustomModelDefinitions(List.copyOf(parentTemplateWrapper.builder.itemModelDefinitions))
-                    .withCustomModelDefinitions(parentTemplateWrapper.builder.imdMappingFunc)
-                    .withRecipe(parentTemplateWrapper.builder.recipeBuilderFunction)
-                    .withSetParentCreativeModeTabs(List.copyOf(parentTemplateWrapper.builder.parentTabs))
-                    .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied IPW afterward
-
-            return newTemplateWrapper;
+            return copyProperties(parentTemplateWrapper, newTemplateWrapper);
         } else return createTemplate();
     }
 
@@ -140,17 +130,7 @@ public class ItemPropertyWrapper {
         if (parentWrapper != null) {
             ItemPropertyWrapper newWrapper = new ItemPropertyWrapper(newItem);
 
-            newWrapper.builder()
-                    .withCustomName(parentWrapper.builder.manuallyLocalizedItemName)
-                    .withCustomSeparatorWords(parentWrapper.builder.definedSeparatorWords)
-                    .withSetTags(List.copyOf(parentWrapper.builder.parentTags))
-                    .withSetCustomModelDefinitions(List.copyOf(parentWrapper.builder.itemModelDefinitions))
-                    .withCustomModelDefinitions(parentWrapper.builder.imdMappingFunc)
-                    .withRecipe(parentWrapper.builder.recipeBuilderFunction)
-                    .withSetParentCreativeModeTabs(List.copyOf(parentWrapper.builder.parentTabs))
-                    .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied IPW afterward
-
-            return newWrapper;
+            return copyProperties(parentWrapper, newWrapper);
         } else return create(newItem);
     }
 
@@ -174,17 +154,7 @@ public class ItemPropertyWrapper {
             ItemPropertyWrapper originalWrapper = MAPPED_IPWS.get(parentItem);
             ItemPropertyWrapper newWrapper = new ItemPropertyWrapper(newItem);
 
-            newWrapper.builder()
-                    .withCustomName(originalWrapper.builder.manuallyLocalizedItemName)
-                    .withCustomSeparatorWords(originalWrapper.builder.definedSeparatorWords)
-                    .withSetTags(List.copyOf(originalWrapper.builder.parentTags))
-                    .withSetCustomModelDefinitions(List.copyOf(originalWrapper.builder.itemModelDefinitions))
-                    .withCustomModelDefinitions(originalWrapper.builder.imdMappingFunc)
-                    .withRecipe(originalWrapper.builder.recipeBuilderFunction)
-                    .withSetParentCreativeModeTabs(List.copyOf(originalWrapper.builder.parentTabs))
-                    .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied IPW afterward
-
-            return newWrapper;
+            return copyProperties(originalWrapper, newWrapper);
         } else return create(newItem);
     }
 
@@ -215,6 +185,26 @@ public class ItemPropertyWrapper {
         if (parentAsItem.requiredFeatures() != FeatureFlags.VANILLA_SET) copiedProperties.requiredFeatures = parentAsItem.requiredFeatures(); // Direct setting cuz the builder method is about as useful as FeatureFlags themselves in vanilla MC
 
         return of(parentItem, CAItems.registerExternalItem(newItemRegName, () -> new Item(copiedProperties)));
+    }
+
+    /**
+     * Shortcut utility method centered around copying builder properties over from one IPW instance to another.
+     *
+     * @param from The IPW instance to copy properties from.
+     * @param to The IPW instance to copy properties to.
+     *
+     * @return The provided IPW instance with copied properties.
+     */
+    public static ItemPropertyWrapper copyProperties(ItemPropertyWrapper from, ItemPropertyWrapper to) {
+        return to.builder()
+                .withCustomName(from.builder.manuallyLocalizedItemName)
+                .withCustomSeparatorWords(from.builder.definedSeparatorWords)
+                .withSetTags(List.copyOf(from.builder.parentTags))
+                .withSetCustomModelDefinitions(List.copyOf(from.builder.itemModelDefinitions))
+                .withCustomModelDefinitions(from.builder.imdMappingFunc)
+                .withRecipe(from.builder.recipeBuilderFunction)
+                .withSetParentCreativeModeTabs(List.copyOf(from.builder.parentTabs))
+                .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied IPW afterward
     }
 
     /**

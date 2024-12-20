@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "chaosawakens:amethyst_block"
+      "item": "chaosawakens:kunzite_block"
     }
   ],
   "result": {
     "count": 9,
-    "item": "chaosawakens:amethyst"
+    "item": "chaosawakens:kunzite"
   }
 }
