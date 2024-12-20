@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-20T20:01:13.8481164	Chaos Awakens: Block States
+// 1.20.1	2024-12-20T14:54:59.7117379	Chaos Awakens: Block States
 5c81494d06a5589da8afe9c24272dddb04a88d14 assets/chaosawakens/blockstates/acacia_gate_block.json
 807de6368ec3d2d151f9683203f9b05493f6600e assets/chaosawakens/blockstates/acacia_leaf_carpet.json
 df2f1e8fa81c1f360358a98fa2fc7dc23ca6f0e3 assets/chaosawakens/blockstates/apple_button.json
@@ -95,6 +95,11 @@ fd189be74304ef28bafb8f0fcc646f12a76c1f0e assets/chaosawakens/blockstates/mesozoi
 5a93492a73d4f93ef6d1f6034c2c141349b3499d assets/chaosawakens/blockstates/mesozoic_stairs.json
 05342d9019831fb59c54d25f21a5a85efc4ba725 assets/chaosawakens/blockstates/mesozoic_trapdoor.json
 76ec400c956ced48cd7f1bc5801d55b13290e2eb assets/chaosawakens/blockstates/mesozoic_wood.json
+6314ab1a7f77626cbd5d9b992e13c9974097d080 assets/chaosawakens/blockstates/mining_fence.json
+5362ceb7960c6678b7406a81d0e356ae6e4d3e82 assets/chaosawakens/blockstates/mining_lamp.json
+0a8733195db7a0b8248f59af5c18f2a4f4b3a41b assets/chaosawakens/blockstates/mining_planks.json
+950496ef70f3aba7fef59a15e88123405005dd98 assets/chaosawakens/blockstates/mining_slab.json
+d49d6bfeba6c90e1f7d0eaf80993c102a18d5b61 assets/chaosawakens/blockstates/mining_wood.json
 6a3645ed78461d21344a48f43f500b3bd0579079 assets/chaosawakens/blockstates/oak_gate_block.json
 332671450d109cfcac32dd1e4de60f490ba7cd47 assets/chaosawakens/blockstates/oak_leaf_carpet.json
 ecc2edd5f3ca059e9ca1a44792c6ccff9269eaa5 assets/chaosawakens/blockstates/peach_button.json

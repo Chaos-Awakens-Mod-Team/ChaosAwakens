@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-20T20:01:13.8769518	Chaos Awakens: Block & Block Item Models
+// 1.20.1	2024-12-20T14:54:59.7224974	Chaos Awakens: Block & Block Item Models
 545cc7a8d51438ddca6429e9262d81c625d1162d assets/chaosawakens/models/block/acacia_gate_block.json
 8d130b2889cdfedadd99deba33ebbc7ef31085f7 assets/chaosawakens/models/block/acacia_leaf_carpet.json
 f700a074b4699cc3621d597ffe655047e0bf4a44 assets/chaosawakens/models/block/acacia_leaf_carpet_inventory.json
@@ -233,6 +233,14 @@ d80fd36132fc89f0fe04fc4bbe28af5057ae5da4 assets/chaosawakens/models/block/mesozo
 1818d4cf26f16d168f0ceadadd3fb42f51253380 assets/chaosawakens/models/block/mesozoic_trapdoor_open.json
 814eeb50cc78f257ce243b274b4c0bc5acc4355c assets/chaosawakens/models/block/mesozoic_trapdoor_top.json
 1935935ed1d11185c0ba1932ede5efb27a274828 assets/chaosawakens/models/block/mesozoic_wood.json
+972f990e612fa8ddfc92761d60714649649de57a assets/chaosawakens/models/block/mining_fence_inventory.json
+d9695f2598e3b7f254c48b39fbb6d2616d998866 assets/chaosawakens/models/block/mining_fence_post.json
+f7fb2a3ecf35afaacf750ef7a8c4d8d347f840f4 assets/chaosawakens/models/block/mining_fence_side.json
+90059cc65b714c546af7c09499eeb7442b061f94 assets/chaosawakens/models/block/mining_lamp.json
+b7251ba0fa87fe33a3dbd498fa8ed4bb156ec980 assets/chaosawakens/models/block/mining_planks.json
+ec02fc09e04144812ff2fbcc2e12858f6e0c182b assets/chaosawakens/models/block/mining_slab.json
+b22baf75373ce7bc7071d10cd674e8e4bec68413 assets/chaosawakens/models/block/mining_slab_top.json
+0f1e0240b811ebfd7da7ca91f9b54a6f335e0cb1 assets/chaosawakens/models/block/mining_wood.json
 9f60fbbd6c4af5295efb425a55e0283d423f1ae9 assets/chaosawakens/models/block/oak_gate_block.json
 f94b44c8fdd602d28e8db578c1d9fd7d2d92ba9b assets/chaosawakens/models/block/oak_leaf_carpet.json
 ef536d5e59a70428a928c8fef4d3f5012cc0dd16 assets/chaosawakens/models/block/oak_leaf_carpet_inventory.json
@@ -439,6 +447,11 @@ b32aa95fc3e76d1268a48c9ff46a6d50131b454a assets/chaosawakens/models/item/mesozoi
 651d535fac0202583f59be8744ab3e4e41e25c4a assets/chaosawakens/models/item/mesozoic_stairs.json
 493441b80730a8ec0f6212e8b3edbff9301f9a72 assets/chaosawakens/models/item/mesozoic_trapdoor.json
 ba369453012cab9f5340dfa3e725274ef03dedc4 assets/chaosawakens/models/item/mesozoic_wood.json
+a978a06d06368f7782091630e6561240a9e3aa1a assets/chaosawakens/models/item/mining_fence.json
+2d6892cbb2bb169bb736329df734d425cf4fb65b assets/chaosawakens/models/item/mining_lamp.json
+9e21bf6971f6e2c46b84587b36e54e860bff27f8 assets/chaosawakens/models/item/mining_planks.json
+e9d0534345951560f4beb7aef2b95d98f0d2b275 assets/chaosawakens/models/item/mining_slab.json
+77178616346fd55216e41bd675ed1ff4dcd66ac6 assets/chaosawakens/models/item/mining_wood.json
 7117af051668c5979a6c9b5144ddbd3805430ba0 assets/chaosawakens/models/item/oak_gate_block.json
 7c2f98b377a707b7f6a83e87289f3e6d93d60e11 assets/chaosawakens/models/item/oak_leaf_carpet.json
 98a8e87022ecbc8ac7e135bf05ef2757d60ed636 assets/chaosawakens/models/item/peach_button.json

@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-20T20:01:13.8642738	Chaos Awakens: Block Tags
+// 1.20.1	2024-12-20T14:54:59.716674	Chaos Awakens: Block Tags
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_crystal.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_mining.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_village.json
@@ -33,6 +33,7 @@ dd43157ac0c3e9516448859d4d7acebd3ac3cd81 data/chaosawakens/tags/blocks/fossils/s
 b41349a4b011bedbfcf9cc91ce48ebbfda560d20 data/chaosawakens/tags/blocks/fossils/stone.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/fossils/stone/chaosawakens.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/fossils/stone/vanilla.json
+2b6b60c7eb14fd8e52d66fd3c012d58e18f0b04d data/chaosawakens/tags/blocks/lamp/mining_lamp.json
 ce9339126a705d600ed3540de0f1dae1c9603889 data/chaosawakens/tags/blocks/miners_dream_mineable.json
 49e02bc82aa3025d443a2c662ae386a2fef88711 data/chaosawakens/tags/blocks/robo_immune.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/robo_immune/jeffery.json
@@ -49,19 +50,20 @@ dfd1a4679b33bcc613029d46b05f5ea2e882c5d7 data/chaosawakens/tags/blocks/wood/logs
 5faaf02bb6450173740f77436c203295e29cabce data/chaosawakens/tags/blocks/wood/logs/mesozoic_logs.json
 3e2eba549ca4846ca5c4ebc327d416bd75d3deef data/chaosawakens/tags/blocks/wood/logs/peach_logs.json
 37657981360327a98efcad52a76b8fa67b359794 data/chaosawakens/tags/blocks/wood/logs/skywood_logs.json
+efbd9f787ad46561e3ee19ae46636e49c8d3b407 data/chaosawakens/tags/blocks/wood/mining_wood.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/minecraft/tags/blocks/base_stone_nether.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/minecraft/tags/blocks/base_stone_overworld.json
 0657cc92f0d5b89ccce850814f03875040484c05 data/minecraft/tags/blocks/fence_gates.json
 539c63c2e9813b8dde94400c01cf7869f0822dad data/minecraft/tags/blocks/leaves.json
 2c3a4af37be58291aadbee3781c0fd38c6aa1ded data/minecraft/tags/blocks/logs_that_burn.json
-c3b00ae107dbd0f5689ebd1f8622bca88d077106 data/minecraft/tags/blocks/mineable/axe.json
+c9d7c06bf956a3674a205f16879b54788b6eab7c data/minecraft/tags/blocks/mineable/axe.json
 bc7f505a4cddcb6c51b81407770cd8eda24960f8 data/minecraft/tags/blocks/mineable/pickaxe.json
 bc7f505a4cddcb6c51b81407770cd8eda24960f8 data/minecraft/tags/blocks/needs_diamond_tool.json
-7030e8eab3b9a7e1f1103635de23ae822665395f data/minecraft/tags/blocks/planks.json
+5c1e7c4f5a2e2ce5b0eaed151ea4f12828aa6956 data/minecraft/tags/blocks/planks.json
 f15ff21a8eb277c8ce6b8fce2782d5bfe3d4f33c data/minecraft/tags/blocks/wooden_buttons.json
 c73f48340acd02386faa456c2f390fad2c17be3e data/minecraft/tags/blocks/wooden_doors.json
-fdd1924b92e374c670ff4cbedb9018cc5f8627a1 data/minecraft/tags/blocks/wooden_fences.json
+64d999679ecbb9d387232f6e81659da6eee8c205 data/minecraft/tags/blocks/wooden_fences.json
 9da013fc4fb61c27303b6ae251266df6ec0dae09 data/minecraft/tags/blocks/wooden_pressure_plates.json
-e9d45ba0b1f5a16b867fa1c22964b94df899eae6 data/minecraft/tags/blocks/wooden_slabs.json
+a86f33631c6e9495272962e342ff7c1f535e3b83 data/minecraft/tags/blocks/wooden_slabs.json
 4636e61613ff9e0a3aa052326951fef28f796813 data/minecraft/tags/blocks/wooden_stairs.json
 ce5f64bdfa1cc7e68eb9aa7994130f054cd10ceb data/minecraft/tags/blocks/wooden_trapdoors.json

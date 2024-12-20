@@ -1,4 +1,4 @@
-// 1.20.1	2024-09-09T17:34:25.4189811	Chaos Awakens: Item Tags
+// 1.20.1	2024-12-20T14:54:59.7210787	Chaos Awakens: Item Tags
 16615fd532d0b8225819af38628d9ef1b3e66f4f data/chaosawakens/tags/items/crystalwood_logs.json
 44f32101995f328de1f8f08f88eab68e3bebf523 data/chaosawakens/tags/items/fossils.json
 957eb1f35fcdfc4e4be448a395edc634bd0b5b96 data/chaosawakens/tags/items/fossils/blackstone.json
@@ -49,12 +49,13 @@ dfd1a4679b33bcc613029d46b05f5ea2e882c5d7 data/chaosawakens/tags/items/wood/logs/
 5faaf02bb6450173740f77436c203295e29cabce data/chaosawakens/tags/items/wood/logs/mesozoic_logs.json
 3e2eba549ca4846ca5c4ebc327d416bd75d3deef data/chaosawakens/tags/items/wood/logs/peach_logs.json
 37657981360327a98efcad52a76b8fa67b359794 data/chaosawakens/tags/items/wood/logs/skywood_logs.json
+1b96866268f0c070fa25ab11a972a74830b46692 data/chaosawakens/tags/items/wood/mining_wood.json
 0657cc92f0d5b89ccce850814f03875040484c05 data/minecraft/tags/items/fence_gates.json
 539c63c2e9813b8dde94400c01cf7869f0822dad data/minecraft/tags/items/leaves.json
 2c3a4af37be58291aadbee3781c0fd38c6aa1ded data/minecraft/tags/items/logs_that_burn.json
-7030e8eab3b9a7e1f1103635de23ae822665395f data/minecraft/tags/items/planks.json
+5c1e7c4f5a2e2ce5b0eaed151ea4f12828aa6956 data/minecraft/tags/items/planks.json
 c73f48340acd02386faa456c2f390fad2c17be3e data/minecraft/tags/items/wooden_doors.json
-fdd1924b92e374c670ff4cbedb9018cc5f8627a1 data/minecraft/tags/items/wooden_fences.json
-e9d45ba0b1f5a16b867fa1c22964b94df899eae6 data/minecraft/tags/items/wooden_slabs.json
+64d999679ecbb9d387232f6e81659da6eee8c205 data/minecraft/tags/items/wooden_fences.json
+a86f33631c6e9495272962e342ff7c1f535e3b83 data/minecraft/tags/items/wooden_slabs.json
 4636e61613ff9e0a3aa052326951fef28f796813 data/minecraft/tags/items/wooden_stairs.json
 ce5f64bdfa1cc7e68eb9aa7994130f054cd10ceb data/minecraft/tags/items/wooden_trapdoors.json

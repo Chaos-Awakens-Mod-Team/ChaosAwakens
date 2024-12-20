@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "chaosawakens:block/mining_slab"
+    },
+    "type=double": {
+      "model": "chaosawakens:block/mining_planks"
+    },
+    "type=top": {
+      "model": "chaosawakens:block/mining_slab_top"
+    }
+  }
+}

@@ -10,6 +10,7 @@ public final class CAWoodTypes {
     public static final WoodType DUPLICATOR = registerWoodType(new WoodType("duplicator", CABlockSetTypes.DUPLICATOR));
     public static final WoodType GINKGO = registerWoodType(new WoodType("ginkgo", CABlockSetTypes.GINKGO));
     public static final WoodType MESOZOIC = registerWoodType(new WoodType("mesozoic", CABlockSetTypes.MESOZOIC));
+    public static final WoodType MINING = registerWoodType(new WoodType("mining", CABlockSetTypes.MINING));
     public static final WoodType PEACH = registerWoodType(new WoodType("peach", CABlockSetTypes.PEACH));
     public static final WoodType SKYWOOD = registerWoodType(new WoodType("skywood", CABlockSetTypes.SKYWOOD));
 

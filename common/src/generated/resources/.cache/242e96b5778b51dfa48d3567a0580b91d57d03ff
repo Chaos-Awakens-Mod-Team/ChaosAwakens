@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-20T20:01:13.8738842	Chaos Awakens: Item Models
+// 1.20.1	2024-12-20T14:54:59.7210787	Chaos Awakens: Item Models
 116ba16f2c38441701e46ddc6529d51385ff1239 assets/chaosawakens/models/item/blt_sandwich.json
 94e1f2c5fc83cb085eee91919be466e6eedc2310 assets/chaosawakens/models/item/blue_fish.json
 75c61853bc548eb17e6f58617c597352ffde52a8 assets/chaosawakens/models/item/butter.json
@@ -23,6 +23,7 @@ f8109115fa17d21aae45864b42b5ba99f3618886 assets/chaosawakens/models/item/gray_fi
 3bf3b88dbf990cdbe9fc796cd470ccebf6bfe5f9 assets/chaosawakens/models/item/kunzite.json
 d203efbf30a4312ea3ffef5f112dc2eda8eec750 assets/chaosawakens/models/item/lava_eel.json
 589ef6125c20d7b4684fbec29b51d27c18dc50a1 assets/chaosawakens/models/item/lettuce.json
+4ff3c06686eba116d5871d842729528450eced22 assets/chaosawakens/models/item/miners_dream.json
 bbf3cf8b4d1b55110a456067dac76a36bd4de790 assets/chaosawakens/models/item/peach.json
 b1ee38661403055cae9b0b2d0c9103a4301d767b assets/chaosawakens/models/item/pink_fish.json
 e640a87e5f62b73a7dbc7c77a3a527d7ed04b046 assets/chaosawakens/models/item/quinoa.json

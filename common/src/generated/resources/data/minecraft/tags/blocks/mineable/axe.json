@@ -107,6 +107,9 @@
     "chaosawakens:skywood_door",
     "chaosawakens:skywood_trapdoor",
     "chaosawakens:skywood_pressure_plate",
-    "chaosawakens:skywood_button"
+    "chaosawakens:skywood_button",
+    "chaosawakens:mining_planks",
+    "chaosawakens:mining_slab",
+    "chaosawakens:mining_fence"
   ]
 }

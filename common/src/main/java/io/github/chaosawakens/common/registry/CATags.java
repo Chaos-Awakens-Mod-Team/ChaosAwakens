@@ -23,6 +23,12 @@ public class CATags {
         public static final TagKey<Block> MINERS_DREAM_MINEABLE = createWrappedBlockTag("miners_dream_mineable")
                 .withTagEntries(ObjectArrayList.of(BASE_STONE_CRYSTAL, BASE_STONE_MINING, BASE_STONE_VILLAGE, BlockTags.BASE_STONE_OVERWORLD, BlockTags.BASE_STONE_NETHER))
                 .getParentTag();
+        public static final TagKey<Block> MINING_WOOD = createWrappedBlockTag("wood/mining_wood")
+                .withEntries(ObjectArrayList.of(CABlocks.MINING_WOOD, CABlocks.MINING_PLANKS, CABlocks.MINING_FENCE, CABlocks.MINING_SLAB))
+                .getParentTag();
+        public static final TagKey<Block> MINING_LAMP = createWrappedBlockTag("lamp/mining_lamp")
+                .withEntry(CABlocks.MINING_LAMP)
+                .getParentTag();
 
         public static final TagKey<Block> FARMABLE = createBlockTag("farmable");
 
@@ -300,6 +306,12 @@ public class CATags {
         public static final TagKey<Item> SPAWNER_SPAWN_EGGS = createItemTag("spawner_spawn_eggs");
         
         public static final TagKey<Item> CRYSTAL_FURNACE_FUEL = createItemTag("crystal_furnace_fuel");
+
+        public static final TagKey<Item> MINING_WOOD = createWrappedItemTag("wood/mining_wood")
+                .withEntries(RegistryUtil.getBlocksAsItemSups(CABlocks.MINING_WOOD, CABlocks.MINING_PLANKS, CABlocks.MINING_SLAB, CABlocks.MINING_FENCE))
+                .getParentTag();
+        public static final TagKey<Item> MINERS_DREAM = createItemTag("miners_dream");
+        public static final TagKey<Item> MINING_LAMP = createItemTag("mining_lamp");
 
         private static TagWrapper<Item, TagKey<Item>> createWrappedItemTag(String name) {
             return TagWrapper.create(createItemTag(name));

@@ -270,6 +270,12 @@ public final class CABlocks {
 
     // Deepslate Ores
 
+    // Lamp & Moldy Blocks
+    public static final Supplier<Block> MINING_LAMP = BlockPropertyWrapper.of(CABlockPropertyWrappers.BASIC_BLOCK, registerBlock("mining_lamp", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.SAND).instrument(NoteBlockInstrument.PLING).strength(0.3F).sound(SoundType.GLASS).lightLevel((curState) -> 15)))).getParentBlock();
+    public static final Supplier<Block> MINING_WOOD = BlockPropertyWrapper.of(CABlockPropertyWrappers.BASIC_BLOCK, registerBlock("mining_wood", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)))).getParentBlock();
+    public static final Supplier<Block> MINING_PLANKS = BlockPropertyWrapper.of(CABlockPropertyWrappers.WOODEN_PLANKS, registerBlock("mining_planks", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD)))).getParentBlock();
+    public static final Supplier<Block> MINING_SLAB = BlockPropertyWrapper.of(CABlockPropertyWrappers.WOODEN_SLAB, registerBlock("mining_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(MINING_PLANKS.get())))).getParentBlock();
+    public static final Supplier<Block> MINING_FENCE = BlockPropertyWrapper.of(CABlockPropertyWrappers.WOODEN_FENCE, registerBlock("mining_fence", () -> new FenceBlock(BlockBehaviour.Properties.copy(MINING_PLANKS.get())))).getParentBlock();
 
     private static Supplier<Block> registerBlock(String id, Supplier<Block> blockSup) {
         return registerBlock(id, blockSup, new Item.Properties());

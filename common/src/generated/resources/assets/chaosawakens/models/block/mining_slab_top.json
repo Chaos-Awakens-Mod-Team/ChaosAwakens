@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "chaosawakens:block/wood/mining/mining_planks",
+    "side": "chaosawakens:block/wood/mining/mining_planks",
+    "top": "chaosawakens:block/wood/mining/mining_planks"
+  }
+}

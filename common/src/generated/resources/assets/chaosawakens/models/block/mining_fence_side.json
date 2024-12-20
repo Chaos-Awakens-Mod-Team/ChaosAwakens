@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_side",
+  "textures": {
+    "texture": "chaosawakens:block/wood/mining/mining_planks"
+  }
+}

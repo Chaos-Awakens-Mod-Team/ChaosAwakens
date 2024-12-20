@@ -5,6 +5,7 @@ import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.api.asm.annotations.RegistrarEntry;
 import io.github.chaosawakens.api.item.ItemPropertyWrapper;
 import io.github.chaosawakens.api.platform.CAServices;
+import io.github.chaosawakens.common.item.misc.MinersDreamItem;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
@@ -81,6 +82,9 @@ public final class CAItems {
 
     public static final Supplier<Item> TITANIUM_INGOT = ItemPropertyWrapper.of(CAItemPropertyWrappers.STANDARD_INGOT, registerItem("titanium_ingot", () -> new Item(new Item.Properties().fireResistant()))).getParentItem();
     public static final Supplier<Item> URANIUM_INGOT = ItemPropertyWrapper.of(CAItemPropertyWrappers.STANDARD_INGOT, registerItem("uranium_ingot", () -> new Item(new Item.Properties().fireResistant()))).getParentItem();
+
+    // Misc
+    public static final Supplier<Item> MINERS_DREAM = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("miners_dream", () -> new MinersDreamItem(new Item.Properties()))).getParentItem();
 
     private static Supplier<Item> registerItem(String id, Supplier<Item> itemSup) {
         Supplier<Item> registeredItemSup = CAServices.REGISTRAR.registerObject(CAConstants.prefix(id), itemSup, BuiltInRegistries.ITEM); // Otherwise reference to the item sup is null cuz it needs to be registered b4hand
