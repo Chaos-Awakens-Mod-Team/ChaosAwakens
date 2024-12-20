@@ -435,7 +435,7 @@ public final class RecipeUtil {
 
     public static Consumer<Supplier<Item>> standardMineral(Consumer<FinishedRecipe> recipeConsumer) {
         return (resultItemSup) -> {
-            if (RegistryUtil.getMaterialBlockFrom(resultItemSup, " ") != null) materialBlockToMaterial(recipeConsumer, RegistryUtil.getMaterialBlockFrom(resultItemSup, " ").get()).accept(resultItemSup);
+            if (RegistryUtil.getMaterialBlockFrom(resultItemSup, "") != null) materialBlockToMaterial(recipeConsumer, RegistryUtil.getMaterialBlockFrom(resultItemSup, "").get()).accept(resultItemSup);
 
             RegistryUtil.getOresFrom(resultItemSup, "").forEach(curOre -> {
                 oreToMaterialSmelting(recipeConsumer, curOre.get()).accept(resultItemSup);

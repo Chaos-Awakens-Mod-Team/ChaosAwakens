@@ -528,11 +528,12 @@ public final class RegistryUtil {
     public static Supplier<Item> getItemBasedOnSuffix(Supplier<Item> targetItem, String targetRegNameSuffix, String suffixReplacement) {
         ResourceLocation targetItemKey = getItemKey(targetItem.get());
         String copiedItemPath = getItemName(targetItem.get());
+        String targetPath = targetRegNameSuffix.isBlank() ? copiedItemPath.concat(suffixReplacement) : copiedItemPath.replace(targetRegNameSuffix, suffixReplacement);
 
         return targetItemKey.getPath().endsWith(targetRegNameSuffix)
-                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetRegNameSuffix.isBlank() ? copiedItemPath.concat(suffixReplacement) : copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("item.minecraft.air")
-                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetRegNameSuffix.isBlank() ? copiedItemPath.concat(suffixReplacement) : copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("block.minecraft.air")
-                ? () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement)))
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetPath)).getDescriptionId().equals("item.minecraft.air")
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetPath)).getDescriptionId().equals("block.minecraft.air")
+                ? () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetPath))
                 : null;
     }
 
@@ -540,11 +541,12 @@ public final class RegistryUtil {
     public static Supplier<Item> getItemBasedOnPrefixBySuffix(Supplier<Item> targetItem, String targetRegNameSuffix, String addedPrefix, String suffixReplacement) {
         ResourceLocation targetItemKey = getItemKey(targetItem.get());
         String copiedItemPath = getItemName(targetItem.get());
+        String targetPath = targetRegNameSuffix.isBlank() ? copiedItemPath.concat(suffixReplacement) : copiedItemPath.replace(targetRegNameSuffix, suffixReplacement);
 
         return targetItemKey.getPath().endsWith(targetRegNameSuffix)
-                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetRegNameSuffix.isBlank() ? copiedItemPath.concat(suffixReplacement) : copiedItemPath.replace(targetRegNameSuffix, suffixReplacement)).withPrefix(addedPrefix)).getDescriptionId().equals("item.minecraft.air")
-                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetRegNameSuffix.isBlank() ? copiedItemPath.concat(suffixReplacement) : copiedItemPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("block.minecraft.air")
-                ? () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(copiedItemPath.replace(targetRegNameSuffix, suffixReplacement)).withPrefix(addedPrefix))
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetPath).withPrefix(addedPrefix)).getDescriptionId().equals("item.minecraft.air")
+                && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetPath)).getDescriptionId().equals("block.minecraft.air")
+                ? () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetPath).withPrefix(addedPrefix))
                 : null;
     }
 
