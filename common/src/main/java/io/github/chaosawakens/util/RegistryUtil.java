@@ -82,90 +82,67 @@ public final class RegistryUtil {
     }
 
     /**
-     * Attempts to retrieve the texture for the supplied {@link Item} filename. <b>IDE/DEV-ENV ONLY!!!</b> This will not work outside of datagen in the dev environment, as it's only meant to be used to generate data
-     * based on located textures within the {@code "build/resources"} directory from the Java Classpath.
-     * <p></p>
-     * Mind that the registry name of the object attempting to utilise this method must EXACTLY match the name of the target texture to locate. This method (and its equivalents) is meant
-     * to substitute for a lack of {@link Minecraft} in datagen, which by extension means a lack of texture management and whatnot.
+     * Attempts to populate {@link #CACHED_PNG_TEXTURES} using the {@code java.class.path} system property.
      *
-     * @param modid The modid under which the texture file should be validated against and located.
-     * @param targetItemFileName The {@link String} for which a PNG file with a matching name should be located.
-     *
-     * @return A {@link ResourceLocation}, formatted and leading to the location of the target {@linkplain Item Item's} texture path, or {@code null} if none could be found.
-     *
-     * @see #getItemTexture(Supplier)
-     * @see #getBlockTexture(String, String)
-     * @see #getBlockTexture(Supplier)
+     * @param baseModId The modid under which actual file-system PNGs (I.E. Basically the textures in your workspace's {@code "/resources"} src directory) should be converted and added.
      */
-    @Nullable
-    public static ResourceLocation getItemTexture(String modid, String targetItemFileName) { //TODO Group this into a common method
+    public static void populateCachedPNGTextures(String baseModId) {
+        if (!CACHED_PNG_TEXTURES.isEmpty()) return;
+
         String classpath = System.getProperty("java.class.path");
 
-        if (CACHED_PNG_TEXTURES.isEmpty()) {
-            for (String curClassPath : classpath.split(File.pathSeparator)) {
-                File curFile = new File(curClassPath);
+        for (String curClassPath : classpath.split(File.pathSeparator)) {
+            File curFile = new File(curClassPath);
 
-                if (curFile.isDirectory()) {
-                    try (Stream<Path> allExistingPaths = Files.walk(curFile.toPath(), FileVisitOption.FOLLOW_LINKS)) { // Literal files
-                        allExistingPaths.filter(Files::isRegularFile)
-                                .filter(curPath -> curPath.toString().endsWith(".png"))
-                                .forEach(curVerifiedPath -> {
-                                    File curVerifiedFile = curVerifiedPath.toFile();
+            if (curFile.isDirectory()) {
+                try (Stream<Path> allExistingPaths = Files.walk(curFile.toPath(), FileVisitOption.FOLLOW_LINKS)) { // Literal files
+                    allExistingPaths.filter(Files::isRegularFile)
+                            .filter(curPath -> curPath.toString().endsWith(".png"))
+                            .forEach(curVerifiedPath -> {
+                                File curVerifiedFile = curVerifiedPath.toFile();
 
-                                    if (curVerifiedFile.getPath().contains("textures\\item")) {
-                                        String name = curVerifiedFile.getPath().replace("\\", "/");
-                                        name = name.substring(name.indexOf("item") + "item/".length(), name.indexOf(".png"));
+                                if (curVerifiedFile.getPath().contains("textures\\item")) {
+                                    String name = curVerifiedFile.getPath().replace("\\", "/");
+                                    name = name.substring(name.indexOf("item") + "item/".length(), name.indexOf(".png"));
 
-                                        CACHED_PNG_TEXTURES.add(new ResourceLocation(modid, name));
-                                    } else if (curVerifiedFile.getPath().contains("textures\\block")) {
-                                        String name = curVerifiedFile.getPath().replace("\\", "/");
-                                        name = name.substring(name.indexOf("block") + "block/".length(), name.indexOf(".png"));
+                                    CACHED_PNG_TEXTURES.add(new ResourceLocation(baseModId, name));
+                                } else if (curVerifiedFile.getPath().contains("textures\\block")) {
+                                    String name = curVerifiedFile.getPath().replace("\\", "/");
+                                    name = name.substring(name.indexOf("block") + "block/".length(), name.indexOf(".png"));
 
-                                        CACHED_PNG_TEXTURES.add(new ResourceLocation(modid, name));
+                                    CACHED_PNG_TEXTURES.add(new ResourceLocation(baseModId, name));
+                                }
+                            });
+                } catch (IOException e) {
+                    CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
+                }
+            } else {
+                try (JarFile curJarFile = new JarFile(curFile)) { // Files nested within JARs
+                    curJarFile.stream()
+                            .filter(curJarEntry -> curJarEntry.getName().endsWith(".png"))
+                            .forEach(curVerifiedJarEntry -> {
+                                String entryPath = curVerifiedJarEntry.getName();
+
+                                if (entryPath.contains("/textures/block/") || entryPath.contains("/textures/item/")) {
+                                    String[] pathParts = entryPath.split("/");
+
+                                    if (pathParts.length >= 4) {
+                                        String modId = pathParts[1];
+                                        String relativePath = String.join("/", Arrays.copyOfRange(pathParts, 3, pathParts.length));
+
+                                        CACHED_PNG_TEXTURES.add(new ResourceLocation(modId, relativePath.replace(".png", "")));
                                     }
-                                });
-                    } catch (IOException e) {
-                        CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
-                    }
-                } else {
-                    try (JarFile curJarFile = new JarFile(curFile)) { // Files nested within JARs
-                        curJarFile.stream()
-                                .filter(curJarEntry -> curJarEntry.getName().endsWith(".png"))
-                                .forEach(curVerifiedJarEntry -> {
-                                    String entryPath = curVerifiedJarEntry.getName();
-
-                                    if (entryPath.contains("/textures/item/")) {
-                                        String[] pathParts = entryPath.split("/");
-
-                                        if (pathParts.length >= 4) {
-                                            String modId = pathParts[1];
-                                            String relativePath = String.join("/", Arrays.copyOfRange(pathParts, 3, pathParts.length));
-
-                                            CACHED_PNG_TEXTURES.add(new ResourceLocation(modId, relativePath.replace(".png", "")));
-                                        }
-                                    } else if (entryPath.contains("/textures/block/")) {
-                                        String[] pathParts = entryPath.split("/");
-
-                                        if (pathParts.length >= 4) {
-                                            String modId = pathParts[1];
-                                            String relativePath = String.join("/", Arrays.copyOfRange(pathParts, 3, pathParts.length));
-
-                                            CACHED_PNG_TEXTURES.add(new ResourceLocation(modId, relativePath.replace(".png", "")));
-                                        }
-                                    }
-                                });
-                    } catch (IOException e) {
-                        CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
-                    }
+                                }
+                            });
+                } catch (IOException e) {
+                    CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
                 }
             }
         }
-
-        return CACHED_PNG_TEXTURES.stream().filter(curRL -> !modid.isBlank() && curRL.getPath().endsWith(targetItemFileName) && curRL.getNamespace().equals(modid)).findFirst().orElse(null);
     }
 
     /**
-     * Attempts to retrieve the texture for the supplied {@link Block} filename. <b>IDE/DEV-ENV ONLY!!!</b> This will not work outside of datagen in the dev environment, as it's only meant to be used to generate data
+     * Attempts to retrieve the texture for the provided filename. <b>IDE/DEV-ENV ONLY!!!</b> This will not work outside of datagen in the dev environment, as it's only meant to be used to generate data
      * based on located textures within the {@code "build/resources"} directory from the Java Classpath.
      * <p></p>
      * Mind that the registry name of the object attempting to utilise this method must EXACTLY match the name of the target texture to locate. This method (and its equivalents) is meant
@@ -174,81 +151,20 @@ public final class RegistryUtil {
      * @param modid The modid under which the texture file should be validated against and located.
      * @param targetBlockFileName The {@link String} for which a PNG file with a matching name should be located.
      *
-     * @return A {@link ResourceLocation}, formatted and leading to the location of the target {@linkplain Block Block's} texture path, or {@code null} if none could be found.
+     * @return A {@link ResourceLocation}, formatted and leading to the location of the target object's texture path, or {@code null} if none could be found.
      *
      * @see #getBlockTexture(Supplier)
-     * @see #getItemTexture(String, String)
      * @see #getItemTexture(Supplier)
      */
     @Nullable
-    public static ResourceLocation getBlockTexture(String modid, String targetBlockFileName) {
-        String classpath = System.getProperty("java.class.path");
-
-        if (CACHED_PNG_TEXTURES.isEmpty()) {
-            for (String curClassPath : classpath.split(File.pathSeparator)) {
-                File curFile = new File(curClassPath);
-
-                if (curFile.isDirectory()) {
-                    try (Stream<Path> allExistingPaths = Files.walk(curFile.toPath(), FileVisitOption.FOLLOW_LINKS)) { // Literal files
-                        allExistingPaths.filter(Files::isRegularFile)
-                                .filter(curPath -> curPath.toString().endsWith(".png"))
-                                .forEach(curVerifiedPath -> {
-                                    File curVerifiedFile = curVerifiedPath.toFile();
-
-                                    if (curVerifiedFile.getPath().contains("textures\\item")) {
-                                        String name = curVerifiedFile.getPath().replace("\\", "/");
-                                        name = name.substring(name.indexOf("item") + "item/".length(), name.indexOf(".png"));
-
-                                        CACHED_PNG_TEXTURES.add(new ResourceLocation(modid, name));
-                                    } else if (curVerifiedFile.getPath().contains("textures\\block")) {
-                                        String name = curVerifiedFile.getPath().replace("\\", "/");
-                                        name = name.substring(name.indexOf("block") + "block/".length(), name.indexOf(".png"));
-
-                                        CACHED_PNG_TEXTURES.add(new ResourceLocation(modid, name));
-                                    }
-                                });
-                    } catch (IOException e) {
-                        CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
-                    }
-                } else {
-                    try (JarFile curJarFile = new JarFile(curFile)) { // Files nested within JARs
-                        curJarFile.stream()
-                                .filter(curJarEntry -> curJarEntry.getName().endsWith(".png"))
-                                .forEach(curVerifiedJarEntry -> {
-                                    String entryPath = curVerifiedJarEntry.getName();
-
-                                    if (entryPath.contains("/textures/block/")) {
-                                        String[] pathParts = entryPath.split("/");
-
-                                        if (pathParts.length >= 4) {
-                                            String modId = pathParts[1];
-                                            String relativePath = String.join("/", Arrays.copyOfRange(pathParts, 3, pathParts.length));
-
-                                            CACHED_PNG_TEXTURES.add(new ResourceLocation(modId, relativePath.replace(".png", "")));
-                                        }
-                                    } else if (entryPath.contains("/textures/item/")) {
-                                        String[] pathParts = entryPath.split("/");
-
-                                        if (pathParts.length >= 4) {
-                                            String modId = pathParts[1];
-                                            String relativePath = String.join("/", Arrays.copyOfRange(pathParts, 3, pathParts.length));
-
-                                            CACHED_PNG_TEXTURES.add(new ResourceLocation(modId, relativePath.replace(".png", "")));
-                                        }
-                                    }
-                                });
-                    } catch (IOException e) {
-                        CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
-                    }
-                }
-            }
-        }
+    public static ResourceLocation getTexture(String modid, String targetBlockFileName) {
+        populateCachedPNGTextures(modid);
 
         return CACHED_PNG_TEXTURES.stream().filter(curRL -> !modid.isBlank() && curRL.getPath().endsWith(targetBlockFileName) && curRL.getNamespace().equals(modid)).findFirst().orElse(null);
     }
 
     /**
-     * Overloaded variant of {@link #getItemTexture(String, String)}. Attempts to retrieve the texture for the supplied {@link Item}. <b>IDE/DEV-ENV ONLY!!!</b> This will not work outside of datagen
+     * Overloaded variant of {@link #getTexture(String, String)}. Attempts to retrieve the texture for the supplied {@link Item}. <b>IDE/DEV-ENV ONLY!!!</b> This will not work outside of datagen
      * in the dev environment, as it's only meant to be used to generate data based on located textures within the {@code "build/resources"} directory from the Java Classpath.
      * <p></p>
      * Mind that the registry name of the object attempting to utilise this method must EXACTLY match
@@ -259,17 +175,16 @@ public final class RegistryUtil {
      *
      * @return A {@link ResourceLocation}, formatted and leading to the location of the target {@linkplain Item Item's} texture path, or {@code null} if none could be found.
      *
-     * @see #getItemTexture(String, String)
-     * @see #getBlockTexture(String, String)
+     * @see #getTexture(String, String)
      * @see #getBlockTexture(Supplier)
      */
     @Nullable
     public static ResourceLocation getItemTexture(Supplier<Item> targetItem) {
-        return getItemTexture(BuiltInRegistries.ITEM.getKey(targetItem.get()).getNamespace(), BuiltInRegistries.ITEM.getKey(targetItem.get()).getPath());
+        return getTexture(BuiltInRegistries.ITEM.getKey(targetItem.get()).getNamespace(), BuiltInRegistries.ITEM.getKey(targetItem.get()).getPath());
     }
 
     /**
-     * Overloaded variant of {@link #getBlockTexture(String, String)}}. Attempts to retrieve the texture for the supplied {@link Block}. <b>IDE/DEV-ENV ONLY!!!</b> This will not work outside of datagen
+     * Overloaded variant of {@link #getTexture(String, String)}}. Attempts to retrieve the texture for the supplied {@link Block}. <b>IDE/DEV-ENV ONLY!!!</b> This will not work outside of datagen
      * in the dev environment, as it's only meant to be used to generate data based on located textures within the {@code "build/resources"} directory from the Java Classpath.
      * <p></p>
      * Mind that the registry name of the object attempting to utilise this method must EXACTLY match
@@ -280,13 +195,12 @@ public final class RegistryUtil {
      *
      * @return A {@link ResourceLocation}, formatted and leading to the location of the target {@linkplain Block Block's} texture path, or {@code null} if none could be found.
      *
-     * @see #getBlockTexture(String, String)
-     * @see #getItemTexture(String, String)
+     * @see #getTexture(String, String)
      * @see #getItemTexture(Supplier)
      */
     @Nullable
     public static ResourceLocation getBlockTexture(Supplier<Block> targetBlock) {
-        return getBlockTexture(BuiltInRegistries.BLOCK.getKey(targetBlock.get()).getNamespace(), BuiltInRegistries.BLOCK.getKey(targetBlock.get()).getPath());
+        return getTexture(BuiltInRegistries.BLOCK.getKey(targetBlock.get()).getNamespace(), BuiltInRegistries.BLOCK.getKey(targetBlock.get()).getPath());
     }
 
     /**

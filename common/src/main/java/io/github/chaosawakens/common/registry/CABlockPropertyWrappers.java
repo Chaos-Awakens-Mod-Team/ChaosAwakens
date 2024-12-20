@@ -138,7 +138,7 @@ public final class CABlockPropertyWrappers {
             .withLootTable(LootUtil::dropDoor)
             .withRecipe(RecipeUtil::doorsFromPlanks)
             .withTags(ObjectArrayList.of(BlockTags.WOODEN_DOORS, BlockTags.MINEABLE_WITH_AXE, ItemTags.WOODEN_DOORS))
-            .withCustomModelDefinitions(parentBlock -> ModelUtil.door(RegistryUtil.getBlockTexture(RegistryUtil.getItemModId(parentBlock.get()), RegistryUtil.getItemName(parentBlock.get()).concat("_top")), RegistryUtil.getBlockTexture(RegistryUtil.getItemModId(parentBlock.get()), RegistryUtil.getItemName(parentBlock.get()).concat("_bottom"))))
+            .withCustomModelDefinitions(parentBlock -> ModelUtil.door(RegistryUtil.getTexture(RegistryUtil.getItemModId(parentBlock.get()), RegistryUtil.getItemName(parentBlock.get()).concat("_top")), RegistryUtil.getTexture(RegistryUtil.getItemModId(parentBlock.get()), RegistryUtil.getItemName(parentBlock.get()).concat("_bottom"))))
             .withBlockStateDefinition(ModelUtil::door)
             .build();
     public static final BlockPropertyWrapper WOODEN_TRAPDOOR = BlockPropertyWrapper.createTemplate()

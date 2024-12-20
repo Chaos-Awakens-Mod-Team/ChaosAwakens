@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-20T16:39:11.6031645	Loot Tables
+// 1.20.1	2024-12-20T17:31:20.0829389	Loot Tables
 fd5e1bc80521d0475feba0a763a4477dafb97aa2 data/chaosawakens/loot_tables/blocks/acacia_gate_block.json
 da9b4c2ed45126af19c82b0d58a8c8627c8fef0f data/chaosawakens/loot_tables/blocks/acacia_leaf_carpet.json
 ee77f01f0b63fbd97ac78ea731b6631de45ae5cb data/chaosawakens/loot_tables/blocks/amethyst_block.json
@@ -8,7 +8,7 @@ e0ee511bca34f9c60bdb2af23a96292e96f0a64c data/chaosawakens/loot_tables/blocks/ap
 8c99e199e0b40ad1396752996afc0d4285a6b5a9 data/chaosawakens/loot_tables/blocks/apple_fence_gate.json
 522a3576da4ffa7d786d8a1faa97c5a04d209006 data/chaosawakens/loot_tables/blocks/apple_gate_block.json
 8d3f572ca1c61e5bba0360b1df6d3d263dae56a5 data/chaosawakens/loot_tables/blocks/apple_leaf_carpet.json
-6e1b39941e0e0a93e1dda40bb087e4a3a4a4c3b2 data/chaosawakens/loot_tables/blocks/apple_leaves.json
+6222f46d7878f63dc3e8c18dea11a707975a95e4 data/chaosawakens/loot_tables/blocks/apple_leaves.json
 cfb52e349a4376dc3ba93e980d78c45c4f7a906c data/chaosawakens/loot_tables/blocks/apple_log.json
 90ab07c0ce2256593cb9fb583e7fa316b077a868 data/chaosawakens/loot_tables/blocks/apple_planks.json
 4f577291cf4b6980779a71ab70ce50d47b3866d2 data/chaosawakens/loot_tables/blocks/apple_pressure_plate.json
@@ -103,7 +103,7 @@ a43910a755dfc06047e1861f8f27b911bfb48523 data/chaosawakens/loot_tables/blocks/pe
 954c71788c69ff45552aa285c1b64a84a831a541 data/chaosawakens/loot_tables/blocks/peach_fence_gate.json
 efbdeaa20d75c7306666f2848d798ea42701e61f data/chaosawakens/loot_tables/blocks/peach_gate_block.json
 508fa0b59183e2a490880559f2f1af45fad37dcc data/chaosawakens/loot_tables/blocks/peach_leaf_carpet.json
-6089d1e47bef6a839bbf5a119cc488e597b1296f data/chaosawakens/loot_tables/blocks/peach_leaves.json
+dbb0af2166ed1d01ed6245b33530a579208f4b85 data/chaosawakens/loot_tables/blocks/peach_leaves.json
 62a338bf3606ba3201021906193190f8eacb0bd7 data/chaosawakens/loot_tables/blocks/peach_log.json
 458c561463dbe339b162d5dc0a970665a8c97d59 data/chaosawakens/loot_tables/blocks/peach_planks.json
 f7ab17393096621b95f2cf598e2aa48638e84516 data/chaosawakens/loot_tables/blocks/peach_pressure_plate.json
