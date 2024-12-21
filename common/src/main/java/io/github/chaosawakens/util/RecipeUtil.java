@@ -203,6 +203,24 @@ public final class RecipeUtil {
         return (resultItemSup) -> cookedFood(recipeConsumer, RegistryUtil.getRawFoodFromCookedFood(resultItemSup).get()).accept(resultItemSup);
     }
 
+    public static Consumer<Supplier<Item>> threeRowRecipe(Consumer<FinishedRecipe> recipeConsumer, ItemLike topItemILReference, ItemLike middleItemILReference, ItemLike bottomItemILReference, int resultItemCount) {
+        return (resultItemSup) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, resultItemSup.get(), resultItemCount)
+                .define('T', topItemILReference)
+                .define('M', middleItemILReference)
+                .define('B', bottomItemILReference)
+                .pattern("TTT")
+                .pattern("MMM")
+                .pattern("BBB")
+                .unlockedBy("has_" + RegistryUtil.getItemName(topItemILReference), PredicateUtil.has(topItemILReference))
+                .unlockedBy("has_" + RegistryUtil.getItemName(middleItemILReference), PredicateUtil.has(middleItemILReference))
+                .unlockedBy("has_" + RegistryUtil.getItemName(bottomItemILReference), PredicateUtil.has(bottomItemILReference))
+                .save(recipeConsumer);
+    }
+
+    public static Consumer<Supplier<Item>> threeRowRecipe(Consumer<FinishedRecipe> recipeConsumer, ItemLike topItemILReference, ItemLike middleItemILReference, ItemLike bottomItemILReference) {
+        return (resultItemSup) -> threeRowRecipe(recipeConsumer, topItemILReference, middleItemILReference, bottomItemILReference, 1).accept(resultItemSup);
+    }
+
     public static Consumer<Supplier<Block>> solidBlockFromSolidBlock(Consumer<FinishedRecipe> recipeConsumer, ItemLike solidBlockILReference, int resultBlockCount) {
         return (resultBlockSup) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, resultBlockSup.get(), resultBlockCount)
                 .define('S', solidBlockILReference)

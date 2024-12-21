@@ -23,7 +23,7 @@ public class CATags {
 
         public static final TagKey<Block> MINERS_DREAM_MINEABLE = createWrappedBlockTag("miners_dream_mineable")
                 .withTagEntries(ObjectArrayList.of(BASE_STONE_CRYSTAL, BASE_STONE_MINING, BASE_STONE_VILLAGE, BlockTags.BASE_STONE_OVERWORLD, BlockTags.BASE_STONE_NETHER, BlockTags.DIRT, BlockTags.SAND, BlockTags.ICE, BlockTags.CAVE_VINES, BlockTags.LEAVES, BlockTags.CROPS, BlockTags.FLOWERS))
-                .withEntries(ObjectArrayList.of(() -> Blocks.GRAVEL, () -> Blocks.SUSPICIOUS_GRAVEL, () -> Blocks.CLAY, () -> Blocks.SMALL_DRIPLEAF, () -> Blocks.SOUL_SAND, () -> Blocks.MAGMA_BLOCK, () -> Blocks.SOUL_SOIL, () -> Blocks.BIG_DRIPLEAF, () -> Blocks.DRIPSTONE_BLOCK, () -> Blocks.POINTED_DRIPSTONE))
+                .withEntries(ObjectArrayList.of(() -> Blocks.GRAVEL, () -> Blocks.SUSPICIOUS_GRAVEL, () -> Blocks.CLAY, () -> Blocks.SANDSTONE, () -> Blocks.SMALL_DRIPLEAF, () -> Blocks.SOUL_SAND, () -> Blocks.MAGMA_BLOCK, () -> Blocks.SOUL_SOIL, () -> Blocks.BIG_DRIPLEAF, () -> Blocks.DRIPSTONE_BLOCK, () -> Blocks.POINTED_DRIPSTONE))
                 .getParentTag();
         public static final TagKey<Block> MINING_WOOD = createWrappedBlockTag("wood/mining_wood")
                 .withEntries(ObjectArrayList.of(CABlocks.MINING_WOOD, CABlocks.MINING_PLANKS, CABlocks.MINING_FENCE, CABlocks.MINING_SLAB))

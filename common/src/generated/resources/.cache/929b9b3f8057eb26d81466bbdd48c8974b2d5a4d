@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-21T21:00:16.7232434	Chaos Awakens: Block Tags
+// 1.20.1	2024-12-21T23:50:10.7781009	Chaos Awakens: Block Tags
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_crystal.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_mining.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_village.json
@@ -34,7 +34,7 @@ b41349a4b011bedbfcf9cc91ce48ebbfda560d20 data/chaosawakens/tags/blocks/fossils/s
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/fossils/stone/chaosawakens.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/fossils/stone/vanilla.json
 2b6b60c7eb14fd8e52d66fd3c012d58e18f0b04d data/chaosawakens/tags/blocks/lamp/mining_lamp.json
-c6565a7585081a42952301591d366202c44c1716 data/chaosawakens/tags/blocks/miners_dream_mineable.json
+12bdb94a915d478964967ba4c9f9d33adbd7d11a data/chaosawakens/tags/blocks/miners_dream_mineable.json
 49e02bc82aa3025d443a2c662ae386a2fef88711 data/chaosawakens/tags/blocks/robo_immune.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/robo_immune/jeffery.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/robo_immune/pounder.json
