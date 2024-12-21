@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "chaosawakens:block/lamps/mining_lamp"
+    "all": "chaosawakens:block/lamp/mining_lamp"
   }
 }

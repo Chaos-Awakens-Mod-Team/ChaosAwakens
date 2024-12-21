@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-20T14:54:59.7224974	Chaos Awakens: Block & Block Item Models
+// 1.20.1	2024-12-20T22:43:43.7329472	Chaos Awakens: Block & Block Item Models
 545cc7a8d51438ddca6429e9262d81c625d1162d assets/chaosawakens/models/block/acacia_gate_block.json
 8d130b2889cdfedadd99deba33ebbc7ef31085f7 assets/chaosawakens/models/block/acacia_leaf_carpet.json
 f700a074b4699cc3621d597ffe655047e0bf4a44 assets/chaosawakens/models/block/acacia_leaf_carpet_inventory.json
@@ -236,7 +236,7 @@ d80fd36132fc89f0fe04fc4bbe28af5057ae5da4 assets/chaosawakens/models/block/mesozo
 972f990e612fa8ddfc92761d60714649649de57a assets/chaosawakens/models/block/mining_fence_inventory.json
 d9695f2598e3b7f254c48b39fbb6d2616d998866 assets/chaosawakens/models/block/mining_fence_post.json
 f7fb2a3ecf35afaacf750ef7a8c4d8d347f840f4 assets/chaosawakens/models/block/mining_fence_side.json
-90059cc65b714c546af7c09499eeb7442b061f94 assets/chaosawakens/models/block/mining_lamp.json
+ebae16f0d4c4a6f8d6b5c87b75571b413bb00bc4 assets/chaosawakens/models/block/mining_lamp.json
 b7251ba0fa87fe33a3dbd498fa8ed4bb156ec980 assets/chaosawakens/models/block/mining_planks.json
 ec02fc09e04144812ff2fbcc2e12858f6e0c182b assets/chaosawakens/models/block/mining_slab.json
 b22baf75373ce7bc7071d10cd674e8e4bec68413 assets/chaosawakens/models/block/mining_slab_top.json

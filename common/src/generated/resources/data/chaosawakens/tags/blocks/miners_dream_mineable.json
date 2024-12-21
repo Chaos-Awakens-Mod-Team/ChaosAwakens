@@ -1,9 +1,26 @@
 {
   "values": [
+    "minecraft:gravel",
+    "minecraft:suspicious_gravel",
+    "minecraft:clay",
+    "minecraft:small_dripleaf",
+    "minecraft:soul_sand",
+    "minecraft:magma_block",
+    "minecraft:soul_soil",
+    "minecraft:big_dripleaf",
+    "minecraft:dripstone_block",
+    "minecraft:pointed_dripstone",
     "#chaosawakens:base_stone_crystal",
     "#chaosawakens:base_stone_mining",
     "#chaosawakens:base_stone_village",
     "#minecraft:base_stone_overworld",
-    "#minecraft:base_stone_nether"
+    "#minecraft:base_stone_nether",
+    "#minecraft:dirt",
+    "#minecraft:sand",
+    "#minecraft:ice",
+    "#minecraft:cave_vines",
+    "#minecraft:leaves",
+    "#minecraft:crops",
+    "#minecraft:flowers"
   ]
 }
