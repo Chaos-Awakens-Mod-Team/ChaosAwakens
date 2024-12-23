@@ -1,7 +1,6 @@
 package io.github.chaosawakens.api.services;
 
 import com.google.common.collect.ImmutableMap;
-import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.api.asm.annotations.RegistrarEntry;
 import io.github.chaosawakens.api.platform.CAServices;
 import io.github.chaosawakens.api.platform.services.IRegistrar;
@@ -31,7 +30,7 @@ public class ForgeRegistrar implements IRegistrar {
         ResourceKey<? extends Registry<V>> targetRegistryKey = targetRegistry.key();
 
         DeferredRegister<V> existingDefReg = (DeferredRegister<V>) CACHED_REGISTRIES.computeIfAbsent(targetRegistryKey, defReg -> {
-            DeferredRegister<V> cachedDefReg = DeferredRegister.create(targetRegistryKey, CAConstants.MODID);
+            DeferredRegister<V> cachedDefReg = DeferredRegister.create(targetRegistryKey, objId.getNamespace());
             cachedDefReg.register(modBus);
             return cachedDefReg;
         });

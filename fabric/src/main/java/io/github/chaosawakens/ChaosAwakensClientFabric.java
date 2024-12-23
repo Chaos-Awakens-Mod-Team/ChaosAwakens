@@ -2,7 +2,6 @@ package io.github.chaosawakens;
 
 import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
 import io.github.chaosawakens.api.datagen.block.BlockModelDefinition;
-import io.github.chaosawakens.util.RegistryUtil;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
@@ -67,8 +66,11 @@ public class ChaosAwakensClientFabric implements ClientModInitializer {
     private static void registerItemColorProviders() {
         BlockPropertyWrapper.getMappedBpws().entrySet().stream().filter(curBwpEntry -> curBwpEntry.getValue().getBlockColorMappingFunc() != null).forEach(curBwpEntry -> { // Need to isolate both methods (in terms of blocks), cuz otherwise block is null within the same method's scope when retrieved from the ColorProviderRegistry
             Supplier<Block> blockSupEntry = curBwpEntry.getKey();
+            BlockColor curMappedBlockColor = curBwpEntry.getValue().getBlockColorMappingFunc().apply(blockSupEntry);
 
-            ColorProviderRegistry.ITEM.register((curStack, tintIdx) -> RegistryUtil.getVanillaLeafColorFor(blockSupEntry).getColor(blockSupEntry.get().defaultBlockState(), null, null, tintIdx), blockSupEntry.get());
+            if (curMappedBlockColor == null) return;
+
+            ColorProviderRegistry.ITEM.register((curStack, tintIdx) -> curMappedBlockColor.getColor(blockSupEntry.get().defaultBlockState(), null, null, tintIdx), blockSupEntry.get());
         });
     }
 }

@@ -270,7 +270,7 @@ public final class CABlocks {
 
     // Deepslate Ores
 
-    // Lamp & Moldy Blocks
+    // Lamp & Mining Blocks
     public static final Supplier<Block> MINING_LAMP = BlockPropertyWrapper.of(CABlockPropertyWrappers.BASIC_BLOCK, registerBlock("mining_lamp", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.SAND).instrument(NoteBlockInstrument.PLING).strength(0.3F).sound(SoundType.GLASS).lightLevel((curState) -> 15)))).getParentBlock();
 
     public static final Supplier<Block> MINING_WOOD = BlockPropertyWrapper.of(CABlockPropertyWrappers.BASIC_BLOCK, registerBlock("mining_wood", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)))).getParentBlock();

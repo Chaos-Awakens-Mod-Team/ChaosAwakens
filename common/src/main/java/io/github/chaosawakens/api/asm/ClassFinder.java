@@ -15,7 +15,7 @@ public final class ClassFinder {
         try {
             return Class.forName(targetClassName);
         } catch (ClassNotFoundException | ExceptionInInitializerError e) {
-            CAConstants.LOGGER.error("Failed to load: {}, no such class was found.", targetClassName, e);
+            CAConstants.LOGGER.error(e instanceof ClassNotFoundException ? "Failed to load: {}, no such class was found." : "Failed to load/initialize: {}", targetClassName, e);
             return null;
         }
     }

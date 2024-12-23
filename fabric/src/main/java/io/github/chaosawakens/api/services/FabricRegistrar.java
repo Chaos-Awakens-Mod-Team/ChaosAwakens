@@ -17,7 +17,7 @@ public class FabricRegistrar implements IRegistrar {
 
     @Override
     public <V, T extends V> Supplier<T> registerObject(ResourceLocation objId, Supplier<T> objSup, Registry<V> targetRegistry) {
-        T targetObject = Registry.register(targetRegistry, objId, objSup.get());
+        T targetObject = Registry.register(targetRegistry, objId, objSup.get()); // Must store in a local field beforehand cuz... for some reason it's null if inlined (:bruhcat:)
         return () -> targetObject;
     }
 }

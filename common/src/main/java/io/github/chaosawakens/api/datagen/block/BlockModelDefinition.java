@@ -156,7 +156,7 @@ public class BlockModelDefinition {
      *
      * @see ModelTemplates
      */
-    public ModelTemplate getParentModel() {
+    public @NotNull ModelTemplate getParentModel() {
         return parentModel;
     }
 

@@ -75,6 +75,7 @@ public final class CAItems {
     // Snack
 
     // Special
+    public static final Supplier<Item> SALT = ItemPropertyWrapper.of(CAItemPropertyWrappers.RAW_FOOD, registerItem("salt", () -> new Item(new Item.Properties()))).getParentItem();
 
     // Minerals
     public static final Supplier<Item> KUNZITE = ItemPropertyWrapper.of(CAItemPropertyWrappers.STANDARD_MINERAL, registerItem("kunzite", () -> new Item(new Item.Properties()))).getParentItem();

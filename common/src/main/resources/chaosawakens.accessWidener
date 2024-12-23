@@ -58,3 +58,6 @@ accessible field net/minecraft/world/item/Item$Properties requiredFeatures Lnet/
 
 # BlockFamilies
 accessible method net/minecraft/data/BlockFamilies familyBuilder (Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/data/BlockFamily$Builder;
+
+# Camera
+accessible method net/minecraft/client/Camera setRotation (FF)V

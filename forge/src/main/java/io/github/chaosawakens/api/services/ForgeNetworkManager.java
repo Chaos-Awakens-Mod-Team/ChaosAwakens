@@ -26,6 +26,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ForgeNetworkManager implements INetworkManager {
@@ -87,13 +88,13 @@ public class ForgeNetworkManager implements INetworkManager {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> targetPlayer), s2cPacket);
     }
 
-    private <MSGT> BiConsumer<MSGT, Supplier<NetworkEvent.Context>> handlePacketFromContext(PacketContext handler) {
+    private <MSGT> BiConsumer<MSGT, Supplier<NetworkEvent.Context>> handlePacketFromContext(Function<MSGT, PacketContext> handler) {
         return (msg, ctx) -> {
             ctx.get().enqueueWork(() -> {
                 LogicalSide curSide = ctx.get().getDirection().getReceptionSide().isServer() ? LogicalSide.SERVER : LogicalSide.CLIENT;
                 ServerPlayer playerSender = ctx.get().getSender();
 
-                handler.handlePacket(playerSender == null ? Minecraft.getInstance().player : playerSender, playerSender == null ? LogicalSidedProvider.CLIENTWORLD.get(curSide).filter(ClientLevel.class::isInstance).orElse(Minecraft.getInstance().level) : playerSender.serverLevel(), curSide.isServer() ? NetworkSide.C2S : NetworkSide.S2C);
+                handler.apply(msg).handlePacket(playerSender == null ? Minecraft.getInstance().player : playerSender, playerSender == null ? LogicalSidedProvider.CLIENTWORLD.get(curSide).filter(ClientLevel.class::isInstance).orElse(Minecraft.getInstance().level) : playerSender.serverLevel(), curSide.isServer() ? NetworkSide.C2S : NetworkSide.S2C);
             });
 
             ctx.get().setPacketHandled(true);

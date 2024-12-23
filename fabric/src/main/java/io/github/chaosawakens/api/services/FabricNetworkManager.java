@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -32,23 +33,25 @@ public class FabricNetworkManager implements INetworkManager {
 
     @Override
     public <MSGT> BasePacket<MSGT> registerPacket(BasePacket<MSGT> packet) {
+        if (packet.packetId() == null || !ResourceLocation.isValidResourceLocation(packet.packetId().toString())) {
+            throw new IllegalArgumentException("Attempted to register packet with invalid packet id: " + (packet == null ? "null" : packet.packetId()));
+        }
+
         NetworkSide targetSide = packet.targetSide();
 
         MAPPED_PACKETS.putIfAbsent(packet.packetClass(), packet);
 
         if (targetSide.equals(NetworkSide.C2S)) {
-            ServerPlayNetworking.registerGlobalReceiver(packet.packetId(), ((targetServer, playerSender, serverPacketListener, buf, fabricPacketSender) -> {
+            ServerPlayNetworking.registerGlobalReceiver(packet.packetId(), ((targetServer, playerReceiver, serverPacketListener, buf, fabricPacketSender) -> {
                 buf.readByte(); // Forge discriminator handling (monke see monke do)
 
-                packet.packetDecoder().apply(buf);
-                packet.packetHandler().handlePacket(playerSender, targetServer.getLevel(playerSender.level().dimension()), NetworkSide.C2S);
+                packet.packetHandler().apply(packet.packetDecoder().apply(buf)).handlePacket(playerReceiver, targetServer.getLevel(playerReceiver.level().dimension()), NetworkSide.C2S);
             }));
         } else if (targetSide.equals(NetworkSide.S2C)) {
             ClientPlayNetworking.registerGlobalReceiver(packet.packetId(), ((targetClient, clientPacketListener, buf, fabricPacketSender) -> {
                 buf.readByte(); // Forge discriminator handling (monke see monke do)
 
-                packet.packetDecoder().apply(buf);
-                packet.packetHandler().handlePacket(targetClient.player, targetClient.level, NetworkSide.S2C);
+                packet.packetHandler().apply(packet.packetDecoder().apply(buf)).handlePacket(targetClient.player, targetClient.level, NetworkSide.S2C);
             }));
         }
         return packet;

@@ -1,5 +1,6 @@
 package io.github.chaosawakens.common.item.misc;
 
+import io.github.chaosawakens.api.vfx.basic.ScreenShakeEffect;
 import io.github.chaosawakens.common.registry.CABlocks;
 import io.github.chaosawakens.common.registry.CATags;
 import net.minecraft.core.BlockPos;
@@ -9,6 +10,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -37,25 +39,31 @@ public class MinersDreamItem extends Item {
     public @NotNull InteractionResult useOn(UseOnContext ctx) {
         Direction targetDirection = ctx.getHorizontalDirection();
         Level currentWorld = ctx.getLevel();
+        BlockPos breakPos = ctx.getClickedPos();
 
-        if (currentWorld.isClientSide) return InteractionResult.FAIL;
+        if (currentWorld.isClientSide) {
+            for (int i = 0; i < 3; i++) {
+                currentWorld.addParticle(ParticleTypes.LARGE_SMOKE.getType(), breakPos.getX(), breakPos.getY(), breakPos.getZ(), Mth.nextDouble(currentWorld.getRandom(), -0.25F, 0.25F), Mth.nextDouble(currentWorld.getRandom(), -0.15F, 0.15F), Mth.nextDouble(currentWorld.getRandom(), -0.25F, 0.25F));
+            }
+            return InteractionResult.FAIL;
+        }
         if (targetDirection == Direction.UP || targetDirection == Direction.DOWN) return InteractionResult.FAIL;
 
-        BlockPos breakPos = ctx.getClickedPos();
         int targetY = ((breakPos.getY() % 8) + 8) % 8;
         Player currentPlayer = ctx.getPlayer();
 
         Vec3i targetFacingDirection = targetDirection.getNormal();
+        ScreenShakeEffect shakeEffect = new ScreenShakeEffect(breakPos, 15.5D, 0.002F, 45.5F, 1.2F);
 
-        currentPlayer.playNotifySound(SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 1.0F, 1.5F);
-        currentWorld.addParticle(ParticleTypes.EXPLOSION.getType(), breakPos.getX(), breakPos.getY(), breakPos.getZ(), 0.25F, 0.25F, 0.25F);
+        currentPlayer.playNotifySound(SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 1.0F, 0.85F);
+        shakeEffect.enqueue(currentWorld);
 
         for (int i = 0; i < HOLE_LENGTH; i++) {
             for (int j = 0; j < HOLE_HEIGHT; j++) {
                 for (int k = -HOLE_WIDTH; k <= HOLE_WIDTH; k++) {
                     int lengthDelta = i * targetFacingDirection.getX() + k * targetFacingDirection.getZ();
                     int widthDelta = i * targetFacingDirection.getZ() + k * targetFacingDirection.getX();
-                    BlockPos targetPos = breakPos.offset(lengthDelta, targetY < 0 ? (targetY + j) + 2 : -targetY + j, widthDelta);
+                    BlockPos targetPos = breakPos.offset(lengthDelta, -targetY + j, widthDelta);
                     BlockState targetBlockState = currentWorld.getBlockState(targetPos);
                     FluidState targetFluidState = currentWorld.getFluidState(targetPos);
 
@@ -106,7 +114,7 @@ public class MinersDreamItem extends Item {
         if (w == -HOLE_WIDTH || w == HOLE_WIDTH) {
             BlockPos currentPos = targetPos.offset(0, 0, 0);
 
-            if (targetLevel.getBlockState(currentPos).canBeReplaced() || targetLevel.getBlockState(currentPos).isAir()) {
+            if (targetLevel.getBlockState(currentPos).canBeReplaced() || targetLevel.getBlockState(currentPos).isAir() || (targetLevel.getBlockState(targetPos).hasProperty(BlockStateProperties.WATERLOGGED) && targetLevel.getBlockState(targetPos).getValue(BlockStateProperties.WATERLOGGED))) {
                 targetLevel.setBlockAndUpdate(currentPos, CABlocks.MINING_PLANKS.get().defaultBlockState());
                 return;
             }
@@ -115,7 +123,7 @@ public class MinersDreamItem extends Item {
         if (h == HOLE_HEIGHT - 1) {
             BlockPos currentPos = targetPos.offset(0, 1, 0);
 
-            if (targetLevel.getBlockState(currentPos).canBeReplaced() || targetLevel.getBlockState(currentPos).isAir() || targetLevel.getBlockState(targetPos).getBlock() instanceof LiquidBlock || isBorderedByFallingBlock(targetLevel, currentPos)) {
+            if (targetLevel.getBlockState(currentPos).canBeReplaced() || targetLevel.getBlockState(currentPos).isAir() || targetLevel.getBlockState(targetPos).getBlock() instanceof LiquidBlock || isBorderedByFallingBlock(targetLevel, currentPos) || (targetLevel.getBlockState(targetPos).hasProperty(BlockStateProperties.WATERLOGGED) && targetLevel.getBlockState(targetPos).getValue(BlockStateProperties.WATERLOGGED)) || (targetLevel.getBlockState(currentPos).hasProperty(BlockStateProperties.WATERLOGGED) && targetLevel.getBlockState(currentPos).getValue(BlockStateProperties.WATERLOGGED))) {
                 targetLevel.setBlockAndUpdate(currentPos, CABlocks.MINING_PLANKS.get().defaultBlockState());
             }
         }

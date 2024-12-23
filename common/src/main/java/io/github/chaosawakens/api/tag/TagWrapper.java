@@ -158,14 +158,29 @@ public class TagWrapper<T, TK extends TagKey<T>> {
         return parentTag;
     }
 
+    /**
+     * Gets the pre-defined {@link List} of object entries stored in this TW instance.
+     *
+     * @return An immutable view of the pre-defined {@link List} of object entries stored in this TW instance.
+     */
     public ImmutableList<Supplier<T>> getPredefinedTagEntries() {
         return ImmutableList.copyOf(storedTaggedObjects);
     }
 
+    /**
+     * Gets the pre-defined {@link List} of {@link TagKey} entries stored in this TW instance.
+     *
+     * @return An immutable view of the pre-defined {@link List} of {@link TagKey} entries stored in this TW instance.
+     */
     public ImmutableList<TK> getStoredTags() {
         return ImmutableList.copyOf(storedCopiedTags);
     }
 
+    /**
+     * Gets the pre-defined {@link List} of parent {@link TagKey} entries stored in this TW instance.
+     *
+     * @return An immutable view of the pre-defined {@link List} of parent {@link TagKey} entries stored in this TW instance.
+     */
     public ImmutableList<TK> getParentTags() {
         return ImmutableList.copyOf(storedParentTags);
     }
