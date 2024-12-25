@@ -172,92 +172,24 @@ public final class CABlocks {
     public static final Supplier<Block> SPRUCE_LEAF_CARPET = BlockPropertyWrapper.of(CABlockPropertyWrappers.LEAF_CARPET, registerBlock("spruce_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_LEAVES).strength(0.1F)))).getParentBlock();
 
     // Dungeon Blocks
-    public static final Supplier<Block> APPLE_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("apple_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(APPLE_PLANKS.get()))))
-            .cachedBuilder()
-            .withCustomName("Apple Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> CRYSTALWOOD_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("crystalwood_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(CRYSTALWOOD_PLANKS.get()))))
-            .cachedBuilder()
-            .withCustomName("Crystalwood Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> DENSEWOOD_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("densewood_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(DENSEWOOD_PLANKS.get()))))
-            .cachedBuilder()
-            .withCustomName("Densewood Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> DUPLICATOR_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("duplicator_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(DUPLICATOR_PLANKS.get()))))
-            .cachedBuilder()
-            .withCustomName("Duplicator Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> GINKGO_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("ginkgo_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(GINKGO_PLANKS.get()))))
-            .cachedBuilder()
-            .withCustomName("Ginkgo Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> MESOZOIC_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("mesozoic_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(MESOZOIC_PLANKS.get()))))
-            .cachedBuilder()
-            .withCustomName("Mesozoic Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> PEACH_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("peach_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(PEACH_PLANKS.get()))))
-            .cachedBuilder()
-            .withCustomName("Peach Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> SKYWOOD_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("skywood_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(SKYWOOD_PLANKS.get()))))
-            .cachedBuilder()
-            .withCustomName("Skywood Gate Block")
-            .build()
-            .getParentBlock();
+    public static final Supplier<Block> APPLE_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("apple_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(APPLE_PLANKS.get())))).getParentBlock();
+    public static final Supplier<Block> CRYSTALWOOD_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("crystalwood_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(CRYSTALWOOD_PLANKS.get())))).getParentBlock();
+    public static final Supplier<Block> DENSEWOOD_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("densewood_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(DENSEWOOD_PLANKS.get())))).getParentBlock();
+    public static final Supplier<Block> DUPLICATOR_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("duplicator_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(DUPLICATOR_PLANKS.get())))).getParentBlock();
+    public static final Supplier<Block> GINKGO_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("ginkgo_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(GINKGO_PLANKS.get())))).getParentBlock();
+    public static final Supplier<Block> MESOZOIC_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("mesozoic_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(MESOZOIC_PLANKS.get())))).getParentBlock();
+    public static final Supplier<Block> PEACH_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("peach_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(PEACH_PLANKS.get())))).getParentBlock();
+    public static final Supplier<Block> SKYWOOD_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("skywood_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(SKYWOOD_PLANKS.get())))).getParentBlock();
 
-    public static final Supplier<Block> ACACIA_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("acacia_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS))))
-            .cachedBuilder()
-            .withCustomName("Acacia Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> BIRCH_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("birch_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS))))
-            .cachedBuilder()
-            .withCustomName("Birch Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> CHERRY_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("cherry_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS))))
-            .cachedBuilder()
-            .withCustomName("Cherry Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> CRIMSON_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("crimson_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS))))
-            .cachedBuilder()
-            .withCustomName("Crimson Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> DARK_OAK_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("dark_oak_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS))))
-            .cachedBuilder()
-            .withCustomName("Dark Oak Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> MANGROVE_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("mangrove_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS))))
-            .cachedBuilder()
-            .withCustomName("Mangrove Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> OAK_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("oak_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS))))
-            .cachedBuilder()
-            .withCustomName("Oak Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> SPRUCE_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("spruce_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS))))
-            .cachedBuilder()
-            .withCustomName("Spruce Gate Block")
-            .build()
-            .getParentBlock();
-    public static final Supplier<Block> WARPED_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("warped_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS))))
-            .cachedBuilder()
-            .withCustomName("Warped Gate Block")
-            .build()
-            .getParentBlock();
+    public static final Supplier<Block> ACACIA_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("acacia_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.ACACIA_PLANKS)))).getParentBlock();
+    public static final Supplier<Block> BIRCH_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("birch_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.BIRCH_PLANKS)))).getParentBlock();
+    public static final Supplier<Block> CHERRY_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("cherry_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS)))).getParentBlock();
+    public static final Supplier<Block> CRIMSON_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("crimson_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS)))).getParentBlock();
+    public static final Supplier<Block> DARK_OAK_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("dark_oak_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS)))).getParentBlock();
+    public static final Supplier<Block> MANGROVE_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("mangrove_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS)))).getParentBlock();
+    public static final Supplier<Block> OAK_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("oak_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)))).getParentBlock();
+    public static final Supplier<Block> SPRUCE_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("spruce_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS)))).getParentBlock();
+    public static final Supplier<Block> WARPED_GATE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GATE_BLOCK, registerBlock("warped_gate_block", () -> new DungeonGateBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS)))).getParentBlock();
 
     // Mineral Blocks
     public static final Supplier<Block> KUNZITE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.MATERIAL_BLOCK_DIAMOND, registerBlock("kunzite_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(75.0F, 2400.0F).sound(SoundType.NETHERITE_BLOCK)), new Item.Properties().fireResistant())).getParentBlock();
@@ -265,6 +197,21 @@ public final class CABlocks {
     public static final Supplier<Block> TITANIUM_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.MATERIAL_BLOCK_DIAMOND, registerBlock("titanium_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(75.0F, 2400.0F).sound(SoundType.NETHERITE_BLOCK)), new Item.Properties().fireResistant())).getParentBlock();
     public static final Supplier<Block> URANIUM_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.MATERIAL_BLOCK_DIAMOND, registerBlock("uranium_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(60.0F, 1800.0F).sound(SoundType.NETHERITE_BLOCK)), new Item.Properties().fireResistant())).getParentBlock();
 
+    // Component Material Blocks
+    public static final Supplier<Block> ENDER_PEARL_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_IRON, registerBlock("ender_pearl_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).sound(SoundType.NETHERITE_BLOCK).strength(0.5F)))).getParentBlock();
+    public static final Supplier<Block> ENDER_EYE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_IRON, registerBlock("ender_eye_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).sound(SoundType.NETHERITE_BLOCK).strength(0.5F)))).getParentBlock();
+
+    public static final Supplier<Block> BASILISK_SCALE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_DIAMOND, registerBlock("basilisk_scale_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).sound(SoundType.SHROOMLIGHT).strength(5.0F, 6.0F)))).getParentBlock();
+    public static final Supplier<Block> EMPEROR_SCORPION_SCALE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_DIAMOND, registerBlock("emperor_scorpion_scale_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_BLACK).sound(SoundType.SHROOMLIGHT).strength(5.0F, 6.0F)))).getParentBlock();
+    public static final Supplier<Block> ENDER_DRAGON_SCALE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_DIAMOND, registerBlock("ender_dragon_scale_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.SHROOMLIGHT).strength(5.0F, 6.0F)))).getParentBlock();
+    public static final Supplier<Block> MOBZILLA_SCALE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_DIAMOND, registerBlock("mobzilla_scale_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).sound(SoundType.SHROOMLIGHT).strength(5.0F, 6.0F)))).getParentBlock();
+    public static final Supplier<Block> MOTH_SCALE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_IRON, registerBlock("moth_scale_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_ORANGE).sound(SoundType.SHROOMLIGHT).strength(5.0F, 6.0F)))).getParentBlock();
+    public static final Supplier<Block> NIGHTMARE_SCALE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_DIAMOND, registerBlock("nightmare_scale_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).sound(SoundType.SHROOMLIGHT).strength(5.0F, 6.0F)))).getParentBlock();
+    public static final Supplier<Block> QUEEN_SCALE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_DIAMOND, registerBlock("queen_scale_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_RED).sound(SoundType.SHROOMLIGHT).strength(50.0F, 1200.0F)))).getParentBlock();
+    public static final Supplier<Block> ROYAL_GUARDIAN_SCALE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_DIAMOND, registerBlock("royal_guardian_scale_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_YELLOW).sound(SoundType.SHROOMLIGHT).strength(50.0F, 1200.0F)))).getParentBlock();
+    public static final Supplier<Block> WATER_DRAGON_SCALE_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_IRON, registerBlock("water_dragon_scale_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_BLUE).sound(SoundType.SHROOMLIGHT).strength(5.0F, 6.0F)))).getParentBlock();
+
+    public static final Supplier<Block> SALT_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.COMPONENT_BLOCK_CONSTRUCTED, registerBlock("salt_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE).sound(SoundType.SAND).strength(0.5F)))).getParentBlock();
 
     // Standard Ores
 
@@ -281,6 +228,13 @@ public final class CABlocks {
             .getParentBlock();
     public static final Supplier<Block> MINING_SLAB = BlockPropertyWrapper.of(CABlockPropertyWrappers.WOODEN_SLAB, registerBlock("mining_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(MINING_PLANKS.get())))).getParentBlock();
     public static final Supplier<Block> MINING_FENCE = BlockPropertyWrapper.of(CABlockPropertyWrappers.WOODEN_FENCE, registerBlock("mining_fence", () -> new FenceBlock(BlockBehaviour.Properties.copy(MINING_PLANKS.get())))).getParentBlock();
+
+    // CrystalWorld Worldgen
+
+
+    // Mining Paradise Worldgen
+
+
 
     private static Supplier<Block> registerBlock(String id, Supplier<Block> blockSup) {
         return registerBlock(id, blockSup, new Item.Properties());

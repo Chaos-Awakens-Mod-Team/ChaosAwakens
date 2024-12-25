@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_emperor_scorpion_scale_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chaosawakens:emperor_scorpion_scale_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "chaosawakens:emperor_scorpion_scale_from_emperor_scorpion_scale_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_emperor_scorpion_scale_block",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "chaosawakens:emperor_scorpion_scale_from_emperor_scorpion_scale_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

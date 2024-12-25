@@ -343,4 +343,21 @@ public final class LootUtil {
                                                 .hasProperty(MultifaceBlock.getFaceProperty(curDir), true))))
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(-1.0F), true))));
     }
+
+    public static LootTable.Builder dropComponents(Supplier<Block> targetBlock, int minCount, int maxCount) {
+        return LootTable.lootTable().withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .apply(ApplyExplosionDecay.explosionDecay())
+                .when(HAS_SILK_TOUCH)
+                .add(LootItem.lootTableItem(targetBlock.get())
+                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1), true))))
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .apply(ApplyExplosionDecay.explosionDecay())
+                        .add(LootItem.lootTableItem(RegistryUtil.getComponentFromMaterialBlock(targetBlock).get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(minCount, maxCount), true))));
+    }
+    public static LootTable.Builder dropComponents(Supplier<Block> targetBlock) {
+        return dropComponents(targetBlock, 4, 9);
+    }
 }

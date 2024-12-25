@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "chaosawakens:ender_dragon_scale_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "chaosawakens:ender_dragon_scale"
+  }
+}

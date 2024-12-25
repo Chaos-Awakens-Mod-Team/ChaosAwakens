@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "M": {
+      "item": "chaosawakens:ender_dragon_scale"
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MMM",
+    "MMM"
+  ],
+  "result": {
+    "item": "chaosawakens:ender_dragon_scale_block"
+  },
+  "show_notification": true
+}

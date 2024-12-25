@@ -75,7 +75,11 @@ public final class CAItems {
     // Snack
 
     // Special
-    public static final Supplier<Item> SALT = ItemPropertyWrapper.of(CAItemPropertyWrappers.RAW_FOOD, registerItem("salt", () -> new Item(new Item.Properties()))).getParentItem();
+    public static final Supplier<Item> SALT = ItemPropertyWrapper.of(CAItemPropertyWrappers.RAW_FOOD, registerItem("salt", () -> new Item(new Item.Properties())))
+            .cachedBuilder()
+            .withRecipe(RecipeUtil::componentMaterial)
+            .build()
+            .getParentItem();
 
     // Minerals
     public static final Supplier<Item> KUNZITE = ItemPropertyWrapper.of(CAItemPropertyWrappers.STANDARD_MINERAL, registerItem("kunzite", () -> new Item(new Item.Properties()))).getParentItem();
@@ -90,21 +94,21 @@ public final class CAItems {
     // Mob Items
     public static final Supplier<Item> WASP_STINGER = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("wasp_stinger", () -> new Item(new Item.Properties().rarity(Rarity.COMMON)))).getParentItem();
 
-    public static final Supplier<Item> BASILISK_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("basilisk_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
+    public static final Supplier<Item> BASILISK_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_COMPONENT, registerItem("basilisk_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
     public static final Supplier<Item> DEAD_STINK_BUG = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("dead_stink_bug", () -> new Item(new Item.Properties()))).getParentItem();
-    public static final Supplier<Item> EMPEROR_SCORPION_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("emperor_scorpion_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
-    public static final Supplier<Item> ENDER_DRAGON_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("ender_dragon_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
-    public static final Supplier<Item> MOTH_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("moth_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
-    public static final Supplier<Item> NIGHTMARE_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("nightmare_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
+    public static final Supplier<Item> EMPEROR_SCORPION_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_COMPONENT, registerItem("emperor_scorpion_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
+    public static final Supplier<Item> ENDER_DRAGON_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_COMPONENT, registerItem("ender_dragon_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
+    public static final Supplier<Item> MOTH_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_COMPONENT, registerItem("moth_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
+    public static final Supplier<Item> NIGHTMARE_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_COMPONENT, registerItem("nightmare_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
     public static final Supplier<Item> SEA_VIPER_TONGUE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("sea_viper_tongue", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
     public static final Supplier<Item> TRIFFID_GOO = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("triffid_goo", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
     public static final Supplier<Item> VORTEX_EYE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("vortex_eye", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
-    public static final Supplier<Item> WATER_DRAGON_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("water_dragon_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
+    public static final Supplier<Item> WATER_DRAGON_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_COMPONENT, registerItem("water_dragon_scale", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
     public static final Supplier<Item> WORM_TOOTH = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("worm_tooth", () -> new Item(new Item.Properties().rarity(Rarity.RARE)))).getParentItem();
 
-    public static final Supplier<Item> MOBZILLA_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("mobzilla_scale", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)))).getParentItem();
-    public static final Supplier<Item> ROYAL_GUARDIAN_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("royal_guardian_scale", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)))).getParentItem();
-    public static final Supplier<Item> QUEEN_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("queen_scale", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)))).getParentItem();
+    public static final Supplier<Item> MOBZILLA_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_COMPONENT, registerItem("mobzilla_scale", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)))).getParentItem();
+    public static final Supplier<Item> ROYAL_GUARDIAN_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_COMPONENT, registerItem("royal_guardian_scale", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)))).getParentItem();
+    public static final Supplier<Item> QUEEN_SCALE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_COMPONENT, registerItem("queen_scale", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)))).getParentItem();
 
     public static final Supplier<Item> JEFFERY_CORE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("jeffery_core", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)))).getParentItem();
 

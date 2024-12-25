@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "chaosawakens:water_dragon_scale_to_water_dragon_scale_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_water_dragon_scale": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chaosawakens:water_dragon_scale"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_water_dragon_scale",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "chaosawakens:water_dragon_scale_to_water_dragon_scale_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

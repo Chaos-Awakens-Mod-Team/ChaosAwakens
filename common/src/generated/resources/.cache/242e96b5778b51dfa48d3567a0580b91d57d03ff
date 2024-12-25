@@ -1,4 +1,4 @@
-// 1.20.1	2024-12-21T23:07:54.2419549	Chaos Awakens: Item Models
+// 1.20.1	2024-12-23T23:01:12.3532657	Chaos Awakens: Item Models
 09e2e3cba220805db46a5a502d1bbff2c28752ae assets/chaosawakens/models/item/basilisk_scale.json
 27a25f54da34292817a2e5e2a9966421e3cff40f assets/chaosawakens/models/item/big_bertha_blade.json
 3a72b3ff807badea9842b5dcdec0f1972b9e6aca assets/chaosawakens/models/item/big_bertha_guard.json
@@ -50,6 +50,7 @@ e87ada66035e29e7e0efde671cd2922c8f5011e4 assets/chaosawakens/models/item/raw_ven
 c1aa47b81b3a0a1e7a1c3f577fc59173f8da71bf assets/chaosawakens/models/item/rock_fish.json
 56a9510ca0cab0e1f5d7be02c3ed9a79b46e2195 assets/chaosawakens/models/item/royal_guardian_scale.json
 c280c81ea7b71b0d546e2ca4c4da5803b6f0cb45 assets/chaosawakens/models/item/ruby.json
+7a97a4348ca4e65c3fe248ebc79ec8b305c0d466 assets/chaosawakens/models/item/salt.json
 d6d66efdab41f85b3b6400d26102dcf1cc0897b7 assets/chaosawakens/models/item/seafood_patty.json
 3dff9e413a4442825af6cb77798bf4310260183b assets/chaosawakens/models/item/sea_viper_tongue.json
 f61ec0bb5ba7fe991df9bb78c382a3c876ad1ded assets/chaosawakens/models/item/spark_fish.json
