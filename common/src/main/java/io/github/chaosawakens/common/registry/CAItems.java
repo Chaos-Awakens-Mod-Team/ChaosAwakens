@@ -5,6 +5,7 @@ import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.api.asm.annotations.RegistrarEntry;
 import io.github.chaosawakens.api.item.ItemPropertyWrapper;
 import io.github.chaosawakens.api.platform.CAServices;
+import io.github.chaosawakens.common.item.misc.CritterCageItem;
 import io.github.chaosawakens.common.item.misc.MinersDreamItem;
 import io.github.chaosawakens.util.RecipeUtil;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -120,6 +121,12 @@ public final class CAItems {
     public static final Supplier<Item> MINERS_DREAM = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("miners_dream", () -> new MinersDreamItem(new Item.Properties())))
             .cachedBuilder()
             .withRecipe(recipeConsumer -> RecipeUtil.threeRowRecipe(recipeConsumer, KUNZITE.get(), Items.REDSTONE_BLOCK, Items.GUNPOWDER))
+            .build()
+            .getParentItem();
+
+    public static final Supplier<Item> CRITTER_CAGE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("critter_cage", () -> new CritterCageItem(new Item.Properties().stacksTo(16))))
+            .cachedBuilder()
+            .withRecipe(recipeConsumer -> RecipeUtil.cageRecipe(recipeConsumer, Items.STICK, Items.IRON_INGOT, 1))
             .build()
             .getParentItem();
 

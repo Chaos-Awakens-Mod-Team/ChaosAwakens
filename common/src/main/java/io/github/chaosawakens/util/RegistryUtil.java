@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.ItemLike;
@@ -79,6 +81,48 @@ public final class RegistryUtil {
      */
     public static ResourceLocation getItemKey(ItemLike targetItemLike) {
         return new ResourceLocation(getItemModId(targetItemLike), getItemName(targetItemLike));
+    }
+
+    /**
+     * Retrieves the registry name of the provided {@link EntityType} via {@link DefaultedRegistry#getKey(Object)} (from the {@link BuiltInRegistries#ITEM} registry).
+     *
+     * @param targetEntityType The {@link EntityType} to retrieve the registry name for.
+     *
+     * @return The registry name of the provided {@link EntityType}.
+     *
+     * @see #getEntityModId(EntityType)
+     * @see #getEntityKey(EntityType)
+     */
+    public static String getEntityName(EntityType<?> targetEntityType) {
+        return BuiltInRegistries.ENTITY_TYPE.getKey(targetEntityType).getPath();
+    }
+
+    /**
+     * Retrieves the modid of the provided {@link EntityType} via {@link DefaultedRegistry#getKey(Object)} (from the {@link BuiltInRegistries#ITEM} registry).
+     *
+     * @param targetEntityType The {@link EntityType} to retrieve the registry name for.
+     *
+     * @return The origin modid of the provided {@link EntityType}.
+     *
+     * @see #getEntityName(EntityType)
+     * @see #getEntityKey(EntityType)
+     */
+    public static String getEntityModId(EntityType<?> targetEntityType) {
+        return BuiltInRegistries.ENTITY_TYPE.getKey(targetEntityType).getNamespace();
+    }
+
+    /**
+     * Retrieves and returns a {@link ResourceLocation} representing the full registry key of the given {@link EntityType}.
+     *
+     * @param targetEntityType The {@link EntityType} to retrieve the registry key for.
+     *
+     * @return A {@link ResourceLocation} representing the full key of the target {@link ItemLike}
+     *
+     * @see #getEntityModId(EntityType)
+     * @see #getEntityName(EntityType)
+     */
+    public static ResourceLocation getEntityKey(EntityType<?> targetEntityType) {
+        return new ResourceLocation(getEntityModId(targetEntityType), getEntityName(targetEntityType));
     }
 
     /**
