@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "chaosawakens:emperor_scorpion_scale_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "chaosawakens:emperor_scorpion_scale"
+  }
+}

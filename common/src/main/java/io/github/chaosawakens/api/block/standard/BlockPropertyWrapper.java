@@ -252,6 +252,15 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
     }
 
     /**
+     * Gets whether this BPW instance bypasses default translation corrections.
+     *
+     * @return Whether this BPW instance bypasses default translation corrections.
+     */
+    public boolean hasLiteralTranslation() {
+        return builder != null && builder.literalTranslation;
+    }
+
+    /**
      * Gets the defined separator words from the {@link #builder()} if the builder exists.
      *
      * @return The defined separator words, or an empty {@link ObjectArrayList} if the {@link #builder()} is {@code null}.
@@ -389,6 +398,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         private List<Supplier<CreativeModeTab>> parentTabs = new ObjectArrayList<>(); // Not datagen-related but whatever
         @Nullable
         private Function<Supplier<Block>, BlockColor> blockColorMappingFunc;
+        private boolean literalTranslation = false;
 
         private BPWBuilder(BlockPropertyWrapper ownerWrapper, Supplier<Block> parentBlock) {
             this.ownerWrapper = ownerWrapper;
@@ -436,6 +446,32 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         public BPWBuilder withCustomName(String manuallyLocalizedBlockName) {
             this.manuallyLocalizedBlockName = manuallyLocalizedBlockName;
             return this;
+        }
+
+        /**
+         * Marks this builder as using literal translations, meaning that corrections (like the one seen in the example provided by {@link #withCustomName(String)}) are not applied.
+         *
+         * @param literalTranslation Whether to use literal translations.
+         *
+         * @return {@code this} (builder method).
+         *
+         * @see #withCustomName(String)
+         * @see #literalTranslation()
+         */
+        public BPWBuilder literalTranslation(boolean literalTranslation) {
+            this.literalTranslation = literalTranslation;
+            return this;
+        }
+
+        /**
+         * Overloaded variant of {@link #literalTranslation(boolean)} which marks this builder as using literal translations.
+         *
+         * @return {@code this} (builder method).
+         *
+         * @see #literalTranslation(boolean)
+         */
+        public BPWBuilder literalTranslation() {
+            return literalTranslation(true);
         }
 
         /**

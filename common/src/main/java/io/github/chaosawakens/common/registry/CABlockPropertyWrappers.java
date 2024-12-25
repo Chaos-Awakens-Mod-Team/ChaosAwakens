@@ -207,6 +207,7 @@ public final class CABlockPropertyWrappers {
 
     public static final BlockPropertyWrapper GATE_BLOCK = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK)
             .cachedBuilder()
+            .literalTranslation()
             .withCustomModelDefinitions(parentBlock -> ObjectArrayList.of(ModelUtil.cubeBottomTop(RegistryUtil.getBlockTexture(parentBlock), RegistryUtil.getBlockTexture(parentBlock).withSuffix("_top"), RegistryUtil.getBlockTexture(parentBlock).withSuffix("_top"))))
             .build();
 
@@ -273,4 +274,35 @@ public final class CABlockPropertyWrappers {
             .withRecipe(RecipeUtil::solidPillarRecipe)
             .withTag(BlockTags.MINEABLE_WITH_PICKAXE)
             .build();
+
+    // Component Material
+    public static final BlockPropertyWrapper COMPONENT_BLOCK = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK)
+            .cachedBuilder()
+            .withRecipe(RecipeUtil::componentMaterialBlock)
+            .literalTranslation()
+            .build();
+
+    public static final BlockPropertyWrapper COMPONENT_BLOCK_STONE = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK_PICKAXE_STONE)
+            .cachedBuilder()
+            .withRecipe(RecipeUtil::componentMaterialBlock)
+            .literalTranslation()
+            .build();
+    public static final BlockPropertyWrapper COMPONENT_BLOCK_IRON = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK_PICKAXE_IRON)
+            .cachedBuilder()
+            .withRecipe(RecipeUtil::componentMaterialBlock)
+            .literalTranslation()
+            .build();
+    public static final BlockPropertyWrapper COMPONENT_BLOCK_DIAMOND = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK_PICKAXE_DIAMOND)
+            .cachedBuilder()
+            .withRecipe(RecipeUtil::componentMaterialBlock)
+            .literalTranslation()
+            .build();
+
+    public static final BlockPropertyWrapper COMPONENT_BLOCK_CONSTRUCTED = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK)
+            .cachedBuilder()
+            .withRecipe(RecipeUtil::componentMaterialBlock)
+            .withLootTable(LootUtil::dropComponents)
+            .literalTranslation()
+            .build();
+
 }

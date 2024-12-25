@@ -461,4 +461,16 @@ public final class RecipeUtil {
             });
         };
     }
+
+    public static Consumer<Supplier<Item>> componentMaterial(Consumer<FinishedRecipe> recipeConsumer) {
+        return (resultItemSup) -> {
+            if (RegistryUtil.getMaterialBlockFromComponent(resultItemSup) != null) materialBlockToMaterial(recipeConsumer, RegistryUtil.getMaterialBlockFromComponent(resultItemSup).get()).accept(resultItemSup);
+        };
+    }
+
+    public static Consumer<Supplier<Block>> componentMaterialBlock(Consumer<FinishedRecipe> recipeConsumer) {
+        return (resultBlockSup) -> {
+            if (RegistryUtil.getComponentFromMaterialBlock(resultBlockSup) != null) materialToBlock(recipeConsumer, RegistryUtil.getComponentFromMaterialBlock(resultBlockSup).get()).accept(resultBlockSup);
+        };
+    }
 }

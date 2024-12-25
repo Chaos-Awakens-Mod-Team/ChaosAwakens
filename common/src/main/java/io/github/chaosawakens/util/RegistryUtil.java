@@ -431,10 +431,13 @@ public final class RegistryUtil {
     public static Supplier<Block> getBlockBasedOnSuffix(Supplier<Block> targetBlock, String targetRegNameSuffix, String suffixReplacement) {
         ResourceLocation targetBlockKey = getItemKey(targetBlock.get());
         String copiedBlockPath = getItemName(targetBlock.get());
+        String targetPath = targetRegNameSuffix.isBlank() ? copiedBlockPath.concat(suffixReplacement) : copiedBlockPath.replace(targetRegNameSuffix, suffixReplacement);
 
         return targetBlockKey.getPath().endsWith(targetRegNameSuffix)
-                && !BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(copiedBlockPath.replace(targetRegNameSuffix, suffixReplacement))).getDescriptionId().equals("block.minecraft.air")
-                ? () -> BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(copiedBlockPath.replace(targetRegNameSuffix, suffixReplacement)))
+                && !BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(targetPath)).getDescriptionId().equals("block.minecraft.air")
+                ? () -> BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(targetPath))
+                : !BuiltInRegistries.BLOCK.get(new ResourceLocation(targetPath)).getDescriptionId().equals("block.minecraft.air")
+                ? () -> BuiltInRegistries.BLOCK.get(new ResourceLocation(targetPath))
                 : null;
     }
 
@@ -448,6 +451,9 @@ public final class RegistryUtil {
                 && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetPath)).getDescriptionId().equals("item.minecraft.air")
                 && !BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetPath)).getDescriptionId().equals("block.minecraft.air")
                 ? () -> BuiltInRegistries.ITEM.get(targetItemKey.withPath(targetPath))
+                : !BuiltInRegistries.ITEM.get(new ResourceLocation(targetPath)).getDescriptionId().equals("item.minecraft.air") //TODO Take care of hardcoded checks like these ones here :moyai:
+                && !BuiltInRegistries.ITEM.get(new ResourceLocation(targetPath)).getDescriptionId().equals("block.minecraft.air")
+                ? () -> BuiltInRegistries.ITEM.get(new ResourceLocation(targetPath))
                 : null;
     }
 
@@ -509,6 +515,22 @@ public final class RegistryUtil {
                 .filter(curBlock -> getItemName(curBlock).endsWith(targetBlockRegNameSuffix) && getItemName(curBlock).contains(getItemName(targetItem.get()).replace(targetItemAbrogatedRegNameSuffix, "")))
                 .map(Suppliers::ofInstance)
                 .collect(Collectors.toCollection(ObjectArrayList::new));
+    }
+
+    @Nullable
+    public static Supplier<Block> getMaterialBlockFromComponent(Supplier<Item> targetItem) {
+        Supplier<Block> targetBlock = BuiltInRegistries.BLOCK.stream()
+                .filter(curBlock -> (getItemName(targetItem.get()).concat("_block")).equals(getItemName(curBlock)))
+                .map(Suppliers::ofInstance)
+                .findFirst()
+                .get();
+
+        return targetBlock != null && !targetBlock.get().getDescriptionId().equals("block.minecraft.air") ? targetBlock : null;
+    }
+
+    @Nullable
+    public static Supplier<Item> getComponentFromMaterialBlock(Supplier<Block> targetBlock) {
+        return getItemBasedOnSuffix(() -> targetBlock.get().asItem(), "_block", "");
     }
 
     public static ObjectArrayList<Supplier<Block>> getOresFrom(Supplier<Item> targetItem, String targetAbrogatedRegNameSuffix) {

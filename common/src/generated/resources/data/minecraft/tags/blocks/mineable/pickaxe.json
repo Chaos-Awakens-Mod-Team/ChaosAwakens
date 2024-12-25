@@ -3,6 +3,17 @@
     "chaosawakens:kunzite_block",
     "chaosawakens:ruby_block",
     "chaosawakens:titanium_block",
-    "chaosawakens:uranium_block"
+    "chaosawakens:uranium_block",
+    "chaosawakens:ender_pearl_block",
+    "chaosawakens:ender_eye_block",
+    "chaosawakens:basilisk_scale_block",
+    "chaosawakens:emperor_scorpion_scale_block",
+    "chaosawakens:ender_dragon_scale_block",
+    "chaosawakens:mobzilla_scale_block",
+    "chaosawakens:moth_scale_block",
+    "chaosawakens:nightmare_scale_block",
+    "chaosawakens:queen_scale_block",
+    "chaosawakens:royal_guardian_scale_block",
+    "chaosawakens:water_dragon_scale_block"
   ]
 }

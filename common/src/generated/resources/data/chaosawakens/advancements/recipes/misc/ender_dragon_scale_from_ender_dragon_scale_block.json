@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ender_dragon_scale_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chaosawakens:ender_dragon_scale_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "chaosawakens:ender_dragon_scale_from_ender_dragon_scale_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_ender_dragon_scale_block",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "chaosawakens:ender_dragon_scale_from_ender_dragon_scale_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

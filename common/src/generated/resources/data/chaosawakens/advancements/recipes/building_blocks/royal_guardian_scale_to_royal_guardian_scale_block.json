@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_royal_guardian_scale": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chaosawakens:royal_guardian_scale"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "chaosawakens:royal_guardian_scale_to_royal_guardian_scale_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_royal_guardian_scale",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "chaosawakens:royal_guardian_scale_to_royal_guardian_scale_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

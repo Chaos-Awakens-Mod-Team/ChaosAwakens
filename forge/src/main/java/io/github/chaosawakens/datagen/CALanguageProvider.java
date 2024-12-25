@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CALanguageProvider extends LanguageProvider {
@@ -177,7 +178,7 @@ public class CALanguageProvider extends LanguageProvider {
 
             CAConstants.LOGGER.debug("[Currently Translating Block]: " + blockRegName + " -> " + (MANUAL_TRANSLATIONS.containsKey(blockRegName) ? MANUAL_TRANSLATIONS.get(blockRegName) : getTranslatedRegistryName(blockRegName)));
 
-            if (blockRegName.endsWith("_block") && !MANUAL_TRANSLATIONS.containsKey(blockRegName)) localizeGeneralRegistryName(blockRegName, "Block of " + getTranslatedRegistryName(blockRegName).substring(0, getTranslatedRegistryName(blockRegName).lastIndexOf(" Block")));
+            if (blockRegName.endsWith("_block") && !MANUAL_TRANSLATIONS.containsKey(blockRegName) && (!BlockPropertyWrapper.getMappedBpws().entrySet().stream().map(Map.Entry::getKey).filter(curEntry -> curEntry.get().getDescriptionId().equals(blockRegName)).findFirst().isPresent() || BlockPropertyWrapper.getMappedBpws().entrySet().stream().filter(curEntry -> curEntry.getKey().get().getDescriptionId().equals(blockRegName)).findFirst().get().getValue().hasLiteralTranslation())) localizeGeneralRegistryName(blockRegName, "Block of " + getTranslatedRegistryName(blockRegName).substring(0, getTranslatedRegistryName(blockRegName).lastIndexOf(" Block")));
             else localizeGeneralRegistryName(blockRegName);
         });
     }

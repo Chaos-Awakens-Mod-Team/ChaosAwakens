@@ -44,4 +44,10 @@ public class CAItemPropertyWrappers {
             .cachedBuilder()
             .withRecipe(RecipeUtil::standardMineral)
             .build();
+
+    // Component
+    public static final ItemPropertyWrapper BASIC_COMPONENT = ItemPropertyWrapper.ofTemplate(BASIC_GENERATED)
+            .cachedBuilder()
+            .withRecipe(RecipeUtil::componentMaterial)
+            .build();
 }
