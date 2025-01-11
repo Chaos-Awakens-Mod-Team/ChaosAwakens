@@ -301,6 +301,7 @@ public final class CABlockPropertyWrappers {
             .withBlockStateDefinition(ModelUtil::simpleBlock)
             .withBlockColor(RegistryUtil::getVanillaGrassColorFor)
             .withLootTable(LootUtil::dropSilkTouchOrShears)
+            .withParentCreativeModeTab(CACreativeModeTabs.CHAOS_AWAKENS_BLOCKS)
             .build();
     public static final BlockPropertyWrapper BASIC_FLOWER = BlockPropertyWrapper.ofTemplate(BASIC_PLANT)
             .cachedBuilder()
@@ -587,5 +588,20 @@ public final class CABlockPropertyWrappers {
             .cachedBuilder()
             .withBlockTag(CATags.CABlockTags.FOSSILS_KYANITE_CHAOSAWAKENS)
             .withItemTag(CATags.CAItemTags.FOSSILS_KYANITE_CHAOSAWAKENS)
+            .build();
+
+    // Flower
+    public static final BlockPropertyWrapper STEM_BLOCK = BlockPropertyWrapper.ofTemplate(BASIC_ROTATED_PILLAR_BLOCK)
+            .cachedBuilder()
+            .withCustomModelDefinitions(parentBlock -> ModelUtil.rotatedPillarBlock(RegistryUtil.getBlockTexture(parentBlock), RegistryUtil.getBlockTexture(parentBlock).withSuffix("_top")))
+            .withBlockTag(CATags.CABlockTags.FLOWER_BLOCKS)
+            .withItemTag(CATags.CAItemTags.FLOWER_BLOCKS)
+            .withTags(ObjectArrayList.of(() -> BlockTags.MINEABLE_WITH_HOE, () -> BlockTags.MINEABLE_WITH_AXE))
+            .build();
+    public static final BlockPropertyWrapper PETAL_BLOCK = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK)
+            .cachedBuilder()
+            .withBlockTag(CATags.CABlockTags.FLOWER_BLOCKS)
+            .withItemTag(CATags.CAItemTags.FLOWER_BLOCKS)
+            .withTags(ObjectArrayList.of(() -> BlockTags.MINEABLE_WITH_HOE, () -> BlockTags.MINEABLE_WITH_AXE))
             .build();
 }

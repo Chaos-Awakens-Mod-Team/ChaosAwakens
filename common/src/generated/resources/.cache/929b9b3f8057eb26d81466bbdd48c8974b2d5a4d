@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-11T19:38:46.897661	Chaos Awakens: Block Tags
+// 1.20.1	2025-01-11T22:01:44.5219603	Chaos Awakens: Block Tags
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_crystal.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_mining.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_village.json
@@ -44,6 +44,7 @@ e68a8acd09380265dc6518c084ac06db70e8c288 data/chaosawakens/tags/blocks/miners_dr
 7b73d6e38919b26eba0831d9b725aa36f1678b71 data/chaosawakens/tags/blocks/stalagmite_ore.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/stalagmite_ore/common.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/stalagmite_ore/rare.json
+d89fc4326b85b6d39178241f56e9b9c6ea779b1f data/chaosawakens/tags/blocks/vegetation/flower_blocks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/wood/logs/apple_logs.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/wood/logs/dead_duplicator_logs.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/wood/logs/densewood_logs.json
@@ -56,11 +57,12 @@ f96e8f951c00e400373b31ca88fd1985fd73f7de data/chaosawakens/tags/blocks/wood/logs
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/minecraft/tags/blocks/crops.json
 376f0b2f5eecef24baab1177ff369fc169dcbc53 data/minecraft/tags/blocks/dirt.json
 0657cc92f0d5b89ccce850814f03875040484c05 data/minecraft/tags/blocks/fence_gates.json
-2de0ee029cff2acc8e54e41dcc976dc790a28f08 data/minecraft/tags/blocks/flowers.json
+75ef6b3c64297a738899241c8213ca21f8c1ad22 data/minecraft/tags/blocks/flowers.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/minecraft/tags/blocks/ice.json
 539c63c2e9813b8dde94400c01cf7869f0822dad data/minecraft/tags/blocks/leaves.json
 2c3a4af37be58291aadbee3781c0fd38c6aa1ded data/minecraft/tags/blocks/logs_that_burn.json
-c9d7c06bf956a3674a205f16879b54788b6eab7c data/minecraft/tags/blocks/mineable/axe.json
+b95e07ccdca2e6b613945397dda9e04c79800366 data/minecraft/tags/blocks/mineable/axe.json
+d89fc4326b85b6d39178241f56e9b9c6ea779b1f data/minecraft/tags/blocks/mineable/hoe.json
 9ef1be475a6bb8ce6e183bf595619c201227e1ba data/minecraft/tags/blocks/mineable/pickaxe.json
 8e6857fca40e1dd7b123e76ee8bc8977496b72b5 data/minecraft/tags/blocks/mineable/shovel.json
 77231706f171152530a4de03b16c0b791383dc79 data/minecraft/tags/blocks/needs_diamond_tool.json
@@ -69,7 +71,7 @@ a7a7dc7f4f5ba9eda4b4cc81482933b822d0ca21 data/minecraft/tags/blocks/needs_iron_t
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/minecraft/tags/blocks/overworld_carver_replaceables.json
 5c1e7c4f5a2e2ce5b0eaed151ea4f12828aa6956 data/minecraft/tags/blocks/planks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/minecraft/tags/blocks/sand.json
-cd60d217bbb0487dd7723dc54d0dbd4bc2bc2e3f data/minecraft/tags/blocks/small_flowers.json
+4a667054e6259cfc605acd1fb87e2ab259085e48 data/minecraft/tags/blocks/small_flowers.json
 b29dbb6f965a866e7b2b85e5d317a32b7ba9ec0f data/minecraft/tags/blocks/tall_flowers.json
 f15ff21a8eb277c8ce6b8fce2782d5bfe3d4f33c data/minecraft/tags/blocks/wooden_buttons.json
 c73f48340acd02386faa456c2f390fad2c17be3e data/minecraft/tags/blocks/wooden_doors.json

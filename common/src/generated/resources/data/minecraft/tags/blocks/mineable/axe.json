@@ -110,6 +110,10 @@
     "chaosawakens:skywood_button",
     "chaosawakens:mining_planks",
     "chaosawakens:mining_slab",
-    "chaosawakens:mining_fence"
+    "chaosawakens:mining_fence",
+    "chaosawakens:flower_stem",
+    "chaosawakens:blood_red_petal_block",
+    "chaosawakens:bright_pink_petal_block",
+    "chaosawakens:navy_blue_petal_block"
   ]
 }

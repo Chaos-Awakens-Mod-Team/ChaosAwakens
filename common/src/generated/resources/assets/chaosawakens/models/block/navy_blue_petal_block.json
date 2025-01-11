@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "chaosawakens:block/stem/navy_blue_petal_block"
+  }
+}

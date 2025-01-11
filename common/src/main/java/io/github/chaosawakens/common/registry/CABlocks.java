@@ -246,8 +246,20 @@ public final class CABlocks {
             .build()
             .getParentBlock();
 
-    // CrystalWorld Vegetation
+    // Stem Blocks
+    public static final Supplier<Block> FLOWER_STEM = BlockPropertyWrapper.of(CABlockPropertyWrappers.STEM_BLOCK, registerBlock("flower_stem", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(MapColor.PLANT).strength(0.3F).sound(SoundType.WOOD)))).getParentBlock();
 
+    public static final Supplier<Block> BLOOD_RED_PETAL_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.PETAL_BLOCK, registerBlock("blood_red_petal_block", () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(MapColor.PLANT).strength(0.2F).sound(SoundType.GRASS)))).getParentBlock();
+    public static final Supplier<Block> BRIGHT_PINK_PETAL_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.PETAL_BLOCK, registerBlock("bright_pink_petal_block", () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(MapColor.PLANT).strength(0.2F).sound(SoundType.GRASS)))).getParentBlock();
+    public static final Supplier<Block> NAVY_BLUE_PETAL_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.PETAL_BLOCK, registerBlock("navy_blue_petal_block", () -> new Block(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().mapColor(MapColor.PLANT).strength(0.2F).sound(SoundType.GRASS)))).getParentBlock();
+
+    // General Vegetation
+    public static final Supplier<Block> CYAN_ROSE = BlockPropertyWrapper.of(CABlockPropertyWrappers.SMALL_FLOWER, registerBlock("cyan_rose", () -> new CustomizableFlowerBlock(() -> MobEffects.MOVEMENT_SPEED, 7, BlockBehaviour.Properties.copy(Blocks.BLUE_ORCHID), VegetationConfig.DEFAULT.getPlantConfig()))).getParentBlock();
+    public static final Supplier<Block> RED_ROSE = BlockPropertyWrapper.of(CABlockPropertyWrappers.SMALL_FLOWER, registerBlock("red_rose", () -> new CustomizableFlowerBlock(() -> MobEffects.MOVEMENT_SLOWDOWN, 14, BlockBehaviour.Properties.copy(Blocks.POPPY), VegetationConfig.DEFAULT.getPlantConfig()))).getParentBlock();
+    public static final Supplier<Block> PAEONIA = BlockPropertyWrapper.of(CABlockPropertyWrappers.SMALL_FLOWER, registerBlock("paeonia", () -> new CustomizableFlowerBlock(() -> MobEffects.SLOW_FALLING, 10, BlockBehaviour.Properties.copy(Blocks.PINK_TULIP), VegetationConfig.DEFAULT.getPlantConfig()))).getParentBlock();
+    public static final Supplier<Block> SWAMP_MILKWEED = BlockPropertyWrapper.of(CABlockPropertyWrappers.SMALL_FLOWER, registerBlock("swamp_milkweed", () -> new CustomizableFlowerBlock(() -> MobEffects.MOVEMENT_SLOWDOWN, 14, BlockBehaviour.Properties.copy(Blocks.WHITE_TULIP), VegetationConfig.DEFAULT.getPlantConfig()))).getParentBlock();
+    public static final Supplier<Block> PRIMROSE = BlockPropertyWrapper.of(CABlockPropertyWrappers.SMALL_FLOWER, registerBlock("primrose", () -> new CustomizableFlowerBlock(() -> MobEffects.DIG_SPEED, 14, BlockBehaviour.Properties.copy(Blocks.ALLIUM), VegetationConfig.DEFAULT.getPlantConfig()))).getParentBlock();
+    public static final Supplier<Block> DAISY = BlockPropertyWrapper.of(CABlockPropertyWrappers.SMALL_FLOWER, registerBlock("daisy", () -> new CustomizableFlowerBlock(() -> MobEffects.JUMP, 14, BlockBehaviour.Properties.copy(Blocks.WHITE_TULIP), VegetationConfig.DEFAULT.getPlantConfig()))).getParentBlock();
 
     // Mining Paradise Vegetation
     public static final Supplier<Block> DENSE_GRASS_BLOCK = BlockPropertyWrapper.of(CABlockPropertyWrappers.GRASS_BLOCK, registerBlock("dense_grass_block", () -> new CustomizableGrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).strength(0.75F), () -> VegetationConfig.DENSE))).getParentBlock();
@@ -269,6 +281,9 @@ public final class CABlocks {
     public static final Supplier<Block> TALL_BUSH = BlockPropertyWrapper.of(CABlockPropertyWrappers.TALL_PLANT, registerBlock("tall_bush", () -> new CustomizableDoublePlantBlock(BlockBehaviour.Properties.copy(Blocks.TALL_GRASS), VegetationConfig.DENSE_BUSH.getPlantConfig()))).getParentBlock();
     public static final Supplier<Block> SMALL_CARNIVOROUS_PLANT = BlockPropertyWrapper.of(CABlockPropertyWrappers.BASIC_FLOWER, registerBlock("small_carnivorous_plant", () -> new CustomizableFlowerBlock(BlockBehaviour.Properties.copy(Blocks.ORANGE_TULIP), VegetationConfig.DENSE.getPlantConfig()))).getParentBlock();
     public static final Supplier<Block> BIG_CARNIVOROUS_PLANT = BlockPropertyWrapper.of(CABlockPropertyWrappers.BASIC_FLOWER, registerBlock("big_carnivorous_plant", () -> new BigCarnivorousPlantBlock(BlockBehaviour.Properties.copy(Blocks.ORANGE_TULIP)))).getParentBlock();
+
+    // CrystalWorld Vegetation
+
 
     // Fossils
     public static final Supplier<Block> CRYSTALIZED_CRYSTAL_APPLE_COW = BlockPropertyWrapper.of(CABlockPropertyWrappers.FOSSIL_BLOCK_CHAOSAWAKENS_KYANITE, registerBlock("crystalized_crystal_apple_cow_kyanite", () -> new Block(BlockBehaviour.Properties.copy(Blocks.GLASS)))).getParentBlock();

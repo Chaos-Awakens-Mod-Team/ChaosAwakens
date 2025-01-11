@@ -166,6 +166,8 @@ public class CATags {
 
         public static final Supplier<TagKey<Block>> LEAF_CARPETS = createBlockTag("leaf_carpets");
 
+        public static final Supplier<TagKey<Block>> FLOWER_BLOCKS = createBlockTag("vegetation/flower_blocks");
+
         public static final Supplier<TagKey<Block>> FARMLAND_BLOCKS = createWrappedBlockTag("farmland_blocks")
                 .withEntries(ObjectArrayList.of(() -> Blocks.FARMLAND))
                 .getParentTag();
@@ -331,6 +333,8 @@ public class CATags {
         public static final Supplier<TagKey<Item>> MINING_WOOD = createWrappedItemTag("wood/mining_wood")
                 .withEntries(RegistryUtil.getBlocksAsItemSups(CABlocks.MINING_WOOD, CABlocks.MINING_PLANKS, CABlocks.MINING_SLAB, CABlocks.MINING_FENCE))
                 .getParentTag();
+
+        public static final Supplier<TagKey<Item>> FLOWER_BLOCKS = createItemTag("vegetation/flower_blocks");
 
         private static TagWrapper<Item, TagKey<Item>> createWrappedItemTag(String name) {
             return TagWrapper.create(createItemTag(name));

@@ -1,9 +1,11 @@
 package io.github.chaosawakens.common.block.vegetation.general.config;
 
 import io.github.chaosawakens.common.block.base.general.config.PlantVegetationConfig;
+import io.github.chaosawakens.common.registry.CATags;
 import io.github.chaosawakens.util.RegistryUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -18,7 +20,7 @@ import java.util.function.Supplier;
 public class DefaultPlantVegetationConfig implements PlantVegetationConfig {
     private final Supplier<Block> plantBlock;
     private final Supplier<Block> tallPlantBlock;
-    private Predicate<BlockState> placementPredicate = state -> true;
+    private Predicate<BlockState> placementPredicate = state -> state.is(BlockTags.DIRT) || state.is(CATags.CABlockTags.FARMLAND_BLOCKS.get());
 
     public DefaultPlantVegetationConfig(Supplier<Block> plantBlock, Supplier<Block> tallPlantBlock) {
         this.plantBlock = plantBlock;
