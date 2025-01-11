@@ -33,7 +33,7 @@ public class LeafCarpetBlock extends MultifaceBlock implements SimpleWaterlogged
     }
 
     @Override
-    public BlockState updateShape(BlockState targetState, Direction facingDir, BlockState neighbourState, LevelAccessor curLevel, BlockPos targetPos, BlockPos neighbourPos) {
+    public @NotNull BlockState updateShape(BlockState targetState, Direction facingDir, BlockState neighbourState, LevelAccessor curLevel, BlockPos targetPos, BlockPos neighbourPos) {
         if (isWaterLogged(targetState)) curLevel.scheduleTick(targetPos, Fluids.WATER, Fluids.WATER.getTickDelay(curLevel));
 
         return super.updateShape(targetState, facingDir, neighbourState, curLevel, targetPos, neighbourPos);
@@ -41,11 +41,11 @@ public class LeafCarpetBlock extends MultifaceBlock implements SimpleWaterlogged
 
     @Override
     public boolean canBeReplaced(BlockState targetState, BlockPlaceContext ctx) {
-        return !ctx.getItemInHand().is(CATags.CAItemTags.LEAF_CARPETS) || super.canBeReplaced(targetState, ctx);
+        return !ctx.getItemInHand().is(CATags.CAItemTags.LEAF_CARPETS.get()) || super.canBeReplaced(targetState, ctx);
     }
 
     @Override
-    public FluidState getFluidState(BlockState targetState) {
+    public @NotNull FluidState getFluidState(BlockState targetState) {
         return isWaterLogged(targetState) ? Fluids.WATER.getSource(false) : super.getFluidState(targetState);
     }
 

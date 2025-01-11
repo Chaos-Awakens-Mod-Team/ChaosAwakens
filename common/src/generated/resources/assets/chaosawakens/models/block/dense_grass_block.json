@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/grass_block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "bottom": "chaosawakens:block/vegetation/dense/dense_dirt",
+    "overlay": "chaosawakens:block/vegetation/dense/dense_grass_block_side_overlay",
+    "particle": "chaosawakens:block/vegetation/dense/dense_dirt",
+    "side": "chaosawakens:block/vegetation/dense/dense_grass_block_side",
+    "top": "chaosawakens:block/vegetation/dense/dense_grass_block_top"
+  }
+}

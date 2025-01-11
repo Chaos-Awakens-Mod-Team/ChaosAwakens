@@ -3,7 +3,9 @@ package io.github.chaosawakens.util;
 import com.google.common.base.Suppliers;
 import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.common.registry.CABlocks;
+import it.unimi.dsi.fastutil.ints.IntIntMutablePair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectObjectMutablePair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.renderer.BiomeColors;
@@ -11,12 +13,17 @@ import net.minecraft.core.DefaultedRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.FoliageColor;
+import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.level.block.LeavesBlock;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -26,6 +33,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
@@ -158,7 +167,7 @@ public final class RegistryUtil {
                                 }
                             });
                 } catch (IOException e) {
-                    CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
+                    CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work outside of the Java classpath.", e);
                 }
             } else {
                 try (JarFile curJarFile = new JarFile(curFile)) { // Files nested within JARs
@@ -179,7 +188,7 @@ public final class RegistryUtil {
                                 }
                             });
                 } catch (IOException e) {
-                    CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work with non-literal/non-regular directories/files.", e);
+                    CAConstants.LOGGER.error("Failed to walk system classpath. Ensure that you're in your IDE and calling this method in datagen-related code, as it is otherwise not designed to work outside of the Java classpath.", e);
                 }
             }
         }
@@ -205,6 +214,11 @@ public final class RegistryUtil {
         populateCachedPNGTextures(modid);
 
         return CACHED_PNG_TEXTURES.stream().filter(curRL -> !modid.isBlank() && curRL.getPath().endsWith(targetBlockFileName) && curRL.getNamespace().equals(modid)).findFirst().orElse(null);
+    }
+
+    @Nullable
+    public static ResourceLocation getTexture(ResourceLocation targetObjectKey) {
+        return getTexture(targetObjectKey.getNamespace(), targetObjectKey.getPath());
     }
 
     /**
@@ -335,6 +349,22 @@ public final class RegistryUtil {
     @Nullable
     public static Supplier<Block> getLogFrom(Supplier<Block> targetBlock) {
         return getFromWood(targetBlock, "_log");
+    }
+
+    @Nullable
+    public static Supplier<Block> getStrippedWoodFrom(Supplier<Block> targetBlock, boolean allowSelfReturn) {
+        ResourceLocation targetBlockKey = getItemKey(targetBlock.get());
+
+        return targetBlockKey.getPath().startsWith("stripped") && (targetBlockKey.getPath().endsWith("wood") || targetBlockKey.getPath().endsWith("log")) && allowSelfReturn
+                ? targetBlock
+                : (targetBlockKey.getPath().endsWith("wood") || targetBlockKey.getPath().endsWith("log")) && !BuiltInRegistries.BLOCK.get(targetBlockKey.withPrefix("stripped_")).getDescriptionId().equals("block.minecraft.air")
+                ? () -> BuiltInRegistries.BLOCK.get(targetBlockKey.withPrefix("stripped_"))
+                : null;
+    }
+
+    @Nullable
+    public static Supplier<Block> getStrippedWoodFrom(Supplier<Block> targetBlock) {
+        return getStrippedWoodFrom(targetBlock, false);
     }
 
     @Nullable
@@ -478,6 +508,20 @@ public final class RegistryUtil {
         String targetPath = targetRegNameSuffix.isBlank() ? copiedBlockPath.concat(suffixReplacement) : copiedBlockPath.replace(targetRegNameSuffix, suffixReplacement);
 
         return targetBlockKey.getPath().endsWith(targetRegNameSuffix)
+                && !BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(targetPath)).getDescriptionId().equals("block.minecraft.air")
+                ? () -> BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(targetPath))
+                : !BuiltInRegistries.BLOCK.get(new ResourceLocation(targetPath)).getDescriptionId().equals("block.minecraft.air")
+                ? () -> BuiltInRegistries.BLOCK.get(new ResourceLocation(targetPath))
+                : null;
+    }
+
+    @Nullable
+    public static Supplier<Block> getBlockBasedOnPrefix(Supplier<Block> targetBlock, String targetRegNamePrefix, String prefixReplacement) {
+        ResourceLocation targetBlockKey = getItemKey(targetBlock.get());
+        String copiedBlockPath = getItemName(targetBlock.get());
+        String targetPath = targetRegNamePrefix.isBlank() ? prefixReplacement.concat(copiedBlockPath) : copiedBlockPath.replace(targetRegNamePrefix, prefixReplacement);
+
+        return targetBlockKey.getPath().endsWith(targetRegNamePrefix)
                 && !BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(targetPath)).getDescriptionId().equals("block.minecraft.air")
                 ? () -> BuiltInRegistries.BLOCK.get(targetBlockKey.withPath(targetPath))
                 : !BuiltInRegistries.BLOCK.get(new ResourceLocation(targetPath)).getDescriptionId().equals("block.minecraft.air")
@@ -672,5 +716,47 @@ public final class RegistryUtil {
                     : isSpruce ? spruceColor
                     : defaultFoliageColor;
         } : null;
+    }
+
+    @NotNull
+    public static BlockColor getVanillaGrassColorFor(Supplier<Block> targetBlock) {
+        return (targetState, tintGetter, targetPos, tint) -> tintGetter != null && targetPos != null ? BiomeColors.getAverageGrassColor(tintGetter, targetPos) : GrassColor.get(0.5D, 1.0D);
+    }
+
+    @Nullable
+    public static ObjectObjectMutablePair<Predicate<UseOnContext>, Consumer<UseOnContext>> defaultHoeTilling(Supplier<Block> parentBlock) {
+        Supplier<Block> farmlandBlock = getBlockBasedOnSuffix(parentBlock, "_dirt", "_farmland") == null
+                ? getBlockBasedOnSuffix(parentBlock, "_grass_block", "_farmland") == null
+                ? getBlockBasedOnSuffix(parentBlock, "", "_farmland")
+                : getBlockBasedOnSuffix(parentBlock, "_grass_block", "_farmland")
+                : getBlockBasedOnSuffix(parentBlock, "_dirt", "_farmland");
+        return farmlandBlock == null || farmlandBlock.get() == null ? null : ObjectObjectMutablePair.of(HoeItem::onlyIfAirAbove, HoeItem.changeIntoState(farmlandBlock.get().defaultBlockState()));
+    }
+
+    @NotNull
+    public static IntIntMutablePair standardWoodFlammability(Supplier<Block> parentBlock) {
+        String parentBlockName = getItemName(parentBlock.get());
+
+        return parentBlockName.startsWith("crystal_") ? IntIntMutablePair.of(0, 0) : parentBlockName.endsWith("wood") || parentBlockName.endsWith("log")
+                ? IntIntMutablePair.of(5, 5)
+                : parentBlockName.endsWith("_leaves") || parentBlock.get() instanceof LeavesBlock || parentBlockName.endsWith("_leaf_carpet")
+                ? IntIntMutablePair.of(30, 60)
+                : parentBlockName.endsWith("_carpet") || parentBlock.get() instanceof CarpetBlock
+                ? IntIntMutablePair.of(60, 20)
+                : IntIntMutablePair.of(5, 20);
+    }
+
+    public static String formatFossilName(String localizedBlockName) {
+        String[] basicSuffixIdentifiers = new String[] {"Stone", "Deepslate", "Sandstone", "Ice", "Sand", "Gravel", "Blackstone", "Netherrack", "Soul Soil", "End Stone", "Kyanite"};
+        boolean hasSuffix = false;
+
+        for (String suffix : basicSuffixIdentifiers) {
+            if (localizedBlockName.endsWith(suffix)) {
+                hasSuffix = true;
+                break;
+            }
+        }
+
+        return hasSuffix ? MiscUtil.wrapSuffixInBrackets(localizedBlockName) : localizedBlockName;
     }
 }

@@ -1,3 +1,8 @@
 {
-  "values": []
+  "values": [
+    "chaosawakens:fossilized_greenfish_gravel",
+    "chaosawakens:fossilized_rock_fish_gravel",
+    "chaosawakens:fossilized_spark_fish_gravel",
+    "chaosawakens:fossilized_woodfish_gravel"
+  ]
 }

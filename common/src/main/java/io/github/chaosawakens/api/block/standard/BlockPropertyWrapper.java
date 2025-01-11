@@ -6,26 +6,31 @@ import io.github.chaosawakens.api.datagen.block.BlockModelDefinition;
 import io.github.chaosawakens.api.datagen.block.BlockStateDefinition;
 import io.github.chaosawakens.common.registry.CABlocks;
 import io.github.chaosawakens.util.LootUtil;
+import it.unimi.dsi.fastutil.ints.IntIntMutablePair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectObjectMutablePair;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * A wrapper class used to store information referenced in datagen to simplify creating data entries for blocks.
+ * A wrapper class used to store information referenced in datagen to simplify creating data entries for blocks, as well as the modification of hardcoded block settings.
  */
 public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
     private static final Object2ObjectLinkedOpenHashMap<Supplier<Block>, BlockPropertyWrapper> MAPPED_BPWS = new Object2ObjectLinkedOpenHashMap<>();
@@ -198,7 +203,10 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         return to.builder()
                 .withCustomName(from.builder.manuallyLocalizedBlockName)
                 .withCustomSeparatorWords(from.builder.definedSeparatorWords)
+                .withLocalization(from.builder.blockTranslationFunc)
                 .withSetTags(List.copyOf(from.builder.parentTags))
+                .withSetBlockTags(List.copyOf(from.builder.blockTags))
+                .withSetItemTags(List.copyOf(from.builder.itemTags))
                 .withLootTable(from.builder.blockLootTableBuilder)
                 .withSetCustomModelDefinitions(List.copyOf(from.builder.blockModelDefinitions))
                 .withCustomModelDefinitions(from.builder.bmdMappingFunc)
@@ -206,6 +214,14 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
                 .withRecipe(from.builder.recipeBuilderFunction)
                 .withSetParentCreativeModeTabs(List.copyOf(from.builder.parentTabs))
                 .withBlockColor(from.builder.blockColorMappingFunc)
+                .withFlammability(from.builder.flammabilityMappingFunc)
+                .withAxeStripping(from.builder.blockStrippingMappingFunc)
+                .withHoeTilling(from.builder.blockTillingMappingFunc)
+                .withShovelFlattening(from.builder.blockFlatteningMappingFunc)
+                .withOxidization(from.builder.blockOxidizationMappingFunc)
+                .asWaxable(from.builder.blockWaxingMappingFunc)
+                .asCompostable(from.builder.blockCompostingMappingFunc)
+                .asFuel(from.builder.blockFuelMappingFunc)
                 .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied BPW afterward
     }
 
@@ -270,6 +286,17 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
     }
 
     /**
+     * Gets the localization {@code Function<String, String>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<String, String>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<String, String> getBlockTranslationFunc() {
+        return builder == null ? null : builder.blockTranslationFunc;
+    }
+
+    /**
      * Gets the {@code Function<Supplier<Block>, LootTable.Builder>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
      * May be {@code null}.
      *
@@ -281,12 +308,30 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
     }
 
     /**
-     * Gets the defined parent {@linkplain TagKey<?> Tags} from the {@link #builder()} if the builder exists.
+     * Gets the defined parent {@linkplain Supplier<TagKey<?>> Tags} from the {@link #builder()} if the builder exists.
      *
-     * @return The defined parent {@linkplain TagKey<?> Tags}, or an empty {@link ObjectArrayList} if the {@link #builder()} is {@code null}.
+     * @return The defined parent {@linkplain Supplier<TagKey<?>> Tags}, or an empty {@link ObjectArrayList} if the {@link #builder()} is {@code null}.
      */
-    public List<TagKey<?>> getParentTags() {
+    public List<Supplier<TagKey<?>>> getParentTags() {
         return builder == null ? ObjectArrayList.of() : builder.parentTags;
+    }
+
+    /**
+     * Gets the defined parent {@linkplain Supplier<TagKey<Block>> Tags} from the {@link #builder()} if the builder exists.
+     *
+     * @return The defined parent {@linkplain Supplier<TagKey<Block>> Tags}, or an empty {@link ObjectArrayList} if the {@link #builder()} is {@code null}.
+     */
+    public List<Supplier<TagKey<Block>>> getParentBlockTags() {
+        return builder == null ? ObjectArrayList.of() : builder.blockTags;
+    }
+
+    /**
+     * Gets the defined parent {@linkplain Supplier<TagKey<Item>> Tags} from the {@link #builder()} if the builder exists.
+     *
+     * @return The defined parent {@linkplain Supplier<TagKey<Item>> Tags}, or an empty {@link ObjectArrayList} if the {@link #builder()} is {@code null}.
+     */
+    public List<Supplier<TagKey<Item>>> getParentItemTags() {
+        return builder == null ? ObjectArrayList.of() : builder.itemTags;
     }
 
     /**
@@ -302,7 +347,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
     }
 
     /**
-     * Gets the {@code Function<Supplier<Block>, List<BlockModelDefinition>>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * Gets the {@code List<BlockModelDefinition>} {@code Function<Supplier<Block>, List<BlockModelDefinition>>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
      * May be {@code null}.
      *
      * @return The {@code Function<Supplier<Block>, List<BlockModelDefinition>>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
@@ -312,9 +357,8 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         return builder == null ? null : builder.bmdMappingFunc;
     }
 
-
     /**
-     * Gets the {@code Function<Supplier<Block>, BlockStateDefinition>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * Gets the {@link BlockStateDefinition} {@code Function<Supplier<Block>, BlockStateDefinition>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
      * May be {@code null}.
      *
      * @return The {@code Function<Supplier<Block>, BlockStateDefinition>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
@@ -325,7 +369,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
     }
 
     /**
-     * Gets the {@code Function<Consumer<FinishedRecipe>, Consumer<Supplier<Block>>>>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * Gets the recipe {@code Function<Consumer<FinishedRecipe>, Consumer<Supplier<Block>>>>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
      * May be {@code null}.
      *
      * @return The {@code Function<Consumer<FinishedRecipe>, Consumer<Supplier<Block>>>>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
@@ -346,7 +390,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
     }
 
     /**
-     * Gets the {@code Function<Supplier<Block>, BlockColor>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * Gets the {@link BlockColor} {@code Function<Supplier<Block>, BlockColor>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
      * May be {@code null}.
      *
      * @return The {@code Function<Supplier<Block>, BlockColor>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
@@ -354,6 +398,94 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
     @Nullable
     public Function<Supplier<Block>, BlockColor> getBlockColorMappingFunc() {
         return builder == null ? null : builder.blockColorMappingFunc;
+    }
+
+    /**
+     * Gets the flammability {@code Function<Supplier<Block>, IntIntMutablePair>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Block>, IntIntMutablePair>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Block>, IntIntMutablePair> getFlammabilityMappingFunc() {
+        return builder == null ? null : builder.flammabilityMappingFunc;
+    }
+
+    /**
+     * Gets the stripping {@code Function<Supplier<Block>, Supplier<Block>>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Block>, Supplier<Block>>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Block>, Supplier<Block>> getBlockStrippingMappingFunc() {
+        return builder == null ? null : builder.blockStrippingMappingFunc;
+    }
+
+    /**
+     * Gets the tilling {@code Function<Supplier<Block>, ObjectObjectMutablePair<Predicate<UseOnContext>, Consumer<UseOnContext>>>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Block>, ObjectObjectMutablePair<Predicate<UseOnContext>, Consumer<UseOnContext>>>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Block>, ObjectObjectMutablePair<Predicate<UseOnContext>, Consumer<UseOnContext>>> getBlockTillingMappingFunc() {
+        return builder == null ? null : builder.blockTillingMappingFunc;
+    }
+
+    /**
+     * Gets the flattening {@code Function<Supplier<Block>, BlockState>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Block>, BlockState>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Block>, BlockState> getBlockFlatteningMappingFunc() {
+        return builder == null ? null : builder.blockFlatteningMappingFunc;
+    }
+
+    /**
+     * Gets the oxidization {@code Function<Supplier<Block>, Supplier<Block>>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Block>, Supplier<Block>>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Block>, Supplier<Block>> getBlockOxidizationMappingFunc() {
+        return builder == null ? null : builder.blockOxidizationMappingFunc;
+    }
+
+    /**
+     * Gets the waxing {@code Function<Supplier<Block>, Supplier<Block>>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Block>, Supplier<Block>>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Block>, Supplier<Block>> getBlockWaxingMappingFunc() {
+        return builder == null ? null : builder.blockOxidizationMappingFunc;
+    }
+
+    /**
+     * Gets the composting {@code Function<Supplier<Block>, Float>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Block>, Float>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Block>, Float> getBlockCompostingMappingFunc() {
+        return builder == null ? null : builder.blockCompostingMappingFunc;
+    }
+
+    /**
+     * Gets the fuel {@code Function<Supplier<Block>, Integer>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Block>, Integer>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Block>, Integer> getBlockFuelMappingFunc() {
+        return builder == null ? null : builder.blockFuelMappingFunc;
     }
 
     /**
@@ -378,7 +510,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
     }
 
     /**
-     * A builder class used to construct certain block-related data for datagen.
+     * A builder class used to construct certain block-related data for datagen and other data related to hardcoded block settings, such as flammability.
      */
     public static class BPWBuilder {
         private final BlockPropertyWrapper ownerWrapper;
@@ -387,7 +519,9 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         private List<String> definedSeparatorWords = ObjectArrayList.of();
         @Nullable
         private Function<Supplier<Block>, LootTable.Builder> blockLootTableBuilder;
-        private final List<TagKey<?>> parentTags = ObjectArrayList.of();
+        private final List<Supplier<TagKey<?>>> parentTags = ObjectArrayList.of();
+        private final List<Supplier<TagKey<Block>>> blockTags = ObjectArrayList.of();
+        private final List<Supplier<TagKey<Item>>> itemTags = ObjectArrayList.of();
         private final List<BlockModelDefinition> blockModelDefinitions = ObjectArrayList.of();
         @Nullable
         private Function<Supplier<Block>, BlockStateDefinition> blockStateDefinition;
@@ -395,9 +529,27 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         private Function<Consumer<FinishedRecipe>, Consumer<Supplier<Block>>> recipeBuilderFunction;
         @Nullable
         private Function<Supplier<Block>, List<BlockModelDefinition>> bmdMappingFunc;
-        private List<Supplier<CreativeModeTab>> parentTabs = new ObjectArrayList<>(); // Not datagen-related but whatever
+        private List<Supplier<CreativeModeTab>> parentTabs = new ObjectArrayList<>();
         @Nullable
         private Function<Supplier<Block>, BlockColor> blockColorMappingFunc;
+        @Nullable
+        private Function<Supplier<Block>, IntIntMutablePair> flammabilityMappingFunc;
+        @Nullable
+        private Function<Supplier<Block>, Supplier<Block>> blockStrippingMappingFunc;
+        @Nullable
+        private Function<Supplier<Block>, ObjectObjectMutablePair<Predicate<UseOnContext>, Consumer<UseOnContext>>> blockTillingMappingFunc;
+        @Nullable
+        private Function<Supplier<Block>, BlockState> blockFlatteningMappingFunc;
+        @Nullable
+        private Function<Supplier<Block>, Supplier<Block>> blockOxidizationMappingFunc;
+        @Nullable
+        private Function<Supplier<Block>, Supplier<Block>> blockWaxingMappingFunc;
+        @Nullable
+        private Function<Supplier<Block>, Float> blockCompostingMappingFunc;
+        @Nullable
+        private Function<Supplier<Block>, Integer> blockFuelMappingFunc;
+        @Nullable
+        private Function<String, String> blockTranslationFunc;
         private boolean literalTranslation = false;
 
         private BPWBuilder(BlockPropertyWrapper ownerWrapper, Supplier<Block> parentBlock) {
@@ -435,13 +587,15 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
          *     }
          * </pre>
          * <b>NOTE:</b> Block registry names ending with "_block" (e.g. "block.chaosawakens.royal_guardian_scale_block") have the "_block" part pruned and the result string is prepended with "Block of"
-         * during the translation process (the registry name stays the same, of course). You may use this method to bypass that step if needed.
+         * during the translation process (the registry name stays the same, of course). You may use this method (or {@link #literalTranslation(boolean)} and its overloaded variant(s)) to bypass that step if needed.
          *
          * @param manuallyLocalizedBlockName The name override used to localize the parent {@linkplain Block Block's} registry name.
          *
          * @return {@code this} (builder method).
          *
          * @see #withCustomSeparatorWords(List)
+         * @see #withLocalization(Function)
+         * @see #literalTranslation(boolean)
          */
         public BPWBuilder withCustomName(String manuallyLocalizedBlockName) {
             this.manuallyLocalizedBlockName = manuallyLocalizedBlockName;
@@ -456,10 +610,27 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
          * @return {@code this} (builder method).
          *
          * @see #withCustomName(String)
+         * @see #withLocalization(Function)
          * @see #literalTranslation()
          */
         public BPWBuilder literalTranslation(boolean literalTranslation) {
             this.literalTranslation = literalTranslation;
+            return this;
+        }
+
+        /**
+         * A custom {@link Function} to apply miscellaneous modifications to the resulting localized block name. This is influenced by {@link #withCustomName(String)} and {@link #literalTranslation(boolean)},
+         * where applicable.
+         *
+         * @param blockTranslationFunc The {@link Function} responsible for directly modifying the resulting localized block name.
+         *
+         * @return {@code this} (builder method).
+         *
+         * @see #withCustomName(String)
+         * @see #literalTranslation(boolean)
+         */
+        public BPWBuilder withLocalization(Function<String, String> blockTranslationFunc) {
+            this.blockTranslationFunc = blockTranslationFunc;
             return this;
         }
 
@@ -475,14 +646,16 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
         }
 
         /**
-         * Assigns a {@link List} of custom separator words which are lowercased during the algorithm's de-localization process. This is ignored if {@link #manuallyLocalizedBlockName} is defined.
-         * The default entries for this are {"Of", "And"}. This {@link List} is appended to the default separator definitions rather than replacing them.
+         * Assigns a {@link List} of custom separator words which are lowercased during the algorithm's de-localization process. This is ignored if {@link #manuallyLocalizedBlockName} is defined, {@link #literalTranslation}
+         * is {@code true}, or if {@link #blockTranslationFunc} is non-null. The default entries for this are {"Of", "And"}. This {@link List} is appended to the default separator definitions rather than replacing them.
          *
          * @param definedSeparatorWords The {@link List} of custom separator words to lowercase while the algorithm is running.
          *
          * @return {@code this} (builder method).
          *
          * @see #withCustomName(String)
+         * @see #withLocalization(Function)
+         * @see #literalTranslation(boolean)
          */
         public BPWBuilder withCustomSeparatorWords(List<String> definedSeparatorWords) {
             this.definedSeparatorWords = definedSeparatorWords;
@@ -511,7 +684,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
          *
          * @return {@code this} (builder method).
          */
-        public BPWBuilder withTag(TagKey<?> parentBlockTag) {
+        public BPWBuilder withTag(Supplier<TagKey<?>> parentBlockTag) {
             this.parentTags.add(parentBlockTag);
             return this;
         }
@@ -525,7 +698,7 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
          *
          * @see #withSetTags(List)
          */
-        public BPWBuilder withTags(List<TagKey<?>> parentBlockTags) {
+        public BPWBuilder withTags(List<Supplier<TagKey<?>>> parentBlockTags) {
             this.parentTags.addAll(parentBlockTags);
             return this;
         }
@@ -539,12 +712,93 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
          *
          * @see #withTags(List)
          */
-        public BPWBuilder withSetTags(List<TagKey<?>> parentBlockTags) {
+        public BPWBuilder withSetTags(List<Supplier<TagKey<?>>> parentBlockTags) {
             this.parentTags.clear();
             this.parentTags.addAll(parentBlockTags);
             return this;
         }
 
+        /**
+         * Tags this BPWBuilder's parent {@link Block} with the provided {@link TagKey<Block>}. Useful for bypassing Java's generic type inference.
+         *
+         * @param parentBlockTag The {@link TagKey<Block>} with which this BPW's parent {@link Block} will be tagged.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder withBlockTag(Supplier<TagKey<Block>> parentBlockTag) {
+            this.blockTags.add(parentBlockTag);
+            return this;
+        }
+
+        /**
+         * Tags this BPWBuilder's parent {@link Block} with the provided {@linkplain TagKey<Block> Tags}. Appends to the existing list. Useful for bypassing Java's generic type inference.
+         *
+         * @param parentBlockTags The {@linkplain TagKey<Block> TagKeys} with which this BPW's parent {@link Block} will be tagged.
+         *
+         * @return {@code this} (builder method).
+         *
+         * @see #withSetBlockTags(List)
+         */
+        public BPWBuilder withBlockTags(List<Supplier<TagKey<Block>>> parentBlockTags) {
+            this.blockTags.addAll(parentBlockTags);
+            return this;
+        }
+
+        /**
+         * Tags this BPWBuilder's parent {@link Block} with the provided {@linkplain TagKey<Block> Tags}. Overwrites the existing list. Useful for bypassing Java's generic type inference.
+         *
+         * @param parentBlockTags The {@linkplain TagKey<Block> TagKeys} with which this BPW's parent {@link Block} will be tagged.
+         *
+         * @return {@code this} (builder method).
+         *
+         * @see #withBlockTags(List)
+         */
+        public BPWBuilder withSetBlockTags(List<Supplier<TagKey<Block>>> parentBlockTags) {
+            this.blockTags.clear();
+            this.blockTags.addAll(parentBlockTags);
+            return this;
+        }
+
+        /**
+         * Tags this BPWBuilder's parent {@link Block} with the provided {@link TagKey<Item>}. Useful for bypassing Java's generic type inference.
+         *
+         * @param parentItemTag The {@link TagKey<Item>} with which this BPW's parent {@link Block} will be tagged.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder withItemTag(Supplier<TagKey<Item>> parentItemTag) {
+            this.itemTags.add(parentItemTag);
+            return this;
+        }
+
+        /**
+         * Tags this BPWBuilder's parent {@link Block} with the provided {@linkplain TagKey<Item> Tags}. Appends to the existing list. Useful for bypassing Java's generic type inference.
+         *
+         * @param parentItemTags The {@linkplain TagKey<Item> TagKeys} with which this BPW's parent {@link Block} will be tagged.
+         *
+         * @return {@code this} (builder method).
+         *
+         * @see #withSetItemTags(List)
+         */
+        public BPWBuilder withItemTags(List<Supplier<TagKey<Item>>> parentItemTags) {
+            this.itemTags.addAll(parentItemTags);
+            return this;
+        }
+
+        /**
+         * Tags this BPWBuilder's parent {@link Block} with the provided {@linkplain TagKey<Item> Tags}. Overwrites the existing list. Useful for bypassing Java's generic type inference.
+         *
+         * @param parentItemTags The {@linkplain TagKey<Item> TagKeys} with which this BPW's parent {@link Block} will be tagged.
+         *
+         * @return {@code this} (builder method).
+         *
+         * @see #withItemTags(List)
+         */
+        public BPWBuilder withSetItemTags(List<Supplier<TagKey<Item>>> parentItemTags) {
+            this.itemTags.clear();
+            this.itemTags.addAll(parentItemTags);
+            return this;
+        }
         /**
          * Appends a custom {@link BlockModelDefinition} to this builder. By default, model datagen is handled based on a series of
          * type checks (E.G. Doors, walls, fences, rotatable blocks, etc.). You can use this method if your custom block requires a
@@ -683,6 +937,110 @@ public class BlockPropertyWrapper { //TODO Maybe type param this for blocks
          */
         public BPWBuilder withBlockColor(Function<Supplier<Block>, BlockColor> blockColorMappingFunc) {
             this.blockColorMappingFunc = blockColorMappingFunc;
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Block Block's} optional flammability settings.
+         *
+         * @param flammabilityMappingFunc The mapping function accepting a representation of the parent {@linkplain Block Block's} optional flammability settings, with the {@link IntIntMutablePair}
+         *                                representing the burn time (in ticks) and spread respectively.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder withFlammability(Function<Supplier<Block>, IntIntMutablePair> flammabilityMappingFunc) {
+            this.flammabilityMappingFunc = flammabilityMappingFunc;
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Block Block's} optional axe stripping to another {@link Block}.
+         *
+         * @param blockStrippingMappingFunc The mapping function accepting a representation of the parent {@linkplain Block Block's} optional axe stripping to another {@link Block}.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder withAxeStripping(Function<Supplier<Block>, Supplier<Block>> blockStrippingMappingFunc) {
+            this.blockStrippingMappingFunc = blockStrippingMappingFunc;
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Block Block's} optional hoe tilling, applying the behaviour specified by the output {@link ObjectObjectMutablePair}.
+         *
+         * @param blockTillingMappingFunc The mapping function accepting a representation of the parent {@linkplain Block Block's} optional hoe tilling,
+         *                                applying the behaviour specified by the output {@link ObjectObjectMutablePair}. The {@link Predicate<UseOnContext>} effectively filters
+         *                                whether the supplied {@link Block} can be tilled, and the {@link Consumer<UseOnContext>} applies the tilling behaviour if that predicate returns
+         *                                {@code true}.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder withHoeTilling(Function<Supplier<Block>, ObjectObjectMutablePair<Predicate<UseOnContext>, Consumer<UseOnContext>>> blockTillingMappingFunc) {
+            this.blockTillingMappingFunc = blockTillingMappingFunc;
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Block Block's} optional shovel flattening to another {@link BlockState}.
+         *
+         * @param blockFlatteningMappingFunc The mapping function accepting a representation of the parent {@linkplain Block Block's} optional shovel flattening to another {@link BlockState}.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder withShovelFlattening(Function<Supplier<Block>, BlockState> blockFlatteningMappingFunc) {
+            this.blockFlatteningMappingFunc = blockFlatteningMappingFunc;
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Block Block's} optional oxidation to another {@link Block}.
+         *
+         * @param blockOxidizationMappingFunc The mapping function accepting a representation of the parent {@linkplain Block Block's} optional oxidation to another {@link Block}, like the copper block's
+         *                                    oxidization overtime if not waxed.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder withOxidization(Function<Supplier<Block>, Supplier<Block>> blockOxidizationMappingFunc) {
+            this.blockOxidizationMappingFunc = blockOxidizationMappingFunc;
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Block Block's} optional waxing to another {@link Block}.
+         *
+         * @param blockWaxingMappingFunc The mapping function accepting a representation of the parent {@linkplain Block Block's} optional waxing to another {@link Block}, like the copper block
+         *                               getting waxed using honey combs.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder asWaxable(Function<Supplier<Block>, Supplier<Block>> blockWaxingMappingFunc) {
+            this.blockWaxingMappingFunc = blockWaxingMappingFunc;
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Block Block's} optional composting chances.
+         *
+         * @param blockCompostMappingFunc The mapping function accepting a representation of the parent {@linkplain Block Block's} composting to another {@link Block}. The output {@link Float} value in the
+         *                                provided {@link Function} represents composting chance. {@code null}/0 values are ignored. Negative values are abs'd.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder asCompostable(Function<Supplier<Block>, Float> blockCompostMappingFunc) {
+            this.blockCompostingMappingFunc = blockCompostMappingFunc;
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Block Block's} optional fuel value.
+         *
+         * @param fuelMappingFunc The mapping function accepting a representation of the parent {@linkplain Block Block's} optional cooke time value, in ticks. {@code null}/0 values are treated as none.
+         *                        Negative values are abs'd.
+         *
+         * @return {@code this} (builder method).
+         */
+        public BPWBuilder asFuel(Function<Supplier<Block>, Integer> fuelMappingFunc) {
+            this.blockFuelMappingFunc = fuelMappingFunc;
             return this;
         }
 

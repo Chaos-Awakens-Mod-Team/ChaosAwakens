@@ -3,6 +3,7 @@ package io.github.chaosawakens.datagen;
 import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
 import io.github.chaosawakens.api.tag.TagWrapper;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -14,6 +15,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class CABlockTagsProvider extends BlockTagsProvider {
 
@@ -30,15 +33,26 @@ public class CABlockTagsProvider extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
         if (!BlockPropertyWrapper.getMappedBpws().isEmpty()) {
             BlockPropertyWrapper.getMappedBpws().forEach((blockSupEntry, curBwp) -> {
-                List<TagKey<?>> parentTags = curBwp.getParentTags();
+                List<TagKey<?>> parentTags = curBwp.getParentTags().stream().map(Supplier::get).collect(Collectors.toCollection(ObjectArrayList::new));
+                List<TagKey<Block>> parentBlockTags = curBwp.getParentBlockTags().stream().map(Supplier::get).collect(Collectors.toCollection(ObjectArrayList::new));
 
-                if (!parentTags.isEmpty()){
+                if (!parentTags.isEmpty()) {
                     parentTags.forEach(curBlockTag -> {
                         if (curBlockTag != null && curBlockTag.isFor(Registries.BLOCK)) {
-                            CAConstants.LOGGER.debug("[Tagging Block]: " + blockSupEntry.get().getDescriptionId() + " -> " + curBlockTag);
+                            CAConstants.LOGGER.debug("[Tagging Block]: {} -> {}", blockSupEntry.get().getDescriptionId(), curBlockTag);
 
                             tag((TagKey<Block>) curBlockTag).add(blockSupEntry.get());
                         }
+                    });
+                }
+
+                if (!parentBlockTags.isEmpty()) {
+                    parentBlockTags.forEach(curBlockTag -> {
+                       if (curBlockTag != null) {
+                           CAConstants.LOGGER.debug("[Tagging Block]: {} -> {}", blockSupEntry.get().getDescriptionId(), curBlockTag);
+
+                           tag(curBlockTag).add(blockSupEntry.get());
+                       }
                     });
                 }
             });
@@ -46,40 +60,40 @@ public class CABlockTagsProvider extends BlockTagsProvider {
 
         if (!TagWrapper.getCachedTWEntries().isEmpty()) {
             TagWrapper.getCachedTWEntries().forEach(twEntry -> {
-                if (twEntry.getParentTag().isFor(Registries.BLOCK)) {
-                    TagKey<?> curBlockTag = twEntry.getParentTag();
+                TagKey<?> parentTagKey = twEntry.getParentTag().get();
 
-                    if (curBlockTag != null) {
-                        twEntry.getPredefinedTagEntries().forEach(tagEntry -> {
-                            Block blockTagEntry = (Block) tagEntry.get();
+                if (parentTagKey.isFor(Registries.BLOCK)) {
+                    twEntry.getPredefinedTagEntries().forEach(tagEntry -> {
+                        Block blockTagEntry = (Block) tagEntry.get();
 
-                            if (blockTagEntry != null) {
-                                CAConstants.LOGGER.debug("[Tagging Block]: " + blockTagEntry.getDescriptionId() + " -> " + curBlockTag);
+                        if (blockTagEntry != null) {
+                            CAConstants.LOGGER.debug("[Tagging Block]: {} -> {}", blockTagEntry.getDescriptionId(), parentTagKey);
 
-                                tag((TagKey<Block>) curBlockTag).add(blockTagEntry);
-                            }
-                        });
+                            tag((TagKey<Block>) parentTagKey).add(blockTagEntry);
+                        }
+                    });
 
-                        twEntry.getStoredTags().forEach(tagKeyEntry -> {
-                            if (tagKeyEntry != null) {
+                    twEntry.getStoredTags().forEach(tagKeyEntry -> {
+                        TagKey<?> storedTagKeyEntry = tagKeyEntry.get();
 
-                                CAConstants.LOGGER.debug("[Tagging Block Tag]: " + tagKeyEntry + " -> " + curBlockTag);
+                        if (storedTagKeyEntry != null) {
+                            CAConstants.LOGGER.debug("[Tagging Block Tag]: {} -> {}", storedTagKeyEntry, parentTagKey);
 
-                                tag((TagKey<Block>) tagKeyEntry); // Force the existingFileHelper to track the tag to be added (otherwise throws exception). Goofy ahh patch.
-                                tag((TagKey<Block>) curBlockTag).addTag((TagKey<Block>) tagKeyEntry);
-                            }
-                        });
+                            tag((TagKey<Block>) storedTagKeyEntry); // Force the existingFileHelper to track the tag to be added (otherwise throws exception). Goofy ahh patch.
+                            tag((TagKey<Block>) parentTagKey).addTag((TagKey<Block>) storedTagKeyEntry);
+                        }
+                    });
 
-                        twEntry.getParentTags().forEach(parentTagKeyEntry -> {
-                            if (parentTagKeyEntry != null) {
+                    twEntry.getParentTags().forEach(parentTagKeyEntry -> {
+                        TagKey<?> storedParentTagKeyEntry = parentTagKeyEntry.get();
 
-                                CAConstants.LOGGER.debug("[Tagging Block Tag]: " + curBlockTag + " -> " + parentTagKeyEntry);
+                        if (storedParentTagKeyEntry != null) {
+                            CAConstants.LOGGER.debug("[Tagging Block Tag]: {} -> {}", parentTagKey, storedParentTagKeyEntry);
 
-                                tag((TagKey<Block>) curBlockTag); // Force the existingFileHelper to track the tag to be added (otherwise throws exception). Goofy ahh patch.
-                                tag((TagKey<Block>) parentTagKeyEntry).addTag((TagKey<Block>) curBlockTag);
-                            }
-                        });
-                    }
+                            tag((TagKey<Block>) parentTagKey); // Force the existingFileHelper to track the tag to be added (otherwise throws exception). Goofy ahh patch.
+                            tag((TagKey<Block>) storedParentTagKeyEntry).addTag((TagKey<Block>) parentTagKey);
+                        }
+                    });
                 }
             });
         }

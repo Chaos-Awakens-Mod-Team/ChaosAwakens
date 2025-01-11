@@ -5,11 +5,15 @@
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "LivingEntityMixin"
+    "common.block.AttachedStemBlockMixin",
+    "common.block.BushBlockMixin",
+    "common.block.CropBlockMixin",
+    "common.block.StemBlockMixin",
+    "common.entity.LivingEntityMixin"
   ],
   "client": [
-    "client.DebugRendererMixin",
-    "client.GameRendererMixin"
+    "client.renderer.DebugRendererMixin",
+    "client.renderer.GameRendererMixin"
   ],
   "server": [
   ],

@@ -59,6 +59,71 @@ public class CritterCageItem extends Item {
             return InteractionResult.SUCCESS;
         } else return InteractionResult.FAIL;
     }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        if (!containsEntity(stack)) return Component.translatable("item.chaosawakens.critter_cage");
+        return Component.translatable("item.chaosawakens.critter_cage").append(" (" + getMobName(stack) + ")");
+    }
+
+    @Override
+    public void appendHoverText(ItemStack targetStack, Level curWorld, List<Component> tooltip, TooltipFlag flag) {
+        if (containsEntity(targetStack)) {
+            LivingEntity target = (LivingEntity) getEntityFromStack(targetStack, curWorld, true);
+
+            if (target == null) return;
+
+            tooltip.add(Component.literal("Mob: ").withStyle(ChatFormatting.BLUE).append(Component.literal(getMobID(targetStack)).withStyle(ChatFormatting.GRAY)));
+            tooltip.add(Component.literal("Mob Name: ").withStyle(ChatFormatting.BLUE).append(Component.literal(getMobName(targetStack)).withStyle(ChatFormatting.GRAY)));
+            tooltip.add(Component.literal("Health: ").withStyle(ChatFormatting.BLUE).append(Component.literal(target.getHealth() + "/" + target.getMaxHealth()).withStyle(ChatFormatting.GRAY)));
+
+            Arrays.stream(EquipmentSlot.values()).forEach(equipmentSlot -> {
+                ItemStack armor = target.getItemBySlot(equipmentSlot);
+                String slotName = switch (equipmentSlot) {
+                    case MAINHAND -> "Main Hand";
+                    case OFFHAND -> "Offhand";
+                    case FEET -> "Boots";
+                    case LEGS -> "Leggings";
+                    case CHEST -> "Chestplate";
+                    case HEAD -> "Helmet";
+                };
+
+                if (!armor.isEmpty()) tooltip.add(Component.literal(slotName + " Item: ").withStyle(ChatFormatting.BLUE).append(armor.getDisplayName()));
+            });
+
+            if (target.isBaby()) tooltip.add(Component.literal("Baby").withStyle(ChatFormatting.BLUE));
+
+            if (target instanceof Villager villager) {
+                tooltip.add(Component.literal("Profession: ").withStyle(ChatFormatting.BLUE).append(Component.literal(MiscUtil.capitalizeFirstLetter(villager.getVillagerData().getProfession().name())).withStyle(ChatFormatting.GRAY)));
+                String toAppend = switch (villager.getVillagerData().getLevel()) {
+                    case 1 -> "Novice";
+                    case 2 -> "Apprentice";
+                    case 3 -> "Journeyman";
+                    case 4 -> "Expert";
+                    case 5 -> "Master";
+                    default -> "";
+                };
+                if (villager.getVillagerData().getProfession().equals(VillagerProfession.NONE)) toAppend = "None";
+                if (!toAppend.isEmpty()) tooltip.add(Component.literal("Trading Level: ").withStyle(ChatFormatting.BLUE).append(Component.literal(toAppend).withStyle(ChatFormatting.GRAY)));
+            }
+
+            if (target instanceof TamableAnimal targetTamable) {
+                tooltip.add(Component.literal("Owner: ").withStyle(ChatFormatting.BLUE).append(Component.literal(targetTamable.getOwner() instanceof Player player ? player.getScoreboardName() : "None").withStyle(ChatFormatting.GRAY)));
+
+                if (target instanceof Wolf targetWolf) {
+                    tooltip.add(Component.literal("Collar Color: ").withStyle(ChatFormatting.BLUE).append(Component.literal((targetWolf.isTame() ? MiscUtil.capitalizeFirstLetter(targetWolf.getCollarColor().toString()) : "None")).withStyle(ChatFormatting.GRAY)));
+                }
+
+                if (target instanceof Cat targetCat) {
+                    String variantName = MiscUtil.reformatFromSnakeCase(BuiltInRegistries.CAT_VARIANT.getKey(targetCat.getVariant()).getPath());
+
+                    tooltip.add(Component.literal("Collar Color: ").withStyle(ChatFormatting.BLUE).append(Component.literal((targetCat.isTame() ? MiscUtil.capitalizeFirstLetter(targetCat.getCollarColor().toString()) : "None")).withStyle(ChatFormatting.GRAY)));
+                    tooltip.add(Component.literal("Variant: ").withStyle(ChatFormatting.BLUE).append(Component.literal(variantName).withStyle(ChatFormatting.GRAY)));
+                }
+            }
+        }
+    }
+
     protected boolean shouldCaptureEntity(ItemStack targetStack, LivingEntity target) {
         if (target.level().isClientSide) return false;
         if (target instanceof Player || !target.isAlive()) return false;
@@ -90,10 +155,6 @@ public class CritterCageItem extends Item {
         return true;
     }
 
-    protected boolean isBlacklisted(EntityType<?> type) {
-        return false; //TODO Add blacklist logic heretype.is(CATags.CRITTER_CAGE_BLACKLISTED);
-    }
-
     protected boolean canReleaseEntity(Player owner, BlockPos targetPos, Direction facingDir, Level curWorld, ItemStack filledStack) {
         if (owner.getCommandSenderWorld().isClientSide) return false;
         if (!containsEntity(filledStack)) return false;
@@ -107,6 +168,10 @@ public class CritterCageItem extends Item {
         return true;
     }
 
+    protected boolean isBlacklisted(EntityType<?> type) {
+        return false; //TODO Add blacklist logic here
+    }
+
     public Entity getEntityFromStack(ItemStack targetStack, Level world, boolean withInfo) {
         if (targetStack.hasTag()) {
             Entity targetEntity = EntityType.loadEntityRecursive(targetStack.getTag().getCompound("storedEntity"), world, entity -> entity);
@@ -114,6 +179,7 @@ public class CritterCageItem extends Item {
 
             return targetEntity;
         }
+
         return null;
     }
 
@@ -131,59 +197,5 @@ public class CritterCageItem extends Item {
 
     public String getMobID(ItemStack stack) {
         return stack.getTag().getCompound("storedEntity").getString("id");
-    }
-
-    @Override
-    public Component getName(ItemStack stack) {
-        if (!containsEntity(stack)) return Component.translatable("item.chaosawakens.critter_cage");
-        return Component.translatable("item.chaosawakens.critter_cage").append(" (" + getMobName(stack) + ")");
-    }
-    @Override
-    public void appendHoverText(ItemStack targetStack, Level curWorld, List<Component> tooltip, TooltipFlag flag) {
-        if (containsEntity(targetStack)) {
-            LivingEntity target = (LivingEntity) getEntityFromStack(targetStack, curWorld, true);
-
-            if (target == null) return;
-            tooltip.add(Component.literal("Mob: ").withStyle(ChatFormatting.BLUE).append(Component.literal(getMobID(targetStack)).withStyle(ChatFormatting.GRAY)));
-            tooltip.add(Component.literal("Mob Name: ").withStyle(ChatFormatting.BLUE).append(Component.literal(getMobName(targetStack)).withStyle(ChatFormatting.GRAY)));
-            tooltip.add(Component.literal("Health: ").withStyle(ChatFormatting.BLUE).append(Component.literal(target.getHealth() + "/" + target.getMaxHealth()).withStyle(ChatFormatting.GRAY)));
-            Arrays.stream(EquipmentSlot.values()).forEach(equipmentSlot -> {
-                ItemStack armor = target.getItemBySlot(equipmentSlot);
-                String slotName = switch (equipmentSlot) {
-                    case MAINHAND -> "Main Hand";
-                    case OFFHAND -> "Offhand";
-                    case FEET -> "Boots";
-                    case LEGS -> "Leggings";
-                    case CHEST -> "Chestplate";
-                    case HEAD -> "Helmet";
-                };
-                if (!armor.isEmpty()) tooltip.add(Component.literal(slotName + " Item: ").withStyle(ChatFormatting.BLUE).append(armor.getDisplayName()));
-            });
-            if (target.isBaby()) tooltip.add(Component.literal("Baby").withStyle(ChatFormatting.BLUE));
-            if (target instanceof Villager villager) {
-                tooltip.add(Component.literal("Profession: ").withStyle(ChatFormatting.BLUE).append(Component.literal(MiscUtil.capitalizeFirstLetter(villager.getVillagerData().getProfession().name())).withStyle(ChatFormatting.GRAY)));
-                String toAppend = switch (villager.getVillagerData().getLevel()) {
-                    case 1 -> "Novice";
-                    case 2 -> "Apprentice";
-                    case 3 -> "Journeyman";
-                    case 4 -> "Expert";
-                    case 5 -> "Master";
-                    default -> "";
-                };
-                if (villager.getVillagerData().getProfession().equals(VillagerProfession.NONE)) toAppend = "None";
-                if (!toAppend.isEmpty()) tooltip.add(Component.literal("Trading Level: ").withStyle(ChatFormatting.BLUE).append(Component.literal(toAppend).withStyle(ChatFormatting.GRAY)));
-            }
-            if (target instanceof TamableAnimal targetTamable) {
-                tooltip.add(Component.literal("Owner: ").withStyle(ChatFormatting.BLUE).append(Component.literal(targetTamable.getOwner() instanceof Player player ? player.getScoreboardName() : "None").withStyle(ChatFormatting.GRAY)));
-                if (target instanceof Wolf targetWolf) {
-                    tooltip.add(Component.literal("Collar Color: ").withStyle(ChatFormatting.BLUE).append(Component.literal((targetWolf.isTame() ? MiscUtil.capitalizeFirstLetter(targetWolf.getCollarColor().toString()) : "None")).withStyle(ChatFormatting.GRAY)));
-                }
-                if (target instanceof Cat targetCat) {
-                    String variantName = MiscUtil.reformatFromSnakeCase(BuiltInRegistries.CAT_VARIANT.getKey(targetCat.getVariant()).getPath());
-                    tooltip.add(Component.literal("Collar Color: ").withStyle(ChatFormatting.BLUE).append(Component.literal((targetCat.isTame() ? MiscUtil.capitalizeFirstLetter(targetCat.getCollarColor().toString()) : "None")).withStyle(ChatFormatting.GRAY)));
-                    tooltip.add(Component.literal("Variant: ").withStyle(ChatFormatting.BLUE).append(Component.literal(variantName).withStyle(ChatFormatting.GRAY)));
-                }
-            }
-        }
     }
 }

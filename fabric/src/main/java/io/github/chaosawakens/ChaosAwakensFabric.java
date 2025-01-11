@@ -7,6 +7,8 @@ public class ChaosAwakensFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         ChaosAwakens.setup();
+
         FabricServerHooks.handleServerLifecycleHooks();
+        FabricVanillaIntegration.handleVanillaIntegration();
     }
 }

@@ -27,7 +27,7 @@ public class CARecipeProvider extends RecipeProvider {
                 Function<Consumer<FinishedRecipe>, Consumer<Supplier<Block>>> mappedRecipe = bpwEntry.getRecipeMappingFunction();
 
                 if (mappedRecipe != null) {
-                    CAConstants.LOGGER.debug("[Generating Block Recipe]: " + blockSupEntry.get().getDescriptionId());
+                    CAConstants.LOGGER.debug("[Generating Block Recipe]: {}", blockSupEntry.get().getDescriptionId());
 
                     mappedRecipe.apply(pWriter).accept(blockSupEntry);
                 }
@@ -39,7 +39,7 @@ public class CARecipeProvider extends RecipeProvider {
                 Function<Consumer<FinishedRecipe>, Consumer<Supplier<Item>>> mappedRecipe = ipwEntry.getRecipeMappingFunction();
 
                 if (mappedRecipe != null) {
-                    CAConstants.LOGGER.debug("[Generating Item Recipe]: " + itemSupEntry.get().getDescriptionId());
+                    CAConstants.LOGGER.debug("[Generating Item Recipe]: {}", itemSupEntry.get().getDescriptionId());
 
                     mappedRecipe.apply(pWriter).accept(itemSupEntry);
                 }

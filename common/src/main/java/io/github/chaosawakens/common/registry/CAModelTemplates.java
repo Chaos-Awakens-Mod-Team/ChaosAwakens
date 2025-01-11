@@ -12,8 +12,14 @@ public class CAModelTemplates {
     public static final ModelTemplate LEAF_CARPET = createTemplate("leaf_carpet", TextureSlot.TEXTURE);
     public static final ModelTemplate LEAF_CARPET_INVENTORY = createTemplate("leaf_carpet_inventory", "_inventory", TextureSlot.TEXTURE);
 
+    public static final ModelTemplate GRASS_BLOCK = createTemplate(new ResourceLocation("grass_block"), TextureSlot.PARTICLE, TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE, CATextureSlots.OVERLAY);
+
     private static ModelTemplate createTemplate(String templateModelFileName, TextureSlot... textureSlots) {
         return createTemplate(templateModelFileName, "", textureSlots);
+    }
+
+    private static ModelTemplate createTemplate(ResourceLocation templateModelFileLoc, TextureSlot... textureSlots) {
+        return createTemplate(templateModelFileLoc, "", textureSlots);
     }
 
     private static ModelTemplate createTemplate(String templateModelFileName, String modelFileSuffix, TextureSlot... textureSlots) {

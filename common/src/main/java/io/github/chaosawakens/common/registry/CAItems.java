@@ -10,6 +10,7 @@ import io.github.chaosawakens.common.item.misc.MinersDreamItem;
 import io.github.chaosawakens.util.RecipeUtil;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -118,7 +119,7 @@ public final class CAItems {
     public static final Supplier<Item> BIG_BERTHA_HANDLE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("big_bertha_handle", () -> new Item(new Item.Properties().rarity(Rarity.EPIC)))).getParentItem();
 
     // Misc
-    public static final Supplier<Item> MINERS_DREAM = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("miners_dream", () -> new MinersDreamItem(new Item.Properties())))
+    public static final Supplier<Item> MINERS_DREAM = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("miners_dream", () -> new MinersDreamItem(new Item.Properties().stacksTo(16))))
             .cachedBuilder()
             .withRecipe(recipeConsumer -> RecipeUtil.threeRowRecipe(recipeConsumer, KUNZITE.get(), Items.REDSTONE_BLOCK, Items.GUNPOWDER))
             .build()
@@ -126,14 +127,22 @@ public final class CAItems {
 
     public static final Supplier<Item> CRITTER_CAGE = ItemPropertyWrapper.of(CAItemPropertyWrappers.BASIC_GENERATED, registerItem("critter_cage", () -> new CritterCageItem(new Item.Properties().stacksTo(16))))
             .cachedBuilder()
-            .withRecipe(recipeConsumer -> RecipeUtil.cageRecipe(recipeConsumer, Items.STICK, Items.IRON_INGOT, 1))
+            .withRecipe(recipeConsumer -> RecipeUtil.cageRecipe(recipeConsumer, Items.STICK, Items.IRON_INGOT, 2))
             .build()
             .getParentItem();
 
-    private static Supplier<Item> registerItem(String id, Supplier<Item> itemSup) {
-        Supplier<Item> registeredItemSup = CAServices.REGISTRAR.registerObject(CAConstants.prefix(id), itemSup, BuiltInRegistries.ITEM); // Otherwise reference to the item sup is null cuz it needs to be registered b4hand
+    private static Supplier<Item> registerItem(ResourceLocation id, Supplier<Item> itemSup) {
+        Supplier<Item> registeredItemSup = CAServices.REGISTRAR.registerObject(id, itemSup, BuiltInRegistries.ITEM); // Otherwise reference to the item sup is null cuz it needs to be registered b4hand
         ITEMS.add(registeredItemSup);
         return registeredItemSup;
+    }
+
+    private static Supplier<Item> registerItem(String id, Supplier<Item> itemSup) {
+        return registerItem(CAConstants.prefix(id), itemSup);
+    }
+
+    public static Supplier<Item> registerExternalItem(ResourceLocation id, Supplier<Item> itemSup) {
+        return registerItem(id, itemSup);
     }
 
     public static Supplier<Item> registerExternalItem(String id, Supplier<Item> itemSup) {

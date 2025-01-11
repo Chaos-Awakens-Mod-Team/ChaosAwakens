@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "chaosawakens:block/fossil/gravel/fossilized_drowned_gravel"
+  }
+}

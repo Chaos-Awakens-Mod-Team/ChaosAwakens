@@ -30,6 +30,17 @@ public final class CACreativeModeTabs {
                     .filter(PredicateUtil::isRegularBlock)
                     .collect(Collectors.toCollection(ObjectArrayList::new))))
             .build());
+    public static final Supplier<CreativeModeTab> CHAOS_AWAKENS_FOSSILS = registerCreativeModeTab("chaos_awakens_fossils", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
+            .title(Component.translatable("creativemodetab.chaosawakens.chaos_awakens_fossils"))
+            .icon(() -> CABlocks.FOSSILIZED_LETTUCE_CHICKEN_STONE.get().asItem().getDefaultInstance())
+            .displayItems((displayParams, curOutput) -> curOutput.acceptAll(CABlocks.getBlocks()
+                    .stream()
+                    .map(Supplier::get)
+                    .map(Block::asItem)
+                    .map(Item::getDefaultInstance)
+                    .filter(PredicateUtil::isFossilBlock)
+                    .collect(Collectors.toCollection(ObjectArrayList::new))))
+            .build());
     public static final Supplier<CreativeModeTab> CHAOS_AWAKENS_ITEMS = registerCreativeModeTab("chaos_awakens_items", () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
             .title(Component.translatable("creativemodetab.chaosawakens.chaos_awakens_items"))
             .icon(() -> CAItems.URANIUM_INGOT.get().asItem().getDefaultInstance())

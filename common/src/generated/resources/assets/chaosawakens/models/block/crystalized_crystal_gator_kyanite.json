@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "chaosawakens:block/fossil/crystal/crystalized_crystal_gator_kyanite"
+  }
+}

@@ -67,7 +67,7 @@ public class MinersDreamItem extends Item {
                     BlockState targetBlockState = currentWorld.getBlockState(targetPos);
                     FluidState targetFluidState = currentWorld.getFluidState(targetPos);
 
-                    if (targetBlockState.is(CATags.CABlockTags.MINERS_DREAM_MINEABLE) || !targetFluidState.is(Fluids.EMPTY)) {
+                    if (targetBlockState.is(CATags.CABlockTags.MINERS_DREAM_MINEABLE.get()) || !targetFluidState.is(Fluids.EMPTY)) {
                         if (currentPlayer.isShiftKeyDown()) placeWoodPillars(currentWorld, targetPos, i, j, k);
                         else placeAndPatchWoodPillars(currentWorld, targetPos, i, j, k);
                     }

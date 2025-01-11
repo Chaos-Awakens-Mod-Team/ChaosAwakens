@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "chaosawakens:block/fossil/endstone/fossilized_shulker_end_stone"
+  }
+}

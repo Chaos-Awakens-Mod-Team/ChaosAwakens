@@ -221,15 +221,15 @@ public final class RecipeUtil {
         return (resultItemSup) -> threeRowRecipe(recipeConsumer, topItemILReference, middleItemILReference, bottomItemILReference, 1).accept(resultItemSup);
     }
 
-    public static Consumer<Supplier<Item>> cageRecipe(Consumer<FinishedRecipe> recipeConsumer, ItemLike stick, ItemLike iron, int resultItemCount) {
-        return (resultItemSup) -> ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, resultItemSup.get(), resultItemCount)
-                .define('S', stick)
-                .define('I', iron)
+    public static Consumer<Supplier<Item>> cageRecipe(Consumer<FinishedRecipe> recipeConsumer, ItemLike stickItemILReference, ItemLike ironItemILReference, int resultItemCount) {
+        return (resultItemSup) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, resultItemSup.get(), resultItemCount)
+                .define('S', stickItemILReference)
+                .define('I', ironItemILReference)
                 .pattern("ISI")
                 .pattern("S S")
                 .pattern("ISI")
-                .unlockedBy("has_" + RegistryUtil.getItemName(stick), PredicateUtil.has(stick))
-                .unlockedBy("has_" + RegistryUtil.getItemName(iron), PredicateUtil.has(iron))
+                .unlockedBy("has_" + RegistryUtil.getItemName(stickItemILReference), PredicateUtil.has(stickItemILReference))
+                .unlockedBy("has_" + RegistryUtil.getItemName(ironItemILReference), PredicateUtil.has(ironItemILReference))
                 .save(recipeConsumer);
     }
 

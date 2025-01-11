@@ -1,3 +1,14 @@
 {
-  "values": []
+  "values": [
+    "chaosawakens:fossilized_cod_gravel",
+    "chaosawakens:fossilized_dolphin_gravel",
+    "chaosawakens:fossilized_drowned_gravel",
+    "chaosawakens:fossilized_glow_squid_gravel",
+    "chaosawakens:fossilized_guardian_gravel",
+    "chaosawakens:fossilized_pufferfish_gravel",
+    "chaosawakens:fossilized_salmon_gravel",
+    "chaosawakens:fossilized_squid_gravel",
+    "chaosawakens:fossilized_tropical_fish_gravel",
+    "chaosawakens:fossilized_turtle_gravel"
+  ]
 }

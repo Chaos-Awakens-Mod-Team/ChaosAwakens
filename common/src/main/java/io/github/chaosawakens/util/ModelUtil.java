@@ -1,12 +1,12 @@
 package io.github.chaosawakens.util;
 
 import com.google.common.collect.Sets;
-import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.api.datagen.block.BlockModelDefinition;
 import io.github.chaosawakens.api.datagen.block.BlockStateDefinition;
 import io.github.chaosawakens.api.datagen.item.ItemModelDefinition;
 import io.github.chaosawakens.common.registry.CABlockStateProperties;
 import io.github.chaosawakens.common.registry.CAModelTemplates;
+import io.github.chaosawakens.common.registry.CATextureSlots;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
@@ -611,8 +611,8 @@ public final class ModelUtil {
     public static BlockStateDefinition slab(Supplier<Block> targetBlock) {
         String targetDoubleBlockModel = StringUtils.substringBefore(ModelLocationUtils.getModelLocation(targetBlock.get()).getPath(), "_slab");
         String fallbackDoubleBlockModel = StringUtils.substringBefore(ModelLocationUtils.getModelLocation(targetBlock.get()).getPath(), "_slab").concat("_block");
-        String chosenDoubleBlockModel = BuiltInRegistries.BLOCK.get(CAConstants.prefix(targetDoubleBlockModel)).getDescriptionId().equals("block.minecraft.air") ? fallbackDoubleBlockModel : targetDoubleBlockModel;
-        return slab(targetBlock, CAConstants.prefix(chosenDoubleBlockModel));
+        String chosenDoubleBlockModel = BuiltInRegistries.BLOCK.get(RegistryUtil.getItemKey(targetBlock.get()).withPath(targetDoubleBlockModel)).getDescriptionId().equals("block.minecraft.air") ? fallbackDoubleBlockModel : targetDoubleBlockModel;
+        return slab(targetBlock, RegistryUtil.getItemKey(targetBlock.get()).withPath(chosenDoubleBlockModel));
     }
 
     /**
@@ -656,7 +656,7 @@ public final class ModelUtil {
      */
     public static BlockStateDefinition woodenSlab(Supplier<Block> targetBlock) {
         String targetDoubleBlockModel = ModelLocationUtils.getModelLocation(targetBlock.get()).getPath();
-        return slab(targetBlock, CAConstants.prefix(!targetDoubleBlockModel.contains("_slab") ? targetDoubleBlockModel.concat("_planks") : targetDoubleBlockModel.replaceAll("_slab", "_planks")));
+        return slab(targetBlock, RegistryUtil.getItemKey(targetBlock.get()).withPath(!targetDoubleBlockModel.contains("_slab") ? targetDoubleBlockModel.concat("_planks") : targetDoubleBlockModel.replaceAll("_slab", "_planks")));
     }
 
     /**
@@ -678,8 +678,7 @@ public final class ModelUtil {
     public static BlockModelDefinition cross(ResourceLocation baseCrossTexture) {
         return BlockModelDefinition.of(ModelTemplates.CROSS)
                 .withTextureMapping(TextureMapping.cross(RegistryUtil.pickBlockPrefix(baseCrossTexture)))
-                .withCustomItemModel(ItemModelDefinition.of(ModelTemplates.FLAT_ITEM)
-                        .withTextureMapping(TextureMapping.layer0(RegistryUtil.pickBlockPrefix(baseCrossTexture))));
+                .withCustomItemModel(generatedBlock(baseCrossTexture));
     }
 
     /**
@@ -701,6 +700,16 @@ public final class ModelUtil {
      */
     public static BlockModelDefinition crossCutout(ResourceLocation baseCrossTexture) {
         return cross(baseCrossTexture).withBlockRenderType(new ResourceLocation(RenderType.cutout().name));
+    }
+
+    public static BlockModelDefinition tintedCross(ResourceLocation baseCrossTexture) {
+        return BlockModelDefinition.of(ModelTemplates.TINTED_CROSS)
+                .withTextureMapping(TextureMapping.cross(RegistryUtil.pickBlockPrefix(baseCrossTexture)))
+                .withCustomItemModel(generatedBlock(baseCrossTexture));
+    }
+
+    public static BlockModelDefinition tintedCrossCutout(ResourceLocation baseCrossTexture) {
+        return tintedCross(baseCrossTexture).withBlockRenderType(new ResourceLocation(RenderType.cutout().name));
     }
 
     /**
@@ -2814,6 +2823,11 @@ public final class ModelUtil {
                 .withBlockRenderType(new ResourceLocation(RenderType.cutoutMipped().name));
     }
 
+    public static ItemModelDefinition generatedBlock(ResourceLocation itemTexture) {
+        return ItemModelDefinition.of(ModelTemplates.FLAT_ITEM)
+                .withTextureMapping(TextureMapping.layer0(RegistryUtil.pickBlockPrefix(itemTexture)));
+    }
+
     public static ItemModelDefinition generated(ResourceLocation itemTexture) {
         return ItemModelDefinition.of(ModelTemplates.FLAT_ITEM)
                 .withTextureMapping(TextureMapping.layer0(RegistryUtil.pickItemPrefix(itemTexture)));
@@ -2822,5 +2836,78 @@ public final class ModelUtil {
     public static ItemModelDefinition handheld(ResourceLocation itemTexture) {
         return ItemModelDefinition.of(ModelTemplates.FLAT_HANDHELD_ITEM)
                 .withTextureMapping(TextureMapping.layer0(RegistryUtil.pickItemPrefix(itemTexture)));
+    }
+
+    public static BlockModelDefinition grassBlock(ResourceLocation particleTexture, ResourceLocation bottomTexture, ResourceLocation topTexture, ResourceLocation sideTexture, ResourceLocation overlayTexture) {
+        return BlockModelDefinition.of(CAModelTemplates.GRASS_BLOCK)
+                .withTextureMapping(CATextureSlots.grassBlock(RegistryUtil.pickBlockPrefix(particleTexture), RegistryUtil.pickBlockPrefix(bottomTexture), RegistryUtil.pickBlockPrefix(topTexture), RegistryUtil.pickBlockPrefix(sideTexture), RegistryUtil.pickBlockPrefix(overlayTexture)))
+                .withBlockRenderType(new ResourceLocation(RenderType.cutoutMipped().name));
+    }
+
+    public static BlockModelDefinition grassBlock(ResourceLocation dirtTexture, ResourceLocation topTexture, ResourceLocation sideTexture, ResourceLocation overlayTexture) {
+        return grassBlock(dirtTexture, dirtTexture, topTexture, sideTexture, overlayTexture);
+    }
+
+    public static BlockModelDefinition grassBlock(ResourceLocation grassBlockReferenceTextureLoc) {
+        ResourceLocation dirtLoc = grassBlockReferenceTextureLoc.withPath(grassBlockReferenceTextureLoc.getPath().replace("_grass_block", "_dirt"));
+        return grassBlock(dirtLoc, dirtLoc, grassBlockReferenceTextureLoc.withSuffix("_top"), grassBlockReferenceTextureLoc.withSuffix("_side"), grassBlockReferenceTextureLoc.withSuffix("_side_overlay"));
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> doublePlant(ResourceLocation topPlantTexture, ResourceLocation bottomPlantTexture) {
+        return ObjectArrayList.of(crossCutout(topPlantTexture).withCustomModelName(topPlantTexture.getPath().substring(topPlantTexture.getPath().lastIndexOf("/") + 1)), crossCutout(bottomPlantTexture).withCustomModelName(bottomPlantTexture.getPath().substring(bottomPlantTexture.getPath().lastIndexOf("/") + 1)).withCustomItemModel(generatedBlock(topPlantTexture)));
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> doublePlant(ResourceLocation baseTallPlantTexture) {
+        return doublePlant(baseTallPlantTexture.withSuffix("_top"), baseTallPlantTexture.withSuffix("_bottom"));
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> tintedDoublePlant(ResourceLocation topPlantTexture, ResourceLocation bottomPlantTexture) {
+        return ObjectArrayList.of(tintedCrossCutout(topPlantTexture).withCustomModelName(topPlantTexture.getPath().substring(topPlantTexture.getPath().lastIndexOf("/") + 1)), tintedCrossCutout(bottomPlantTexture).withCustomModelName(bottomPlantTexture.getPath().substring(bottomPlantTexture.getPath().lastIndexOf("/") + 1)).withCustomItemModel(generatedBlock(topPlantTexture)));
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> tintedDoublePlant(ResourceLocation baseTallPlantTexture) {
+        return tintedDoublePlant(baseTallPlantTexture.withSuffix("_top"), baseTallPlantTexture.withSuffix("_bottom"));
+    }
+
+    public static BlockStateDefinition doublePlant(Supplier<Block> targetBlock) {
+        return BlockStateDefinition.of(targetBlock)
+                .withBlockStateSupplier(MultiVariantGenerator.multiVariant(targetBlock.get())
+                        .with(PropertyDispatch.property(BlockStateProperties.DOUBLE_BLOCK_HALF)
+                                .select(DoubleBlockHalf.LOWER, Variant.variant()
+                                        .with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(targetBlock.get()).withSuffix("_bottom")))
+                                .select(DoubleBlockHalf.UPPER, Variant.variant()
+                                        .with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(targetBlock.get()).withSuffix("_top")))));
+    }
+
+    public static BlockModelDefinition farmlandDry(ResourceLocation farmlandTexture, ResourceLocation dirtTexture) {
+        return BlockModelDefinition.of(ModelTemplates.FARMLAND)
+                .withTextureMapping(CATextureSlots.farmland(RegistryUtil.pickBlockPrefix(farmlandTexture), RegistryUtil.pickBlockPrefix(dirtTexture)));
+    }
+
+    public static BlockModelDefinition farmlandMoist(ResourceLocation moistFarmlandTexture, ResourceLocation dirtTexture) {
+        return BlockModelDefinition.of(ModelTemplates.FARMLAND)
+                .withTextureMapping(CATextureSlots.farmland(RegistryUtil.pickBlockPrefix(moistFarmlandTexture), RegistryUtil.pickBlockPrefix(dirtTexture)))
+                .withCustomModelName(moistFarmlandTexture.getPath().substring(moistFarmlandTexture.getPath().lastIndexOf("/") + 1));
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> farmland(ResourceLocation farmlandTexture, ResourceLocation moistFarmlandTexture, ResourceLocation dirtTexture) {
+        return ObjectArrayList.of(farmlandDry(farmlandTexture, dirtTexture), farmlandMoist(moistFarmlandTexture, dirtTexture));
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> farmland(ResourceLocation farmlandTexture) {
+        return farmland(farmlandTexture, farmlandTexture.withSuffix("_moist"), farmlandTexture.withPath(farmlandTexture.getPath().replace("_farmland", "_dirt")));
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> defaultedFarmland(ResourceLocation farmlandTexture) {
+        return farmland(farmlandTexture, farmlandTexture.withSuffix("_moist"), farmlandTexture.withPath(farmlandTexture.getPath().replace("_farmland", "")));
+    }
+
+    public static BlockStateDefinition farmland(Supplier<Block> targetBlock) {
+        ResourceLocation dryFarmlandModelLoc = ModelLocationUtils.getModelLocation(targetBlock.get());
+        ResourceLocation moistureFarmlandModelLoc = ModelLocationUtils.getModelLocation(targetBlock.get()).withSuffix("_moist");
+        return BlockStateDefinition.of(targetBlock)
+                .withBlockStateSupplier(MultiVariantGenerator.multiVariant(targetBlock.get())
+                        .with(PropertyDispatch.property(BlockStateProperties.MOISTURE)
+                                .generate(moistureLevel -> moistureLevel.compareTo(7) >= 0 ? Variant.variant().with(VariantProperties.MODEL, moistureFarmlandModelLoc) : Variant.variant().with(VariantProperties.MODEL, dryFarmlandModelLoc))));
     }
 }

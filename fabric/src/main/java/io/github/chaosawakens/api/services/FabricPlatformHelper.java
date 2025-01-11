@@ -63,7 +63,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
                         } catch (IOException e) {
                             CAConstants.LOGGER.error("Failed to initialize JarFile for: {}", pathString, e);
                         }
-                    } else if (Files.isDirectory(Paths.get(pathString))) {
+                    } else if (Files.isDirectory(Paths.get(pathString))) { // Check if the path is pointing to a directory for standard directory walking (basically only useful in the dev env for project files inside the build/ dir) (we do be walking) (memory cardio :trol:)
                         try (Stream<Path> allExistingPaths = Files.walk(Paths.get(pathString))) {
                             allExistingPaths.filter(Files::isRegularFile)
                                     .filter(curPath -> curPath.toString().endsWith(".class"))
@@ -71,9 +71,9 @@ public class FabricPlatformHelper implements IPlatformHelper {
                                     .map(curPath -> ClassFinder.forName(Paths.get(pathString).relativize(curPath).toString().replace(File.separatorChar, '.').replace(".class", "")))
                                     .forEach(filteredClasses::add);
                         } catch (IOException e) {
-                            CAConstants.LOGGER.error("Failed to initialize walk path: {}", pathString, e);
+                            CAConstants.LOGGER.error("Failed to walk path: {}", pathString, e);
                         }
-                    } else if (pathString.endsWith(".class")) {
+                    } else if (pathString.endsWith(".class")) { // I mean, how/why would you even get to this point?
                         if (hasAnnotation(annotationTypeClazz, pathString, false, null)) {
                             filteredClasses.add(ClassFinder.forName(pathString.replace(File.separatorChar, '.').replace(".class", "")));
                         }
@@ -84,7 +84,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     private static boolean hasAnnotation(Class<? extends Annotation> annotationTypeClazz, String targetClassName, boolean processForJar, @Nullable JarFile targetJar) {
-        final boolean[] foundValidAnnotation = {false};
+        final boolean[] foundValidAnnotation = {false}; // I love atomic handling
         ClassReader reader;
 
         try {
@@ -106,12 +106,6 @@ public class FabricPlatformHelper implements IPlatformHelper {
         }
 
         ClassVisitor visitor = new ClassVisitor(Opcodes.ASM9) {
-            private String className;
-
-            @Override
-            public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
-                this.className = name.replace('/', '.');
-            }
 
             @Override
             public AnnotationVisitor visitAnnotation(String desc, boolean visible) {

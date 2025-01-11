@@ -4,6 +4,7 @@ import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
 import io.github.chaosawakens.api.item.ItemPropertyWrapper;
 import io.github.chaosawakens.api.tag.TagWrapper;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -16,6 +17,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class CAItemTagsProvider extends ItemTagsProvider {
 
@@ -32,14 +35,25 @@ public class CAItemTagsProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         if (!BlockPropertyWrapper.getMappedBpws().isEmpty()) {
             BlockPropertyWrapper.getMappedBpws().forEach((blockSupEntry, curBwp) -> {
-                List<TagKey<?>> parentTags = curBwp.getParentTags();
+                List<TagKey<?>> parentTags = curBwp.getParentTags().stream().map(Supplier::get).collect(Collectors.toCollection(ObjectArrayList::new));
+                List<TagKey<Item>> parentItemTags = curBwp.getParentItemTags().stream().map(Supplier::get).collect(Collectors.toCollection(ObjectArrayList::new));
 
-                if (!parentTags.isEmpty()){
+                if (!parentTags.isEmpty()) {
                     parentTags.forEach(curBlockItemTag -> {
                         if (curBlockItemTag != null && curBlockItemTag.isFor(Registries.ITEM)) {
-                            CAConstants.LOGGER.debug("[Tagging Block Item]: " + blockSupEntry.get().getDescriptionId() + " -> " + curBlockItemTag);
+                            CAConstants.LOGGER.debug("[Tagging Block Item]: {} -> {}", blockSupEntry.get().getDescriptionId(), curBlockItemTag);
 
                             tag((TagKey<Item>) curBlockItemTag).add(blockSupEntry.get().asItem());
+                        }
+                    });
+                }
+
+                if (!parentItemTags.isEmpty()) {
+                    parentItemTags.forEach(curItemTag -> {
+                        if (curItemTag != null) {
+                            CAConstants.LOGGER.debug("[Tagging Block Item]: {} -> {}", blockSupEntry.get().getDescriptionId(), curItemTag);
+
+                            tag(curItemTag).add(blockSupEntry.get().asItem());
                         }
                     });
                 }
@@ -48,11 +62,11 @@ public class CAItemTagsProvider extends ItemTagsProvider {
 
         if (!ItemPropertyWrapper.getMappedIpws().isEmpty()) {
             ItemPropertyWrapper.getMappedIpws().forEach((itemSupEntry, curIwp) -> {
-                List<TagKey<Item>> parentItemTags = curIwp.getParentTags();
+                List<TagKey<Item>> parentItemTags = curIwp.getParentTags().stream().map(Supplier::get).collect(Collectors.toCollection(ObjectArrayList::new));
 
                 if (!parentItemTags.isEmpty()) {
                     parentItemTags.forEach(curItemTag -> {
-                        CAConstants.LOGGER.debug("[Tagging Item]: " + itemSupEntry.get().getDescriptionId() + " -> " + curItemTag);
+                        CAConstants.LOGGER.debug("[Tagging Item]: {} -> {}", itemSupEntry.get().getDescriptionId(), curItemTag);
 
                         tag(curItemTag).add(itemSupEntry.get());
                     });
@@ -62,37 +76,39 @@ public class CAItemTagsProvider extends ItemTagsProvider {
 
         if (!TagWrapper.getCachedTWEntries().isEmpty()) {
             TagWrapper.getCachedTWEntries().forEach(twEntry -> {
-                if (twEntry.getParentTag().isFor(Registries.ITEM)) {
-                    TagKey<?> curItemTag = twEntry.getParentTag();
+                TagKey<?> parentTagKey = twEntry.getParentTag().get();
 
-                    if (curItemTag != null) {
+                if (parentTagKey.isFor(Registries.ITEM)) {
+                    if (parentTagKey != null) {
                         twEntry.getPredefinedTagEntries().forEach(tagEntry -> {
                             Item itemTagEntry = tagEntry.get() instanceof Block ? ((Block) tagEntry.get()).asItem() : (Item) tagEntry.get();
 
                             if (itemTagEntry != null) {
-                                CAConstants.LOGGER.debug((tagEntry.get() instanceof Block ? "[Tagging Block Item]: " : "[Tagging Item]: ") + itemTagEntry.getDescriptionId() + " -> " + curItemTag);
+                                CAConstants.LOGGER.debug("{}{} -> {}", tagEntry.get() instanceof Block ? "[Tagging Block Item]: " : "[Tagging Item]: ", itemTagEntry.getDescriptionId(), parentTagKey);
 
-                                tag((TagKey<Item>) curItemTag).add(itemTagEntry);
+                                tag((TagKey<Item>) parentTagKey).add(itemTagEntry);
                             }
                         });
 
                         twEntry.getStoredTags().forEach(tagKeyEntry -> {
-                            if (tagKeyEntry != null) {
+                            TagKey<?> storedTagKeyEntry = tagKeyEntry.get();
 
-                                CAConstants.LOGGER.debug("[Tagging Item Tag]: " + tagKeyEntry + " -> " + curItemTag);
+                            if (storedTagKeyEntry != null) {
+                                CAConstants.LOGGER.debug("[Tagging Item Tag]: {} -> {}", storedTagKeyEntry, parentTagKey);
 
-                                tag((TagKey<Item>) tagKeyEntry); // Force the existingFileHelper to track the tag to be added (otherwise throws exception). Goofy ahh patch.
-                                tag((TagKey<Item>) curItemTag).addTag((TagKey<Item>) tagKeyEntry);
+                                tag((TagKey<Item>) tagKeyEntry.get()); // Force the existingFileHelper to track the tag to be added (otherwise throws exception). Goofy ahh patch.
+                                tag((TagKey<Item>) parentTagKey).addTag((TagKey<Item>) storedTagKeyEntry);
                             }
                         });
 
                         twEntry.getParentTags().forEach(parentTagKeyEntry -> {
-                            if (parentTagKeyEntry != null) {
+                            TagKey<?> storedParentTagKeyEntry = parentTagKeyEntry.get();
 
-                                CAConstants.LOGGER.debug("[Tagging Item Tag]: " + curItemTag + " -> " + parentTagKeyEntry);
+                            if (storedParentTagKeyEntry != null) {
+                                CAConstants.LOGGER.debug("[Tagging Item Tag]: {} -> {}", parentTagKey, storedParentTagKeyEntry);
 
-                                tag((TagKey<Item>) curItemTag); // Force the existingFileHelper to track the tag to be added (otherwise throws exception). Goofy ahh patch.
-                                tag((TagKey<Item>) parentTagKeyEntry).addTag((TagKey<Item>) curItemTag);
+                                tag((TagKey<Item>) parentTagKey); // Force the existingFileHelper to track the tag to be added (otherwise throws exception). Goofy ahh patch.
+                                tag((TagKey<Item>) storedParentTagKeyEntry).addTag((TagKey<Item>) parentTagKey);
                             }
                         });
                     }

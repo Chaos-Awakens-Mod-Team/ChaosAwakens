@@ -174,6 +174,16 @@ public final class PredicateUtil {
      * @return
      */
     public static boolean isRegularBlock(ItemStack stackToTest) {
-        return isBlockItem(stackToTest) || hasParentTab(stackToTest, CACreativeModeTabs.CHAOS_AWAKENS_BLOCKS);
+        return isBlockItem(stackToTest) && hasParentTab(stackToTest, CACreativeModeTabs.CHAOS_AWAKENS_BLOCKS);
+    }
+
+    /**
+     *
+     * @param stackToTest
+     *
+     * @return
+     */
+    public static boolean isFossilBlock(ItemStack stackToTest) {
+        return isBlockItem(stackToTest) && hasParentTab(stackToTest, CACreativeModeTabs.CHAOS_AWAKENS_FOSSILS);
     }
 }

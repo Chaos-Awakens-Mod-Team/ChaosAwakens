@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -63,7 +64,7 @@ public class FruitableLeavesBlock extends LeavesBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState targetState, Level curLevel, BlockPos targetPos, Player interactingPlayer, InteractionHand usedHand, BlockHitResult result) {
+    public @NotNull InteractionResult use(BlockState targetState, Level curLevel, BlockPos targetPos, Player interactingPlayer, InteractionHand usedHand, BlockHitResult result) {
         return extractFruit(targetState, targetPos, curLevel);
     }
 

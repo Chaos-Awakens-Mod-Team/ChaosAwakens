@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "chaosawakens:block/dense_farmland"
+    },
+    "moisture=1": {
+      "model": "chaosawakens:block/dense_farmland"
+    },
+    "moisture=2": {
+      "model": "chaosawakens:block/dense_farmland"
+    },
+    "moisture=3": {
+      "model": "chaosawakens:block/dense_farmland"
+    },
+    "moisture=4": {
+      "model": "chaosawakens:block/dense_farmland"
+    },
+    "moisture=5": {
+      "model": "chaosawakens:block/dense_farmland"
+    },
+    "moisture=6": {
+      "model": "chaosawakens:block/dense_farmland"
+    },
+    "moisture=7": {
+      "model": "chaosawakens:block/dense_farmland_moist"
+    }
+  }
+}

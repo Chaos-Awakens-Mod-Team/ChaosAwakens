@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "chaosawakens:block/fossil/blackstone/fossilized_magma_cube_blackstone"
+  }
+}

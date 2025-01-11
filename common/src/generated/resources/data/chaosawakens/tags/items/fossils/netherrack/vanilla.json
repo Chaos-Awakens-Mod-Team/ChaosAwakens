@@ -1,3 +1,15 @@
 {
-  "values": []
+  "values": [
+    "chaosawakens:fossilized_blaze_netherrack",
+    "chaosawakens:fossilized_enderman_netherrack",
+    "chaosawakens:fossilized_frog_netherrack",
+    "chaosawakens:fossilized_ghast_netherrack",
+    "chaosawakens:fossilized_hoglin_netherrack",
+    "chaosawakens:fossilized_magma_cube_netherrack",
+    "chaosawakens:fossilized_piglin_netherrack",
+    "chaosawakens:fossilized_strider_netherrack",
+    "chaosawakens:fossilized_warped_ent_netherrack",
+    "chaosawakens:fossilized_wither_skeleton_netherrack",
+    "chaosawakens:fossilized_zombified_piglin_netherrack"
+  ]
 }

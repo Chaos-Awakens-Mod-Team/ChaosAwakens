@@ -4,6 +4,7 @@ import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Lists;
 import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
+import io.github.chaosawakens.api.damage_type.DamageTypeWrapper;
 import io.github.chaosawakens.api.item.ItemPropertyWrapper;
 import io.github.chaosawakens.common.registry.CABlocks;
 import io.github.chaosawakens.common.registry.CACreativeModeTabs;
@@ -17,7 +18,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CALanguageProvider extends LanguageProvider {
@@ -168,18 +168,25 @@ public class CALanguageProvider extends LanguageProvider {
         if (!BlockPropertyWrapper.getMappedBpws().isEmpty()) {
             BlockPropertyWrapper.getMappedBpws().forEach((blockRegNameEntry, curBwp) -> { //TODO Optimize and update logging :trol:
                 if (!curBwp.getManuallyLocalizedBlockName().isBlank()) addManualTranslation(blockRegNameEntry.get().getDescriptionId(), curBwp.getManuallyLocalizedBlockName());
-                else if (!curBwp.getDefinedSeparatorWords().isEmpty()) localizeGeneralRegistryName(blockRegNameEntry.get().getDescriptionId(), Lists.asList(DEFAULT_SEPARATORS.get(0), DEFAULT_SEPARATORS.get(1), curBwp.getDefinedSeparatorWords().toArray(String[]::new)), ObjectArrayList.of());
+                else if (!curBwp.getDefinedSeparatorWords().isEmpty() && curBwp.getBlockTranslationFunc() == null && !curBwp.hasLiteralTranslation()) localizeGeneralRegistryName(blockRegNameEntry.get().getDescriptionId(), Lists.asList(DEFAULT_SEPARATORS.get(0), DEFAULT_SEPARATORS.get(1), curBwp.getDefinedSeparatorWords().toArray(String[]::new)), ObjectArrayList.of());
             });
         }
 
         CABlocks.getBlocks().forEach(blockRegEntry -> {
             Block blockEntry = blockRegEntry.get();
             String blockRegName = blockEntry.getDescriptionId();
+            BlockPropertyWrapper mappedBpw = BlockPropertyWrapper.getMappedBpws().entrySet().stream().anyMatch(curEntry -> curEntry.getKey().get().getDescriptionId().equals(blockRegName)) ? BlockPropertyWrapper.getMappedBpws().entrySet().stream().filter(curEntry -> curEntry.getKey().get().getDescriptionId().equals(blockRegName)).findFirst().get().getValue() : null;
+            String translatedBlockName = MANUAL_TRANSLATIONS.containsKey(blockRegName) ? MANUAL_TRANSLATIONS.get(blockRegName) : getTranslatedRegistryName(blockRegName);
 
-            CAConstants.LOGGER.debug("[Currently Translating Block]: " + blockRegName + " -> " + (MANUAL_TRANSLATIONS.containsKey(blockRegName) ? MANUAL_TRANSLATIONS.get(blockRegName) : getTranslatedRegistryName(blockRegName)));
+            CAConstants.LOGGER.debug("[Currently Translating Block]: {} -> {}", blockRegName, translatedBlockName);
 
-            if (blockRegName.endsWith("_block") && !MANUAL_TRANSLATIONS.containsKey(blockRegName) && (!BlockPropertyWrapper.getMappedBpws().entrySet().stream().map(Map.Entry::getKey).filter(curEntry -> curEntry.get().getDescriptionId().equals(blockRegName)).findFirst().isPresent() || BlockPropertyWrapper.getMappedBpws().entrySet().stream().filter(curEntry -> curEntry.getKey().get().getDescriptionId().equals(blockRegName)).findFirst().get().getValue().hasLiteralTranslation())) localizeGeneralRegistryName(blockRegName, "Block of " + getTranslatedRegistryName(blockRegName).substring(0, getTranslatedRegistryName(blockRegName).lastIndexOf(" Block")));
-            else localizeGeneralRegistryName(blockRegName);
+            // TODO Indent this monstrosity (too lazy to do it rn)
+            if (blockRegName.endsWith("_block") && !MANUAL_TRANSLATIONS.containsKey(blockRegName) && (mappedBpw == null || (mappedBpw.hasLiteralTranslation() && mappedBpw.getBlockTranslationFunc() == null))) localizeGeneralRegistryName(blockRegName, "Block of " + getTranslatedRegistryName(blockRegName).substring(0, getTranslatedRegistryName(blockRegName).lastIndexOf(" Block")));
+            else if (mappedBpw != null && mappedBpw.getBlockTranslationFunc() != null) {
+                CAConstants.LOGGER.debug("[Currently Modifying Localized Block]: {} -> {}", translatedBlockName, mappedBpw.getBlockTranslationFunc().apply(translatedBlockName));
+
+                add(blockEntry, mappedBpw.getBlockTranslationFunc().apply(translatedBlockName));
+            } else localizeGeneralRegistryName(blockRegName);
         });
     }
 
@@ -190,29 +197,51 @@ public class CALanguageProvider extends LanguageProvider {
             int endCharIndex = tabRegName.indexOf("',");
             tabRegName = tabRegName.substring(17, endCharIndex);
 
-            CAConstants.LOGGER.debug("[Currently Translating Creative Mode Tab]: " + tabRegName + " -> " + getTranslatedRegistryName(tabRegName));
+            CAConstants.LOGGER.debug("[Currently Translating Creative Mode Tab]: {} -> {}", tabRegName, getTranslatedRegistryName(tabRegName));
 
-            MANUAL_INSERTIONS.putAll(getTranslatedRegistryName(tabRegName), ObjectArrayList.of("Chaos Awakens", ":"));
+            MANUAL_INSERTIONS.putAll(getTranslatedRegistryName(tabRegName), ObjectArrayList.of("Chaos Awakens", ":")); // Oneshot (No fancy shenanigans for em anyway)
 
             localizeGeneralRegistryName(tabRegName);
         });
+    }
+
+    protected void translateDamageSources() { // Moreso grabbed from damage types but uhhh... same difference idk
+        if (!DamageTypeWrapper.getMappedDtws().isEmpty()) {
+            DamageTypeWrapper.getMappedDtws().forEach((damageTypeEntry, curDtw) -> {
+                if (!curDtw.getCopiedMsgId().isBlank()) {
+                    String curDmgTypeKey = "death.attack.".concat(curDtw.getCopiedMsgId());
+                    String curDmgTypeDesc = curDtw.getLocalizedDeathMessageComponent() == null ? "" : curDtw.getLocalizedDeathMessageComponent().getString();
+
+                    if (!curDmgTypeDesc.isBlank()) {
+                        CAConstants.LOGGER.debug("[Currently Adding Damage Type Description]: {} -> {}", curDmgTypeKey, curDmgTypeDesc);
+                        addManualTranslation(curDmgTypeKey, curDmgTypeDesc);
+                    }
+                }
+            });
+        }
     }
 
     protected void translateItems() {
         if (!ItemPropertyWrapper.getMappedIpws().isEmpty()) {
             ItemPropertyWrapper.getMappedIpws().forEach((itemRegNameEntry, curIwp) -> { //TODO Optimize and update logging :trol:
                 if (!curIwp.getManuallyLocalizedItemName().isBlank()) addManualTranslation(itemRegNameEntry.get().getDescriptionId(), curIwp.getManuallyLocalizedItemName());
-                else if (!curIwp.getDefinedSeparatorWords().isEmpty()) localizeGeneralRegistryName(itemRegNameEntry.get().getDescriptionId(), Lists.asList(DEFAULT_SEPARATORS.get(0), DEFAULT_SEPARATORS.get(1), curIwp.getDefinedSeparatorWords().toArray(String[]::new)), ObjectArrayList.of());
+                else if (!curIwp.getDefinedSeparatorWords().isEmpty() && curIwp.getItemTranslationFunc() == null && !curIwp.hasLiteralTranslation()) localizeGeneralRegistryName(itemRegNameEntry.get().getDescriptionId(), Lists.asList(DEFAULT_SEPARATORS.get(0), DEFAULT_SEPARATORS.get(1), curIwp.getDefinedSeparatorWords().toArray(String[]::new)), ObjectArrayList.of());
             });
         }
 
         CAItems.getItems().forEach(itemRegEntry -> {
             Item itemEntry = itemRegEntry.get();
             String itemRegName = itemEntry.getDescriptionId();
+            ItemPropertyWrapper mappedIpw = ItemPropertyWrapper.getMappedIpws().entrySet().stream().anyMatch(curEntry -> curEntry.getKey().get().getDescriptionId().equals(itemRegName)) ? ItemPropertyWrapper.getMappedIpws().entrySet().stream().filter(curEntry -> curEntry.getKey().get().getDescriptionId().equals(itemRegName)).findFirst().get().getValue() : null;
+            String translatedItemName = MANUAL_TRANSLATIONS.containsKey(itemRegName) ? MANUAL_TRANSLATIONS.get(itemRegName) : getTranslatedRegistryName(itemRegName);
 
-            CAConstants.LOGGER.debug("[Currently Translating Item]: " + itemRegName + " -> " + getTranslatedRegistryName(itemRegName));
+            CAConstants.LOGGER.debug("[Currently Translating Item]: {} -> {}", itemRegName, translatedItemName);
 
-            localizeGeneralRegistryName(itemRegName);
+            if (mappedIpw != null && mappedIpw.getItemTranslationFunc() != null) {
+                CAConstants.LOGGER.debug("[Currently Modifying Localized Item]: {} -> {}", translatedItemName, mappedIpw.getItemTranslationFunc().apply(translatedItemName));
+
+                add(itemEntry, mappedIpw.getItemTranslationFunc().apply(translatedItemName));
+            } else localizeGeneralRegistryName(itemRegName);
         });
     }
 
@@ -228,6 +257,7 @@ public class CALanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         translateBlocks();
         translateCreativeModeTabs();
+        translateDamageSources();
         translateItems();
 
         handleManualTranslations();

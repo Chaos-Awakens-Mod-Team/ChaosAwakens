@@ -1,3 +1,8 @@
 {
-  "values": []
+  "values": [
+    "chaosawakens:frozen_arctic_fox_ice",
+    "chaosawakens:frozen_polar_bear_ice",
+    "chaosawakens:frozen_snow_golem_ice",
+    "chaosawakens:frozen_stray_ice"
+  ]
 }

@@ -9,6 +9,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.CreativeModeTab;
@@ -21,7 +22,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * A wrapper class used primarily to store information referenced in datagen to simplify creating data entries for items.
+ * A wrapper class used primarily to store information referenced in datagen to simplify creating data entries for items, as well as the modification of hardcoded item settings.
  */
 public class ItemPropertyWrapper {
     private static final Object2ObjectLinkedOpenHashMap<Supplier<Item>, ItemPropertyWrapper> MAPPED_IPWS = new Object2ObjectLinkedOpenHashMap<>();
@@ -71,7 +72,7 @@ public class ItemPropertyWrapper {
      * @return A new {@link ItemPropertyWrapper} instance.
      *
      * @see #of(Supplier, Supplier)
-     * @see #of(String, Supplier)
+     * @see #of(ResourceLocation, Supplier)
      * @see #of(ItemPropertyWrapper, Supplier)
      */
     public static ItemPropertyWrapper create(Supplier<Item> parentItem) {
@@ -121,7 +122,7 @@ public class ItemPropertyWrapper {
      * @return A new {@link ItemPropertyWrapper} instance with copied properties based on the provided IPW, or an entirely new/clean instance if the provided IPW is {@code null}.
      *
      * @see #of(Supplier, Supplier)
-     * @see #of(String, Supplier)
+     * @see #of(ResourceLocation, Supplier)
      * @see #create(Supplier)
      * @see #create(String, Supplier)
      * @see #createTemplate()
@@ -146,7 +147,7 @@ public class ItemPropertyWrapper {
      *
      * @see #create(Supplier)
      * @see #create(String, Supplier)
-     * @see #of(String, Supplier)
+     * @see #of(ResourceLocation, Supplier)
      * @see #of(ItemPropertyWrapper, Supplier)
      */
     public static ItemPropertyWrapper of(Supplier<Item> parentItem, Supplier<Item> newItem) {
@@ -172,7 +173,7 @@ public class ItemPropertyWrapper {
      * @see #create(Supplier)
      * @see #create(String, Supplier)
      */
-    public static ItemPropertyWrapper of(String newItemRegName, Supplier<Item> parentItem) {
+    public static ItemPropertyWrapper of(ResourceLocation newItemRegName, Supplier<Item> parentItem) {
         Item parentAsItem = parentItem.get();
         Item.Properties copiedProperties = new Item.Properties()
                 .rarity(parentAsItem.getRarity(parentAsItem.getDefaultInstance()))
@@ -199,11 +200,15 @@ public class ItemPropertyWrapper {
         return to.builder()
                 .withCustomName(from.builder.manuallyLocalizedItemName)
                 .withCustomSeparatorWords(from.builder.definedSeparatorWords)
+                .withLocalization(from.builder.itemTranslationFunc)
                 .withSetTags(List.copyOf(from.builder.parentTags))
                 .withSetCustomModelDefinitions(List.copyOf(from.builder.itemModelDefinitions))
                 .withCustomModelDefinitions(from.builder.imdMappingFunc)
                 .withRecipe(from.builder.recipeBuilderFunction)
                 .withSetParentCreativeModeTabs(List.copyOf(from.builder.parentTabs))
+                .asCompostable(from.builder.itemCompostingMappingFunc)
+                .asFuel(from.builder.itemFuelMappingFunc)
+                .literalTranslation(from.builder.literalTranslation)
                 .build(); // Direct setting of the builder would copy the entire object itself, which would in-turn overwrite it if any calls are made to the copied IPW afterward
     }
 
@@ -223,7 +228,7 @@ public class ItemPropertyWrapper {
      *
      * @return The cached {@link IPWBuilder} instance, or {@code null} if the {@link #builder} is {@code null}.
      *
-     * @see #of(String, Supplier)
+     * @see #of(ResourceLocation, Supplier)
      * @see #of(Supplier, Supplier)
      */
     @Nullable
@@ -250,6 +255,15 @@ public class ItemPropertyWrapper {
     }
 
     /**
+     * Gets whether this IPW instance bypasses default translation corrections.
+     *
+     * @return Whether this IPW instance bypasses default translation corrections.
+     */
+    public boolean hasLiteralTranslation() {
+        return builder != null && builder.literalTranslation;
+    }
+
+    /**
      * Gets the defined separator words from the {@link #builder()} if the builder exists.
      *
      * @return The defined separator words, or an empty {@link ObjectArrayList} if the {@link #builder()} is {@code null}.
@@ -259,11 +273,22 @@ public class ItemPropertyWrapper {
     }
 
     /**
-     * Gets the defined parent {@linkplain TagKey<Item> Tags} from the {@link #builder()} if the builder exists.
+     * Gets the localization {@code Function<String, String>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
      *
-     * @return The defined parent {@linkplain TagKey<Item> Tags}, or an empty {@link ObjectArrayList} if the {@link #builder()} is {@code null}.
+     * @return The {@code Function<String, String>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
      */
-    public List<TagKey<Item>> getParentTags() {
+    @Nullable
+    public Function<String, String> getItemTranslationFunc() {
+        return builder == null ? null : builder.itemTranslationFunc;
+    }
+
+    /**
+     * Gets the defined parent {@linkplain Supplier<TagKey<Item>> Tags} from the {@link #builder()} if the builder exists.
+     *
+     * @return The defined parent {@linkplain Supplier<TagKey<Item>> Tags}, or an empty {@link ObjectArrayList} if the {@link #builder()} is {@code null}.
+     */
+    public List<Supplier<TagKey<Item>>> getParentTags() {
         return builder == null ? ObjectArrayList.of() : builder.parentTags;
     }
 
@@ -310,6 +335,28 @@ public class ItemPropertyWrapper {
     }
 
     /**
+     * Gets the composting {@code Function<Supplier<Item>, Float>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Item>, Float>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Item>, Float> getCompostingMappingFunc() {
+        return builder == null ? null : builder.itemCompostingMappingFunc;
+    }
+
+    /**
+     * Gets the fuel {@code Function<Supplier<Item>, Integer>} from the {@link #builder()} if the builder exists, and it is defined within said builder.
+     * May be {@code null}.
+     *
+     * @return The {@code Function<Supplier<Item>, Integer>}, or {@code null} if the {@link #builder()} is {@code null} || it isn't defined within said builder.
+     */
+    @Nullable
+    public Function<Supplier<Item>, Integer> getItemFuelMappingFunc() {
+        return builder == null ? null : builder.itemFuelMappingFunc;
+    }
+
+    /**
      * Whether this IPW instance is a template. Templates are not stored in {@link #getMappedIpws()} and have no parent {@link Item}.
      *
      * @return Whether this IPW instance is a template.
@@ -331,20 +378,27 @@ public class ItemPropertyWrapper {
     }
 
     /**
-     * A builder class used to construct certain item-related data for datagen.
+     * A builder class used to construct certain item-related data for datagen and other data related to hardcoded item settings, such as fuel-ability.
      */
     public static class IPWBuilder {
         private final ItemPropertyWrapper ownerWrapper;
         private final Supplier<Item> itemParent;
         private String manuallyLocalizedItemName = "";
         private List<String> definedSeparatorWords = ObjectArrayList.of();
-        private final List<TagKey<Item>> parentTags = ObjectArrayList.of();
+        private final List<Supplier<TagKey<Item>>> parentTags = ObjectArrayList.of();
         private final List<ItemModelDefinition> itemModelDefinitions = ObjectArrayList.of();
         @Nullable
         private Function<Consumer<FinishedRecipe>, Consumer<Supplier<Item>>> recipeBuilderFunction;
         @Nullable
         private Function<Supplier<Item>, List<ItemModelDefinition>> imdMappingFunc;
         private final List<Supplier<CreativeModeTab>> parentTabs = new ObjectArrayList<>(); // Not datagen-related but whatever
+        @Nullable
+        private Function<Supplier<Item>, Float> itemCompostingMappingFunc;
+        @Nullable
+        private Function<Supplier<Item>, Integer> itemFuelMappingFunc;
+        @Nullable
+        private Function<String, String> itemTranslationFunc;
+        private boolean literalTranslation = false;
 
         private IPWBuilder(ItemPropertyWrapper ownerWrapper, Supplier<Item> itemParent) {
             this.ownerWrapper = ownerWrapper;
@@ -393,18 +447,63 @@ public class ItemPropertyWrapper {
         }
 
         /**
-         * Assigns a {@link List} of custom separator words which are lowercased during the algorithm's de-localization process. This is ignored if {@link #manuallyLocalizedItemName} is defined.
-         * The default entries for this are {"Of", "And"}. This {@link List} is appended to the default separator definitions rather than replacing them.
+         * Assigns a {@link List} of custom separator words which are lowercased during the algorithm's de-localization process. This is ignored if {@link #manuallyLocalizedItemName} is defined, {@link #literalTranslation}
+         * is {@code true}, or if {@link #itemTranslationFunc} is non-null. The default entries for this are {"Of", "And"}. This {@link List} is appended to the default separator definitions rather than replacing them.
          *
          * @param definedSeparatorWords The {@link List} of custom separator words to lowercase while the algorithm is running.
          *
          * @return {@code this} (builder method).
          *
          * @see #withCustomName(String)
+         * @see #withLocalization(Function)
+         * @see #literalTranslation(boolean)
          */
         public IPWBuilder withCustomSeparatorWords(List<String> definedSeparatorWords) {
             this.definedSeparatorWords = definedSeparatorWords;
             return this;
+        }
+
+        /**
+         * Marks this builder as using literal translations, meaning that corrections (like the one seen in the example provided by {@link #withCustomName(String)}) are not applied. Useless on items (for now).
+         *
+         * @param literalTranslation Whether to use literal translations.
+         *
+         * @return {@code this} (builder method).
+         *
+         * @see #withCustomName(String)
+         * @see #withLocalization(Function)
+         * @see #literalTranslation()
+         */
+        public IPWBuilder literalTranslation(boolean literalTranslation) {
+            this.literalTranslation = literalTranslation;
+            return this;
+        }
+
+        /**
+         * A custom {@link Function} to apply miscellaneous modifications to the resulting localized item name. This is influenced by {@link #withCustomName(String)} and {@link #literalTranslation(boolean)},
+         * where applicable.
+         *
+         * @param itemTranslationFunc The {@link Function} responsible for directly modifying the resulting localized item name.
+         *
+         * @return {@code this} (builder method).
+         *
+         * @see #withCustomName(String)
+         * @see #literalTranslation(boolean)
+         */
+        public IPWBuilder withLocalization(Function<String, String> itemTranslationFunc) {
+            this.itemTranslationFunc = itemTranslationFunc;
+            return this;
+        }
+
+        /**
+         * Overloaded variant of {@link #literalTranslation(boolean)} which marks this builder as using literal translations.
+         *
+         * @return {@code this} (builder method).
+         *
+         * @see #literalTranslation(boolean)
+         */
+        public IPWBuilder literalTranslation() {
+            return literalTranslation(true);
         }
 
         /**
@@ -414,7 +513,7 @@ public class ItemPropertyWrapper {
          *
          * @return {@code this} (builder method).
          */
-        public IPWBuilder withTag(TagKey<Item> parentItemTag) {
+        public IPWBuilder withTag(Supplier<TagKey<Item>> parentItemTag) {
             this.parentTags.add(parentItemTag);
             return this;
         }
@@ -428,7 +527,7 @@ public class ItemPropertyWrapper {
          *
          * @see #withSetTags(List)
          */
-        public IPWBuilder withTags(List<TagKey<Item>> parentItemTags) {
+        public IPWBuilder withTags(List<Supplier<TagKey<Item>>> parentItemTags) {
             this.parentTags.addAll(parentItemTags);
             return this;
         }
@@ -442,7 +541,7 @@ public class ItemPropertyWrapper {
          *
          * @see #withTags(List)
          */
-        public IPWBuilder withSetTags(List<TagKey<Item>> parentItemTags) {
+        public IPWBuilder withSetTags(List<Supplier<TagKey<Item>>> parentItemTags) {
             this.parentTags.clear();
             this.parentTags.addAll(parentItemTags);
             return this;
@@ -554,6 +653,32 @@ public class ItemPropertyWrapper {
         public IPWBuilder withSetParentCreativeModeTabs(List<Supplier<CreativeModeTab>> parentTabs) {
             this.parentTabs.clear();
             this.parentTabs.addAll(parentTabs);
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Item Item's} composting chance.
+         *
+         * @param itemCompostingMappingFunc The mapping function accepting a representation of the parent {@linkplain Item Item's} composting, with the output {@link Float} value representing the composting chance.
+         *                                  {@code null}/0 values are ignored. Negative values are abs'd.
+         *
+         * @return {@code this} (builder method).
+         */
+        public IPWBuilder asCompostable(Function<Supplier<Item>, Float> itemCompostingMappingFunc) {
+            this.itemCompostingMappingFunc = itemCompostingMappingFunc;
+            return this;
+        }
+
+        /**
+         * Defines a custom mapping function representing the parent {@linkplain Item Item's} cook time as a fuel.
+         *
+         * @param itemFuelMappingFunc The mapping function accepting a representation of the parent {@linkplain Item Item's} cook time (in ticks), with the output {@link Integer} value representing the composting chance.
+         *                                  {@code null}/0 values are ignored. Negative values are abs'd.
+         *
+         * @return {@code this} (builder method).
+         */
+        public IPWBuilder asFuel(Function<Supplier<Item>, Integer> itemFuelMappingFunc) {
+            this.itemFuelMappingFunc = itemFuelMappingFunc;
             return this;
         }
 

@@ -357,7 +357,43 @@ public final class LootUtil {
                         .add(LootItem.lootTableItem(RegistryUtil.getComponentFromMaterialBlock(targetBlock).get())
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(minCount, maxCount), true))));
     }
+
     public static LootTable.Builder dropComponents(Supplier<Block> targetBlock) {
         return dropComponents(targetBlock, 4, 9);
+    }
+
+    public static LootTable.Builder dropGrassBlock(Supplier<Block> targetBlock) {
+        return LootTable.lootTable().withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .when(ExplosionCondition.survivesExplosion())
+                .add(LootItem.lootTableItem(targetBlock.get())
+                        .when(HAS_SILK_TOUCH)
+                        .otherwise(LootItem.lootTableItem(RegistryUtil.getBlockBasedOnSuffix(targetBlock, "_grass_block", "_dirt").get()))));
+    }
+
+    public static LootTable.Builder dropFarmland(Supplier<Block> targetBlock) {
+        return LootTable.lootTable().withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .when(ExplosionCondition.survivesExplosion())
+                .add(LootItem.lootTableItem(targetBlock.get())
+                        .when(HAS_SILK_TOUCH)
+                        .otherwise(LootItem.lootTableItem(RegistryUtil.getBlockBasedOnSuffix(targetBlock, "_farmland", "_dirt") == null ? RegistryUtil.getBlockBasedOnSuffix(targetBlock, "_farmland", "").get() :RegistryUtil.getBlockBasedOnSuffix(targetBlock, "_farmland", "_dirt").get()))));
+    }
+
+    public static LootTable.Builder dropDoublePlant(Supplier<Block> targetBlock) {
+        return LootTable.lootTable().withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .when(ExplosionCondition.survivesExplosion())
+                .add(LootItem.lootTableItem(targetBlock.get())
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(targetBlock.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)))));
+    }
+
+    public static LootTable.Builder dropDoublePlantShearsOrSilkTouch(Supplier<Block> targetBlock) {
+        return LootTable.lootTable().withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .when(ExplosionCondition.survivesExplosion())
+                .add(LootItem.lootTableItem(targetBlock.get())
+                        .when(HAS_SHEARS_OR_SILK_TOUCH)
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(targetBlock.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)))));
     }
 }

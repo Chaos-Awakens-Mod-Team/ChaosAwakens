@@ -21,6 +21,7 @@ public class ChaosAwakensClientFabric implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         handleBlockRenderLayers();
+
         registerBlockColorProviders();
         registerItemColorProviders();
     }
@@ -68,7 +69,7 @@ public class ChaosAwakensClientFabric implements ClientModInitializer {
             Supplier<Block> blockSupEntry = curBwpEntry.getKey();
             BlockColor curMappedBlockColor = curBwpEntry.getValue().getBlockColorMappingFunc().apply(blockSupEntry);
 
-            if (curMappedBlockColor == null) return;
+            if (curMappedBlockColor == null) return; // Failsafe for initial nullity (how)
 
             ColorProviderRegistry.ITEM.register((curStack, tintIdx) -> curMappedBlockColor.getColor(blockSupEntry.get().defaultBlockState(), null, null, tintIdx), blockSupEntry.get());
         });
