@@ -5,7 +5,6 @@ import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -95,7 +94,7 @@ public class DamageTypeWrapper {
     }
 
     /**
-     * A builder class used to construct certain damage source-related data for datagen.
+     * A builder class used to construct certain damage type-related data for datagen.
      */
     public static class DTWBuilder {
         private final DamageTypeWrapper ownerWrapper;
@@ -141,7 +140,7 @@ public class DamageTypeWrapper {
 
         /**
          * Builds a new {@link DamageTypeWrapper} using this builder's data. Also maps the owner
-         * {@link DamageTypeWrapper} to the parent {@linkplain DamageSource} if isn't already mapped.
+         * {@link DamageTypeWrapper} to the parent {@linkplain DamageType} if isn't already mapped.
          *
          * @return The newly data-populated {@link DamageTypeWrapper}.
          */

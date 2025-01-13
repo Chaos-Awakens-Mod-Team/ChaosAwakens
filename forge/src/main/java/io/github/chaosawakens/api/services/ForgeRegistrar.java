@@ -55,7 +55,9 @@ public class ForgeRegistrar implements IRegistrar {
     public <T> Supplier<ResourceKey<T>> registerDatapackObject(ResourceLocation objId, Function<BootstapContext<T>, Supplier<T>> objSupMappingFunc, ResourceKey<Registry<T>> targetDatapackRegistry) {
         ResourceKey<T> targetObject = ResourceKey.create(targetDatapackRegistry, objId);
 
-        CACHED_DATAPACK_OBJECT_ENTRIES.put(targetDatapackRegistry, ObjectObjectMutablePair.of(targetObject, objSupMappingFunc)); // Need to use this approach since RSBs don't support stacking registration calls and I'm too stubborn to diverge from the otherwise straightforward ML registration approach I've been trying to facilitate :trol:
+        if (objSupMappingFunc != null) {
+            CACHED_DATAPACK_OBJECT_ENTRIES.put(targetDatapackRegistry, ObjectObjectMutablePair.of(targetObject, objSupMappingFunc)); // Need to use this approach since RSBs don't support stacking registration calls and I'm too stubborn to diverge from the otherwise straightforward ML registration approach I've been trying to facilitate :trol:
+        }
 
         return () -> targetObject;
     }

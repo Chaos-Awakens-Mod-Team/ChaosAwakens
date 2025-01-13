@@ -65,3 +65,11 @@ accessible method net/minecraft/client/Camera setRotation (FF)V
 # TextureSlot
 accessible method net/minecraft/data/models/model/TextureSlot create (Ljava/lang/String;Lnet/minecraft/data/models/model/TextureSlot;)Lnet/minecraft/data/models/model/TextureSlot;
 accessible method net/minecraft/data/models/model/TextureSlot create (Ljava/lang/String;)Lnet/minecraft/data/models/model/TextureSlot;
+
+# OreVeinifier$VeinType
+accessible class net/minecraft/world/level/levelgen/OreVeinifier$VeinType
+accessible field net/minecraft/world/level/levelgen/OreVeinifier$VeinType minY I
+accessible field net/minecraft/world/level/levelgen/OreVeinifier$VeinType maxY I
+
+# NoiseRouterData
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData overworld (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;ZZ)Lnet/minecraft/world/level/levelgen/NoiseRouter;

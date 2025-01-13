@@ -1,0 +1,11 @@
+{
+  "type": "chaosawakens:mining_paradise",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "chaosawakens:dense_plains"
+    },
+    "settings": "minecraft:overworld"
+  }
+}
