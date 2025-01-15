@@ -6,6 +6,6 @@
       "type": "minecraft:fixed",
       "biome": "chaosawakens:dense_plains"
     },
-    "settings": "minecraft:overworld"
+    "settings": "chaosawakens:mining_paradise"
   }
 }

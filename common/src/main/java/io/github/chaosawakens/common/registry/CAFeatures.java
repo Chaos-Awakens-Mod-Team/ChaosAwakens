@@ -25,7 +25,9 @@ public class CAFeatures {
     public static class CAConfiguredFeatures {
         private static final ObjectArrayList<Supplier<ResourceKey<ConfiguredFeature<?, ?>>>> CONFIGURED_FEATURES = new ObjectArrayList<>();
 
+        // Bonemeal
         public static final Supplier<ResourceKey<ConfiguredFeature<?, ?>>> SINGLE_DENSE_GRASS = registerConfiguredFeature("single_dense_grass", () -> new ConfiguredFeature<>(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(CABlocks.DENSE_GRASS.get()))));
+        public static final Supplier<ResourceKey<ConfiguredFeature<?, ?>>> SINGLE_CRYSTAL_GRASS = registerConfiguredFeature("single_crystal_grass", () -> new ConfiguredFeature<>(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(CABlocks.CRYSTAL_GRASS.get()))));
 
         private static Supplier<ResourceKey<ConfiguredFeature<?, ?>>> registerConfiguredFeature(ResourceLocation id, Supplier<ConfiguredFeature<?, ?>> actualPlacedFeatureSup) {
             Supplier<ResourceKey<ConfiguredFeature<?, ?>>> placedFeatureSup = CAServices.REGISTRAR.registerDatapackObject(id, b -> actualPlacedFeatureSup, Registries.CONFIGURED_FEATURE);
@@ -46,7 +48,9 @@ public class CAFeatures {
     public static class CAPlacedFeatures {
         private static final ObjectArrayList<Supplier<ResourceKey<PlacedFeature>>> PLACED_FEATURES = new ObjectArrayList<>();
 
+        // Bonemeal
         public static final Supplier<ResourceKey<PlacedFeature>> DENSE_GRASS_BONEMEAL = registerPlacedFeature("dense_grass_bonemeal", CAConfiguredFeatures.SINGLE_DENSE_GRASS, ObjectArrayList.of(PlacementUtils.isEmpty()));
+        public static final Supplier<ResourceKey<PlacedFeature>> CRYSTAL_GRASS_BONEMEAL = registerPlacedFeature("crystal_grass_bonemeal", CAConfiguredFeatures.SINGLE_CRYSTAL_GRASS, ObjectArrayList.of(PlacementUtils.isEmpty()));
 
         private static Supplier<ResourceKey<PlacedFeature>> registerPlacedFeature(ResourceLocation id, Supplier<ResourceKey<ConfiguredFeature<?, ?>>> configuredFeatureHolder, List<PlacementModifier> placementModifiers) {
             Supplier<ResourceKey<PlacedFeature>> placedFeatureSup = CAServices.REGISTRAR.registerDatapackObject(id, b -> () -> new PlacedFeature(b.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(configuredFeatureHolder.get()), List.copyOf(placementModifiers)), Registries.PLACED_FEATURE);

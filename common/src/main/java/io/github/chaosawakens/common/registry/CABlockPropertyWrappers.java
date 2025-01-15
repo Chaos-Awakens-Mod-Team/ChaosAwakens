@@ -285,7 +285,6 @@ public final class CABlockPropertyWrappers {
     public static final BlockPropertyWrapper CRYSTAL_GRASS_BLOCK = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK_PICKAXE)
             .cachedBuilder()
             .withCustomModelDefinitions(parentBlock -> ObjectArrayList.of(ModelUtil.crystalGrassBlock(RegistryUtil.getBlockTexture(parentBlock))))
-            .withLootTable(LootUtil::dropSelf)
             .build();
 
     public static final BlockPropertyWrapper FARMLAND = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK_SHOVEL)
@@ -355,19 +354,23 @@ public final class CABlockPropertyWrappers {
     public static final BlockPropertyWrapper CRYSTAL_PLANT = BlockPropertyWrapper.ofTemplate(NO_TINT_PLANT)
             .cachedBuilder()
             .withSetTags(ObjectArrayList.of())
+            .withSetBlockTags(ObjectArrayList.of(CATags.CABlockTags.CRYSTAL_VEGETATION))
             .build();
     public static final BlockPropertyWrapper CRYSTAL_FLOWER = BlockPropertyWrapper.ofTemplate(NO_TINT_FLOWER)
             .cachedBuilder()
             .withSetTags(ObjectArrayList.of())
+            .withSetBlockTags(ObjectArrayList.of(CATags.CABlockTags.CRYSTAL_FLOWER_BLOCKS))
             .build();
 
     public static final BlockPropertyWrapper TALL_CRYSTAL_PLANT = BlockPropertyWrapper.ofTemplate(NO_TINT_TALL_PLANT)
             .cachedBuilder()
             .withSetTags(ObjectArrayList.of())
+            .withSetBlockTags(ObjectArrayList.of(CATags.CABlockTags.CRYSTAL_VEGETATION))
             .build();
     public static final BlockPropertyWrapper TALL_CRYSTAL_FLOWER = BlockPropertyWrapper.ofTemplate(NO_TINT_TALL_FLOWER)
             .cachedBuilder()
             .withSetTags(ObjectArrayList.of())
+            .withSetBlockTags(ObjectArrayList.of(CATags.CABlockTags.CRYSTAL_FLOWER_BLOCKS))
             .build();
 
     // Solid

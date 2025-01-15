@@ -33,6 +33,11 @@ public class CustomizableTallGrassBlock extends TallGrassBlock {
     }
 
     @Override
+    public boolean canSurvive(BlockState targetState, LevelReader curLevel, BlockPos targetPos) { // Needed because Forge patch go brr
+        return mayPlaceOn(curLevel.getBlockState(targetPos.below()), curLevel, targetPos.below());
+    }
+
+    @Override
     public boolean isValidBonemealTarget(LevelReader curLevel, BlockPos targetPos, BlockState targetState, boolean onClient) {
         return getPlantConfig() != null && getPlantConfig().get().canBeBonemealed(curLevel, targetPos, targetState, onClient);
     }

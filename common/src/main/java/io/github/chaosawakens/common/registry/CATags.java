@@ -168,6 +168,11 @@ public class CATags {
 
         public static final Supplier<TagKey<Block>> FLOWER_BLOCKS = createBlockTag("vegetation/flower_blocks");
 
+        public static final Supplier<TagKey<Block>> CRYSTAL_FLOWER_BLOCKS = createBlockTag("vegetation/crystal_flower_blocks");
+        public static final Supplier<TagKey<Block>> CRYSTAL_VEGETATION = createWrappedBlockTag("vegetation/crystal_vegetation")
+                .withTagEntry(CRYSTAL_FLOWER_BLOCKS)
+                .getParentTag();
+
         public static final Supplier<TagKey<Block>> FARMLAND_BLOCKS = createWrappedBlockTag("farmland_blocks")
                 .withEntries(ObjectArrayList.of(() -> Blocks.FARMLAND))
                 .getParentTag();
@@ -335,6 +340,11 @@ public class CATags {
                 .getParentTag();
 
         public static final Supplier<TagKey<Item>> FLOWER_BLOCKS = createItemTag("vegetation/flower_blocks");
+
+        public static final Supplier<TagKey<Item>> CRYSTAL_FLOWER_BLOCKS = createItemTag("vegetation/crystal_flower_blocks");
+        public static final Supplier<TagKey<Item>> CRYSTAL_VEGETATION = createWrappedItemTag("vegetation/crystal_vegetation")
+                .withTagEntry(CRYSTAL_FLOWER_BLOCKS)
+                .getParentTag();
 
         private static TagWrapper<Item, TagKey<Item>> createWrappedItemTag(String name) {
             return TagWrapper.create(createItemTag(name));

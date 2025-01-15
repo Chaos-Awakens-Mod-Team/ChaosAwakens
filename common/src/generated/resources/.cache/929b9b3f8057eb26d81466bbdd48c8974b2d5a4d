@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-13T23:06:21.9571408	Chaos Awakens: Block Tags
+// 1.20.1	2025-01-15T19:41:17.3879505	Chaos Awakens: Block Tags
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_crystal.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_mining.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/base_stone_village.json
@@ -44,6 +44,8 @@ e68a8acd09380265dc6518c084ac06db70e8c288 data/chaosawakens/tags/blocks/miners_dr
 7b73d6e38919b26eba0831d9b725aa36f1678b71 data/chaosawakens/tags/blocks/stalagmite_ore.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/stalagmite_ore/common.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/stalagmite_ore/rare.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/vegetation/crystal_flower_blocks.json
+798bc4558a3d6c56f1db2f6c6965525e0cd5c0a2 data/chaosawakens/tags/blocks/vegetation/crystal_vegetation.json
 d89fc4326b85b6d39178241f56e9b9c6ea779b1f data/chaosawakens/tags/blocks/vegetation/flower_blocks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/wood/logs/apple_logs.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/blocks/wood/logs/dead_duplicator_logs.json

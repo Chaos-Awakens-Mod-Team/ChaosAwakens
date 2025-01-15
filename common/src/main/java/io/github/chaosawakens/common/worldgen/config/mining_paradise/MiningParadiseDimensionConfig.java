@@ -2,8 +2,10 @@ package io.github.chaosawakens.common.worldgen.config.mining_paradise;
 
 import io.github.chaosawakens.common.registry.CABiomes;
 import io.github.chaosawakens.common.registry.CADimensions;
+import io.github.chaosawakens.common.registry.CANoiseGeneratorSettings;
 import io.github.chaosawakens.common.registry.CASurfaceRules;
 import io.github.chaosawakens.common.worldgen.config.base.DimensionLevelStemConfig;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -14,7 +16,6 @@ import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.FixedBiomeSource;
-import net.minecraft.world.level.biome.OverworldBiomeBuilder;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
@@ -43,7 +44,7 @@ public class MiningParadiseDimensionConfig implements DimensionLevelStemConfig {
         HolderGetter<NoiseGeneratorSettings> noiseGenSettingsLookup = regCtx.lookup(Registries.NOISE_SETTINGS);
 
         BiomeSource src = new FixedBiomeSource(biomeLookup.getOrThrow(CABiomes.DENSE_PLAINS.get()));
-        Holder.Reference<NoiseGeneratorSettings> settings = noiseGenSettingsLookup.getOrThrow(NoiseGeneratorSettings.OVERWORLD);
+        Holder.Reference<NoiseGeneratorSettings> settings = noiseGenSettingsLookup.getOrThrow(CANoiseGeneratorSettings.MINING_PARADISE.get());
 
         return new NoiseBasedChunkGenerator(src, settings);
     }
@@ -53,13 +54,31 @@ public class MiningParadiseDimensionConfig implements DimensionLevelStemConfig {
     }
 
     public static Supplier<NoiseGeneratorSettings> createMiningParadiseNoiseGenSettings(BootstapContext<NoiseGeneratorSettings> regCtx) {
-        return () -> new NoiseGeneratorSettings(BASE_MP_NOISE_SETTINGS, Blocks.STONE.defaultBlockState(), Blocks.WATER.defaultBlockState(), NoiseRouterData.overworld(regCtx.lookup(Registries.DENSITY_FUNCTION), regCtx.lookup(Registries.NOISE), false, false), createMiningParadiseSurfaceRules(), (new OverworldBiomeBuilder()).spawnTarget(), 128, false, true, true, false);
+        return () -> new NoiseGeneratorSettings(BASE_MP_NOISE_SETTINGS, Blocks.STONE.defaultBlockState(), Blocks.WATER.defaultBlockState(), NoiseRouterData.overworld(regCtx.lookup(Registries.DENSITY_FUNCTION), regCtx.lookup(Registries.NOISE), false, false), createMiningParadiseSurfaceRules(), ObjectArrayList.of(), 121, false, true, true, false);
     }
 
     public static SurfaceRules.RuleSource createMiningParadiseSurfaceRules() {
-        SurfaceRules.RuleSource surfaceRuleSource = SurfaceRules.sequence(SurfaceRules.ifTrue(CASurfaceRules.CAConditionSources.AT_ABOVE_WATER_LEVEL, CASurfaceRules.CAStateRules.DENSE_GRASS_BLOCK), CASurfaceRules.CAStateRules.DENSE_DIRT);
+        SurfaceRules.RuleSource surfaceRuleSource = SurfaceRules.sequence(
+                SurfaceRules.ifTrue(
+                        SurfaceRules.abovePreliminarySurface(),
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.ON_FLOOR,
+                                SurfaceRules.sequence(
+                                        SurfaceRules.ifTrue(
+                                                CASurfaceRules.CAConditionSources.AT_ABOVE_WATER_LEVEL,
+                                                CASurfaceRules.CAStateRules.DENSE_GRASS_BLOCK
+                                        ),
+                                        CASurfaceRules.CAStateRules.DENSE_DIRT
+                                )
+                        )
+                ),
+                SurfaceRules.ifTrue(
+                        SurfaceRules.UNDER_FLOOR,
+                        CASurfaceRules.CAStateRules.DENSE_DIRT
+                )
+        );
         SurfaceRules.RuleSource bedrockFloorRuleSource = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("bedrock_floor", VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(5)), CASurfaceRules.CAStateRules.BEDROCK));
-        SurfaceRules.RuleSource densePlainsRuleSource = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(CABiomes.DENSE_PLAINS.get()), SurfaceRules.sequence(surfaceRuleSource)));
+        SurfaceRules.RuleSource densePlainsRuleSource = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(CABiomes.DENSE_PLAINS.get()), surfaceRuleSource));
 
         return SurfaceRules.sequence(densePlainsRuleSource, bedrockFloorRuleSource);
     }

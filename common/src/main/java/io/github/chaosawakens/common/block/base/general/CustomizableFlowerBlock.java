@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -33,6 +34,11 @@ public class CustomizableFlowerBlock extends FlowerBlock {
     @Override
     protected boolean mayPlaceOn(BlockState targetState, BlockGetter curLevel, BlockPos targetPos) {
         return getPlantConfig() != null && getPlantConfig().get().allowPlacementOn(curLevel, targetPos, targetState);
+    }
+
+    @Override
+    public boolean canSurvive(BlockState targetState, LevelReader curLevel, BlockPos targetPos) { // Needed because Forge patch go brr
+        return mayPlaceOn(curLevel.getBlockState(targetPos.below()), curLevel, targetPos.below());
     }
 
     @Override
