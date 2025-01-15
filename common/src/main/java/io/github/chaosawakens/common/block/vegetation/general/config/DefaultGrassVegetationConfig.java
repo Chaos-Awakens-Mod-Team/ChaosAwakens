@@ -44,7 +44,7 @@ public class DefaultGrassVegetationConfig implements GrassVegetationConfig {
 
     @Override
     public boolean canBeBonemealed(LevelReader curLevel, BlockPos targetPos, BlockState targetState, boolean onClient) {
-        return curLevel.getBlockState(targetPos.above()).isAir();
+        return curLevel.getBlockState(targetPos.above()).isAir() && getBonemealPlacedFeature() != null && getBonemealPlacedFeature().isPresent();
     }
 
     @Override

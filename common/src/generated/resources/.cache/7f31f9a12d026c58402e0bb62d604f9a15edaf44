@@ -1,8 +1,8 @@
-// 1.20.1	2025-01-13T20:39:05.8053621	Chaos Awakens Datapack Registries
+// 1.20.1	2025-01-13T22:48:14.5733405	Chaos Awakens Datapack Registries
 2340a4b1d099214775cb456687b1aa902d5c058a data/chaosawakens/damage_type/big_carnivorous_plant.json
 639d3e54d3df69c99f7b7d1571b1fffe8ec5e442 data/chaosawakens/damage_type/thorny_sun.json
 45fea5392d56011b8ad50c3da8acfe301029f3a5 data/chaosawakens/dimension/mining_paradise.json
-bbd4eee60d520329f9a788929ff35b715cbe5945 data/chaosawakens/dimension_type/mining_paradise.json
+ae156e4ca64412f89d69af0dfa6a8e378730f867 data/chaosawakens/dimension_type/mining_paradise.json
 2a0728e54403e2bc19a80ac12cc30f128f9bc0b5 data/chaosawakens/worldgen/biome/dense_plains.json
 24bd686a56264e719c472012cc063246e7731c2d data/chaosawakens/worldgen/configured_feature/single_dense_grass.json
 9ac8187d102bfcdfa1d9cc4ab105c15909aae1d6 data/chaosawakens/worldgen/noise_settings/mining_paradise.json

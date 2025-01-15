@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "chaosawakens:fossilized_swarm_stone"
+          "name": "chaosawakens:crystal_grass_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "chaosawakens:blocks/fossilized_swarm_stone"
+  "random_sequence": "chaosawakens:blocks/crystal_grass_block"
 }

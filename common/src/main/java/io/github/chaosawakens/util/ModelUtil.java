@@ -2853,6 +2853,11 @@ public final class ModelUtil {
         return grassBlock(dirtLoc, dirtLoc, grassBlockReferenceTextureLoc.withSuffix("_top"), grassBlockReferenceTextureLoc.withSuffix("_side"), grassBlockReferenceTextureLoc.withSuffix("_side_overlay"));
     }
 
+    public static BlockModelDefinition crystalGrassBlock(ResourceLocation grassBlockReferenceTextureLoc) {
+        ResourceLocation sideLoc = grassBlockReferenceTextureLoc.withSuffix("_bottom");
+        return grassBlock(sideLoc, sideLoc, grassBlockReferenceTextureLoc.withSuffix("_top"), grassBlockReferenceTextureLoc.withSuffix("_side"), grassBlockReferenceTextureLoc.withSuffix("_side"));
+    }
+
     public static ObjectArrayList<BlockModelDefinition> doublePlant(ResourceLocation topPlantTexture, ResourceLocation bottomPlantTexture) {
         return ObjectArrayList.of(crossCutout(topPlantTexture).withCustomModelName(topPlantTexture.getPath().substring(topPlantTexture.getPath().lastIndexOf("/") + 1)), crossCutout(bottomPlantTexture).withCustomModelName(bottomPlantTexture.getPath().substring(bottomPlantTexture.getPath().lastIndexOf("/") + 1)).withCustomItemModel(generatedBlock(topPlantTexture)));
     }

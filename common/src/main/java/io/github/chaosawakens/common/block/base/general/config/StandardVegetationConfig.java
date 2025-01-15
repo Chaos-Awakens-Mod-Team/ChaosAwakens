@@ -39,10 +39,8 @@ public interface StandardVegetationConfig {
      * Vegetation Config utilised by {@link CustomizableGrassBlock} implementations.
      *
      * @return This instance's {@link GrassVegetationConfig}. May be {@code null}.
-     *
      * @see CustomizableGrassBlock
      */
-    @Nullable
     Supplier<GrassVegetationConfig> getGrassConfig();
 
     /**

@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-11T22:01:44.5294917	Chaos Awakens: Item Tags
+// 1.20.1	2025-01-11T22:46:11.0275033	Chaos Awakens: Item Tags
 8673c6f1ebefbd4055258086e7c64e1dd29cc9e3 data/chaosawakens/tags/items/fossils.json
 957eb1f35fcdfc4e4be448a395edc634bd0b5b96 data/chaosawakens/tags/items/fossils/blackstone.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/items/fossils/blackstone/chaosawakens.json
@@ -31,8 +31,8 @@ dd43157ac0c3e9516448859d4d7acebd3ac3cd81 data/chaosawakens/tags/items/fossils/so
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/items/fossils/soul_soil/chaosawakens.json
 6221b2600419368f6428cfd270508708514ea694 data/chaosawakens/tags/items/fossils/soul_soil/vanilla.json
 b41349a4b011bedbfcf9cc91ce48ebbfda560d20 data/chaosawakens/tags/items/fossils/stone.json
-a2fff034ec7823c0feb38346353b0ce82ea4db80 data/chaosawakens/tags/items/fossils/stone/chaosawakens.json
-8ac5bd67c01f3cf3fe87139b7c028e240e60da7f data/chaosawakens/tags/items/fossils/stone/vanilla.json
+5b99c02e83247352aac342fa9b5f9d07676cb63a data/chaosawakens/tags/items/fossils/stone/chaosawakens.json
+733e8ef495b80ad2000c4f3a068a62e27d65ab73 data/chaosawakens/tags/items/fossils/stone/vanilla.json
 d89fc4326b85b6d39178241f56e9b9c6ea779b1f data/chaosawakens/tags/items/vegetation/flower_blocks.json
 e7ba5237319801a9049bfae3df7ece786080ebe2 data/chaosawakens/tags/items/villager_trades/archaeologist/fossils.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/chaosawakens/tags/items/villager_trades/archaeologist/fossils/common.json

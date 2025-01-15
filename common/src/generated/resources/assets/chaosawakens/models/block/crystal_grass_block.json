@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/grass_block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "bottom": "chaosawakens:block/vegetation/crystal/crystal_grass_block_bottom",
+    "overlay": "chaosawakens:block/vegetation/crystal/crystal_grass_block_side",
+    "particle": "chaosawakens:block/vegetation/crystal/crystal_grass_block_bottom",
+    "side": "chaosawakens:block/vegetation/crystal/crystal_grass_block_side",
+    "top": "chaosawakens:block/vegetation/crystal/crystal_grass_block_top"
+  }
+}

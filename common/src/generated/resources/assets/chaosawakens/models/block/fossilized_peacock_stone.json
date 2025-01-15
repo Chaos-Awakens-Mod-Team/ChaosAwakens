@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "chaosawakens:block/fossil/stone/fossilized_peacock_stone"
-  }
-}

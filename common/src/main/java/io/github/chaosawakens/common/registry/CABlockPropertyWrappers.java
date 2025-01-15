@@ -282,6 +282,11 @@ public final class CABlockPropertyWrappers {
             .withHoeTilling(RegistryUtil::defaultHoeTilling)
             .withTags(ObjectArrayList.of(() -> BlockTags.DIRT, () -> ItemTags.DIRT))
             .build();
+    public static final BlockPropertyWrapper CRYSTAL_GRASS_BLOCK = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK_PICKAXE)
+            .cachedBuilder()
+            .withCustomModelDefinitions(parentBlock -> ObjectArrayList.of(ModelUtil.crystalGrassBlock(RegistryUtil.getBlockTexture(parentBlock))))
+            .withLootTable(LootUtil::dropSelf)
+            .build();
 
     public static final BlockPropertyWrapper FARMLAND = BlockPropertyWrapper.ofTemplate(BASIC_BLOCK_SHOVEL)
             .cachedBuilder()
@@ -327,6 +332,42 @@ public final class CABlockPropertyWrappers {
             .withBlockColor(null)
             .withTags(ObjectArrayList.of(() -> BlockTags.TALL_FLOWERS, () -> ItemTags.TALL_FLOWERS))
             .withLootTable(LootUtil::dropDoublePlant)
+            .build();
+
+    public static final BlockPropertyWrapper NO_TINT_PLANT = BlockPropertyWrapper.ofTemplate(BASIC_PLANT)
+            .cachedBuilder()
+            .withBlockColor(null)
+            .build();
+    public static final BlockPropertyWrapper NO_TINT_FLOWER = BlockPropertyWrapper.ofTemplate(BASIC_FLOWER)
+            .cachedBuilder()
+            .withBlockColor(null)
+            .build();
+
+    public static final BlockPropertyWrapper NO_TINT_TALL_PLANT = BlockPropertyWrapper.ofTemplate(TALL_PLANT)
+            .cachedBuilder()
+            .withBlockColor(null)
+            .build();
+    public static final BlockPropertyWrapper NO_TINT_TALL_FLOWER = BlockPropertyWrapper.ofTemplate(TALL_FLOWER)
+            .cachedBuilder()
+            .withBlockColor(null)
+            .build();
+
+    public static final BlockPropertyWrapper CRYSTAL_PLANT = BlockPropertyWrapper.ofTemplate(NO_TINT_PLANT)
+            .cachedBuilder()
+            .withSetTags(ObjectArrayList.of())
+            .build();
+    public static final BlockPropertyWrapper CRYSTAL_FLOWER = BlockPropertyWrapper.ofTemplate(NO_TINT_FLOWER)
+            .cachedBuilder()
+            .withSetTags(ObjectArrayList.of())
+            .build();
+
+    public static final BlockPropertyWrapper TALL_CRYSTAL_PLANT = BlockPropertyWrapper.ofTemplate(NO_TINT_TALL_PLANT)
+            .cachedBuilder()
+            .withSetTags(ObjectArrayList.of())
+            .build();
+    public static final BlockPropertyWrapper TALL_CRYSTAL_FLOWER = BlockPropertyWrapper.ofTemplate(NO_TINT_TALL_FLOWER)
+            .cachedBuilder()
+            .withSetTags(ObjectArrayList.of())
             .build();
 
     // Solid
