@@ -22,7 +22,7 @@ public class CABiomes {
     public static final Supplier<ResourceKey<Biome>> DENSE_PLAINS = registerBiome("dense_plains", DensePlainsBiomeConfig::new);
 
     private static Supplier<ResourceKey<Biome>> registerBiome(ResourceLocation id, Supplier<BiomeConfig> biomeConfigSup) {
-        Supplier<ResourceKey<Biome>> biomeSup = CAServices.REGISTRAR.registerDatapackObject(id, b -> biomeConfigSup.get()::createBiome, Registries.BIOME);
+        Supplier<ResourceKey<Biome>> biomeSup = CAServices.REGISTRAR.registerDatapackObject(id, b -> () -> biomeConfigSup.get().createBiome(b), Registries.BIOME);
         BIOMES.add(biomeSup);
         return biomeSup;
     }

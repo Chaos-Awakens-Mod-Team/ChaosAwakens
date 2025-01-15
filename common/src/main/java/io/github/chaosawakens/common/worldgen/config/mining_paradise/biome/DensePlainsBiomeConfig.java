@@ -1,6 +1,7 @@
 package io.github.chaosawakens.common.worldgen.config.mining_paradise.biome;
 
 import io.github.chaosawakens.common.worldgen.config.base.BiomeConfig;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
@@ -18,7 +19,7 @@ public class DensePlainsBiomeConfig implements BiomeConfig {
 
     @Override
     public float getTemperature() {
-        return 0;
+        return 0.8F;
     }
 
     @Override
@@ -37,7 +38,7 @@ public class DensePlainsBiomeConfig implements BiomeConfig {
     }
 
     @Override
-    public @Nullable BiomeGenerationSettings getGenerationSettings() {
+    public @Nullable BiomeGenerationSettings getGenerationSettings(BootstapContext<Biome> regCtx) {
         return null;
     }
 

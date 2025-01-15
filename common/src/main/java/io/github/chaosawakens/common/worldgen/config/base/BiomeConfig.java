@@ -1,5 +1,6 @@
 package io.github.chaosawakens.common.worldgen.config.base;
 
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.biome.EndBiomes;
 import net.minecraft.data.worldgen.biome.NetherBiomes;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
@@ -23,6 +24,8 @@ public interface BiomeConfig {
      * The primary method responsible for constructing this config's parent {@link Biome} using the rest of the config methods. Override if you want to directly intercept biome initialization/configuration and modify it
      * according to your needs.
      *
+     * @param regCtx The {@link BootstapContext} used to register the parent {@link Biome}.
+     *
      * @return This config's parent {@link Biome}, passed in during registration. May not be {@code null}.
      *
      * @see OverworldBiomes
@@ -30,7 +33,7 @@ public interface BiomeConfig {
      * @see EndBiomes
      */
     @NotNull
-    default Biome createBiome() {
+    default Biome createBiome(BootstapContext<Biome> regCtx) {
         Biome.BiomeBuilder biomeBuilder = new Biome.BiomeBuilder();
 
         biomeBuilder.hasPrecipitation(hasPrecipitation());
@@ -44,7 +47,7 @@ public interface BiomeConfig {
                         .skyColor(103877)
                 .build() : getSpecialEffects());
         biomeBuilder.mobSpawnSettings(getMobSpawnSettings() == null ? new MobSpawnSettings.Builder().build() : getMobSpawnSettings());
-        biomeBuilder.generationSettings(getGenerationSettings() == null ? new BiomeGenerationSettings.PlainBuilder().build() : getGenerationSettings());
+        biomeBuilder.generationSettings(getGenerationSettings(regCtx) == null ? new BiomeGenerationSettings.PlainBuilder().build() : getGenerationSettings(regCtx));
 
         if (getTemperatureModifier() != null) biomeBuilder.temperatureAdjustment(getTemperatureModifier());
 
@@ -96,7 +99,7 @@ public interface BiomeConfig {
      * @return The generation settings used to effectively post-process the parent {@link Biome}.
      */
     @Nullable
-    BiomeGenerationSettings getGenerationSettings();
+    BiomeGenerationSettings getGenerationSettings(BootstapContext<Biome> regCtx);
 
     /**
      * The temperature modifier used to determine whether the parent {@link Biome} should undergo temperature modifications based on its default temperature configuration or

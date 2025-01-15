@@ -58,7 +58,7 @@ public class MiningParadiseDimensionConfig implements DimensionLevelStemConfig {
     }
 
     public static SurfaceRules.RuleSource createMiningParadiseSurfaceRules() {
-        SurfaceRules.RuleSource surfaceRuleSource = SurfaceRules.sequence(
+        SurfaceRules.RuleSource defaultSurfaceRuleSource = SurfaceRules.sequence(
                 SurfaceRules.ifTrue(
                         SurfaceRules.abovePreliminarySurface(),
                         SurfaceRules.ifTrue(
@@ -77,8 +77,8 @@ public class MiningParadiseDimensionConfig implements DimensionLevelStemConfig {
                         CASurfaceRules.CAStateRules.DENSE_DIRT
                 )
         );
-        SurfaceRules.RuleSource bedrockFloorRuleSource = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.verticalGradient("bedrock_floor", VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(5)), CASurfaceRules.CAStateRules.BEDROCK));
-        SurfaceRules.RuleSource densePlainsRuleSource = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(CABiomes.DENSE_PLAINS.get()), surfaceRuleSource));
+        SurfaceRules.RuleSource densePlainsRuleSource = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(CABiomes.DENSE_PLAINS.get()), defaultSurfaceRuleSource));
+        SurfaceRules.RuleSource bedrockFloorRuleSource = SurfaceRules.ifTrue(SurfaceRules.verticalGradient("bedrock_floor", VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(5)), CASurfaceRules.CAStateRules.BEDROCK);
 
         return SurfaceRules.sequence(densePlainsRuleSource, bedrockFloorRuleSource);
     }

@@ -1,0 +1,12 @@
+{
+  "feature": "chaosawakens:single_crystal_grass",
+  "placement": [
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "blocks": "minecraft:air"
+      }
+    }
+  ]
+}
