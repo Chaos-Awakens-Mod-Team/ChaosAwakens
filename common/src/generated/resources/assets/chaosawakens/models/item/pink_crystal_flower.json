@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "chaosawakens:block/vegetation/crystal/pink_crystal_flower"
+  }
+}

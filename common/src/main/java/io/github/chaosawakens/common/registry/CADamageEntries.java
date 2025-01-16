@@ -29,6 +29,7 @@ public class CADamageEntries {
                 .withLocalizedDeathMessageComponent(Component.literal("%1$s was pricked to death by a Thorny Sun"))
                 .build()
                 .getOwnerDamageType();
+
         public static final Supplier<ResourceKey<DamageType>> BIG_CARNIVOROUS_PLANT = DamageTypeWrapper.create(registerDamageType("big_carnivorous_plant", () -> new DamageType("big_carnivorous_plant", 0.1F)))
                 .builder()
                 .withCopiedMsgId("big_carnivorous_plant")
