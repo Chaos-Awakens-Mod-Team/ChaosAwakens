@@ -1,0 +1,890 @@
+{
+  "type": "minecraft:flat_cache",
+  "argument": {
+    "type": "minecraft:cache_2d",
+    "argument": {
+      "type": "minecraft:add",
+      "argument1": 10.0,
+      "argument2": {
+        "type": "minecraft:mul",
+        "argument1": {
+          "type": "minecraft:blend_alpha"
+        },
+        "argument2": {
+          "type": "minecraft:add",
+          "argument1": -10.0,
+          "argument2": {
+            "type": "minecraft:spline",
+            "spline": {
+              "coordinate": "chaosawakens:vanilla/land/continents",
+              "points": [
+                {
+                  "derivative": 0.0,
+                  "location": -0.19,
+                  "value": 1.95
+                },
+                {
+                  "derivative": 0.0,
+                  "location": -0.15,
+                  "value": {
+                    "coordinate": "chaosawakens:vanilla/land/erosion",
+                    "points": [
+                      {
+                        "derivative": 0.0,
+                        "location": -0.6,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 3.65
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.5,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.05,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.05,
+                              "value": 2.67
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.35,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 3.65
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.25,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 3.65
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.1,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.05,
+                              "value": 2.67
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.05,
+                              "value": 6.3
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.03,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 3.65
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.35,
+                        "value": 3.65
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.45,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges_folded",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.9,
+                              "value": 3.65
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": -0.69,
+                              "value": {
+                                "coordinate": "chaosawakens:vanilla/land/ridges",
+                                "points": [
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.0,
+                                    "value": 3.65
+                                  },
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.1,
+                                    "value": 0.625
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.55,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges_folded",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.9,
+                              "value": 3.65
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": -0.69,
+                              "value": {
+                                "coordinate": "chaosawakens:vanilla/land/ridges",
+                                "points": [
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.0,
+                                    "value": 3.65
+                                  },
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.1,
+                                    "value": 0.625
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.62,
+                        "value": 3.65
+                      }
+                    ]
+                  }
+                },
+                {
+                  "derivative": 0.0,
+                  "location": -0.1,
+                  "value": {
+                    "coordinate": "chaosawakens:vanilla/land/erosion",
+                    "points": [
+                      {
+                        "derivative": 0.0,
+                        "location": -0.6,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 2.97
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.5,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.05,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.05,
+                              "value": 2.67
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.35,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 2.97
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.25,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 2.97
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.1,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.05,
+                              "value": 2.67
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.05,
+                              "value": 6.3
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.03,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 2.97
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.35,
+                        "value": 2.97
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.45,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges_folded",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.9,
+                              "value": 2.97
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": -0.69,
+                              "value": {
+                                "coordinate": "chaosawakens:vanilla/land/ridges",
+                                "points": [
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.0,
+                                    "value": 2.97
+                                  },
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.1,
+                                    "value": 0.625
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.55,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges_folded",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.9,
+                              "value": 2.97
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": -0.69,
+                              "value": {
+                                "coordinate": "chaosawakens:vanilla/land/ridges",
+                                "points": [
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.0,
+                                    "value": 2.97
+                                  },
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.1,
+                                    "value": 0.625
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.62,
+                        "value": 2.97
+                      }
+                    ]
+                  }
+                },
+                {
+                  "derivative": 0.0,
+                  "location": 0.03,
+                  "value": {
+                    "coordinate": "chaosawakens:vanilla/land/erosion",
+                    "points": [
+                      {
+                        "derivative": 0.0,
+                        "location": -0.6,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 1.68
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.5,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.05,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.05,
+                              "value": 2.67
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.35,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 1.68
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.25,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 1.68
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.1,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.05,
+                              "value": 2.67
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.05,
+                              "value": 6.3
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.03,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 1.68
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.35,
+                        "value": 1.68
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.45,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges_folded",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.9,
+                              "value": 1.68
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": -0.69,
+                              "value": {
+                                "coordinate": "chaosawakens:vanilla/land/ridges",
+                                "points": [
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.0,
+                                    "value": 1.68
+                                  },
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.1,
+                                    "value": 0.625
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.55,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges_folded",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.9,
+                              "value": 1.68
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": -0.69,
+                              "value": {
+                                "coordinate": "chaosawakens:vanilla/land/ridges",
+                                "points": [
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.0,
+                                    "value": 1.68
+                                  },
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.1,
+                                    "value": 0.625
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.62,
+                        "value": 1.68
+                      }
+                    ]
+                  }
+                },
+                {
+                  "derivative": 0.0,
+                  "location": 0.06,
+                  "value": {
+                    "coordinate": "chaosawakens:vanilla/land/erosion",
+                    "points": [
+                      {
+                        "derivative": 0.0,
+                        "location": -0.6,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 1.19
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.5,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.05,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.05,
+                              "value": 2.67
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.35,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 1.19
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.25,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 1.19
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": -0.1,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.05,
+                              "value": 2.67
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.05,
+                              "value": 6.3
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.03,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.2,
+                              "value": 6.3
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.2,
+                              "value": 1.19
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.05,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges_folded",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": 0.45,
+                              "value": {
+                                "coordinate": "chaosawakens:vanilla/land/ridges",
+                                "points": [
+                                  {
+                                    "derivative": 0.0,
+                                    "location": -0.2,
+                                    "value": 6.3
+                                  },
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.2,
+                                    "value": 1.19
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.7,
+                              "value": 1.56
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.4,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges_folded",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": 0.45,
+                              "value": {
+                                "coordinate": "chaosawakens:vanilla/land/ridges",
+                                "points": [
+                                  {
+                                    "derivative": 0.0,
+                                    "location": -0.2,
+                                    "value": 6.3
+                                  },
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.2,
+                                    "value": 1.19
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": 0.7,
+                              "value": 1.56
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.45,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges_folded",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.7,
+                              "value": {
+                                "coordinate": "chaosawakens:vanilla/land/ridges",
+                                "points": [
+                                  {
+                                    "derivative": 0.0,
+                                    "location": -0.2,
+                                    "value": 6.3
+                                  },
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.2,
+                                    "value": 1.19
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": -0.15,
+                              "value": 1.37
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.55,
+                        "value": {
+                          "coordinate": "chaosawakens:vanilla/land/ridges_folded",
+                          "points": [
+                            {
+                              "derivative": 0.0,
+                              "location": -0.7,
+                              "value": {
+                                "coordinate": "chaosawakens:vanilla/land/ridges",
+                                "points": [
+                                  {
+                                    "derivative": 0.0,
+                                    "location": -0.2,
+                                    "value": 6.3
+                                  },
+                                  {
+                                    "derivative": 0.0,
+                                    "location": 0.2,
+                                    "value": 1.19
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "derivative": 0.0,
+                              "location": -0.15,
+                              "value": 1.37
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "derivative": 0.0,
+                        "location": 0.58,
+                        "value": 1.19
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

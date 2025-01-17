@@ -73,3 +73,18 @@ accessible field net/minecraft/world/level/levelgen/OreVeinifier$VeinType maxY I
 
 # NoiseRouterData
 accessible method net/minecraft/world/level/levelgen/NoiseRouterData overworld (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;ZZ)Lnet/minecraft/world/level/levelgen/NoiseRouter;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData slide (Lnet/minecraft/world/level/levelgen/DensityFunction;IIIIDIID)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData noiseGradientDensity (Lnet/minecraft/world/level/levelgen/DensityFunction;Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData splineWithBlending (Lnet/minecraft/world/level/levelgen/DensityFunction;Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData yLimitedInterpolatable (Lnet/minecraft/world/level/levelgen/DensityFunction;Lnet/minecraft/world/level/levelgen/DensityFunction;III)Lnet/minecraft/world/level/levelgen/DensityFunction;
+
+# TerrainProvider
+accessible method net/minecraft/data/worldgen/TerrainProvider getErosionFactor (Lnet/minecraft/util/ToFloatFunction;Lnet/minecraft/util/ToFloatFunction;Lnet/minecraft/util/ToFloatFunction;FZLnet/minecraft/util/ToFloatFunction;)Lnet/minecraft/util/CubicSpline;
+accessible method net/minecraft/data/worldgen/TerrainProvider calculateSlope (FFFF)F
+accessible method net/minecraft/data/worldgen/TerrainProvider ridgeSpline (Lnet/minecraft/util/ToFloatFunction;FFFFFFLnet/minecraft/util/ToFloatFunction;)Lnet/minecraft/util/CubicSpline;
+accessible method net/minecraft/data/worldgen/TerrainProvider buildWeirdnessJaggednessSpline (Lnet/minecraft/util/ToFloatFunction;FLnet/minecraft/util/ToFloatFunction;)Lnet/minecraft/util/CubicSpline;
+accessible method net/minecraft/data/worldgen/TerrainProvider buildRidgeJaggednessSpline (Lnet/minecraft/util/ToFloatFunction;Lnet/minecraft/util/ToFloatFunction;FFLnet/minecraft/util/ToFloatFunction;)Lnet/minecraft/util/CubicSpline;
+accessible method net/minecraft/data/worldgen/TerrainProvider buildErosionJaggednessSpline (Lnet/minecraft/util/ToFloatFunction;Lnet/minecraft/util/ToFloatFunction;Lnet/minecraft/util/ToFloatFunction;FFFFLnet/minecraft/util/ToFloatFunction;)Lnet/minecraft/util/CubicSpline;
+accessible method net/minecraft/data/worldgen/TerrainProvider buildMountainRidgeSplineWithPoints (Lnet/minecraft/util/ToFloatFunction;FZLnet/minecraft/util/ToFloatFunction;)Lnet/minecraft/util/CubicSpline;
+accessible method net/minecraft/data/worldgen/TerrainProvider mountainContinentalness (FFF)F
+accessible method net/minecraft/data/worldgen/TerrainProvider calculateMountainRidgeZeroContinentalnessPoint (F)F

@@ -205,7 +205,7 @@ public class CALanguageProvider extends LanguageProvider {
         });
     }
 
-    protected void translateDamageSources() { // Moreso grabbed from damage types but uhhh... same difference idk
+    protected void translateDamageTypes() {
         if (!DamageTypeWrapper.getMappedDtws().isEmpty()) {
             DamageTypeWrapper.getMappedDtws().forEach((damageTypeEntry, curDtw) -> {
                 if (!curDtw.getCopiedMsgId().isBlank()) {
@@ -257,7 +257,7 @@ public class CALanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         translateBlocks();
         translateCreativeModeTabs();
-        translateDamageSources();
+        translateDamageTypes();
         translateItems();
 
         handleManualTranslations();

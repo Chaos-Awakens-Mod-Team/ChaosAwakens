@@ -3,11 +3,24 @@
   "downfall": 0.0,
   "effects": {
     "fog_color": 2989342,
-    "sky_color": 103877,
+    "sky_color": 343499,
     "water_color": 4159204,
-    "water_fog_color": 329011
+    "water_fog_color": 429011
   },
-  "features": [],
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "chaosawakens:dense_grass_patch"
+    ]
+  ],
   "has_precipitation": false,
   "spawn_costs": {},
   "spawners": {
