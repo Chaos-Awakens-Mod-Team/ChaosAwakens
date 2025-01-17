@@ -71,7 +71,10 @@ public class MiningParadiseDimensionConfig implements DimensionLevelStemConfig {
                 ),
                 SurfaceRules.ifTrue(
                         SurfaceRules.UNDER_FLOOR,
-                        CASurfaceRules.CAStateRules.DENSE_DIRT
+                        SurfaceRules.ifTrue(
+                                SurfaceRules.not(SurfaceRules.hole()),
+                                CASurfaceRules.CAStateRules.DENSE_DIRT
+                        )
                 )
         );
         SurfaceRules.RuleSource densePlainsRuleSource = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.isBiome(CABiomes.DENSE_PLAINS.get()), defaultSurfaceRuleSource));
@@ -92,8 +95,8 @@ public class MiningParadiseDimensionConfig implements DimensionLevelStemConfig {
         DensityFunction terrainFactor = CADensityFunctions.getWrappedDensityFunctionHolder(regCtx, CADensityFunctions.MINING_PARADISE_FACTOR);
         DensityFunction terrainDepth = CADensityFunctions.getWrappedDensityFunctionHolder(regCtx, CADensityFunctions.MINING_PARADISE_DEPTH);
         DensityFunction continentRidges = CADensityFunctions.getWrappedDensityFunctionHolder(regCtx, CADensityFunctions.RIDGES);
-        DensityFunction initialLandDensity = NoiseRouterData.slide(DensityFunctions.add(NoiseRouterData.noiseGradientDensity(DensityFunctions.cache2d(terrainFactor), terrainDepth), DensityFunctions.constant(-0.803125D)).clamp(-72.0D, 72.0D), -256, 480, 121, 93, -0.158425D, 32, 56, 0.1271875D);
-        DensityFunction finalLandDensity = DensityFunctions.mul(DensityFunctions.interpolated(initialLandDensity), DensityFunctions.constant(0.32D)).squeeze();
+        DensityFunction initialLandDensity = NoiseRouterData.slide(DensityFunctions.add(NoiseRouterData.noiseGradientDensity(DensityFunctions.cache2d(terrainFactor), terrainDepth), DensityFunctions.constant(-0.803125D)).clamp(-128.0D, 128.0D), -256, 480, 121, 84, -0.198425D, 32, 66, 0.5271875D);
+        DensityFunction finalLandDensity = DensityFunctions.mul(DensityFunctions.interpolated(DensityFunctions.blendDensity(initialLandDensity)), DensityFunctions.constant(0.96D)).squeeze();
 
         return new NoiseRouter(
                 zero,

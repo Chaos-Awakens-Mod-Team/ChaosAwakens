@@ -26,62 +26,65 @@
       "type": "minecraft:squeeze",
       "argument": {
         "type": "minecraft:mul",
-        "argument1": 0.32,
+        "argument1": 0.96,
         "argument2": {
           "type": "minecraft:interpolated",
           "argument": {
-            "type": "minecraft:add",
-            "argument1": 0.1271875,
-            "argument2": {
-              "type": "minecraft:mul",
-              "argument1": {
-                "type": "minecraft:y_clamped_gradient",
-                "from_value": 0.0,
-                "from_y": -224,
-                "to_value": 1.0,
-                "to_y": -200
-              },
+            "type": "minecraft:blend_density",
+            "argument": {
+              "type": "minecraft:add",
+              "argument1": 0.5271875,
               "argument2": {
-                "type": "minecraft:add",
-                "argument1": -0.1271875,
+                "type": "minecraft:mul",
+                "argument1": {
+                  "type": "minecraft:y_clamped_gradient",
+                  "from_value": 0.0,
+                  "from_y": -224,
+                  "to_value": 1.0,
+                  "to_y": -190
+                },
                 "argument2": {
                   "type": "minecraft:add",
-                  "argument1": -0.158425,
+                  "argument1": -0.5271875,
                   "argument2": {
-                    "type": "minecraft:mul",
-                    "argument1": {
-                      "type": "minecraft:y_clamped_gradient",
-                      "from_value": 1.0,
-                      "from_y": 103,
-                      "to_value": 0.0,
-                      "to_y": 131
-                    },
+                    "type": "minecraft:add",
+                    "argument1": -0.198425,
                     "argument2": {
-                      "type": "minecraft:add",
-                      "argument1": 0.158425,
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:y_clamped_gradient",
+                        "from_value": 1.0,
+                        "from_y": 103,
+                        "to_value": 0.0,
+                        "to_y": 140
+                      },
                       "argument2": {
-                        "type": "minecraft:clamp",
-                        "input": {
-                          "type": "minecraft:add",
-                          "argument1": -0.803125,
-                          "argument2": {
-                            "type": "minecraft:mul",
-                            "argument1": 4.0,
+                        "type": "minecraft:add",
+                        "argument1": 0.198425,
+                        "argument2": {
+                          "type": "minecraft:clamp",
+                          "input": {
+                            "type": "minecraft:add",
+                            "argument1": -0.803125,
                             "argument2": {
-                              "type": "minecraft:quarter_negative",
-                              "argument": {
-                                "type": "minecraft:mul",
-                                "argument1": "chaosawakens:mining_paradise/land/depth",
-                                "argument2": {
-                                  "type": "minecraft:cache_2d",
-                                  "argument": "chaosawakens:mining_paradise/land/factor"
+                              "type": "minecraft:mul",
+                              "argument1": 4.0,
+                              "argument2": {
+                                "type": "minecraft:quarter_negative",
+                                "argument": {
+                                  "type": "minecraft:mul",
+                                  "argument1": "chaosawakens:mining_paradise/land/depth",
+                                  "argument2": {
+                                    "type": "minecraft:cache_2d",
+                                    "argument": "chaosawakens:mining_paradise/land/factor"
+                                  }
                                 }
                               }
                             }
-                          }
-                        },
-                        "max": 72.0,
-                        "min": -72.0
+                          },
+                          "max": 128.0,
+                          "min": -128.0
+                        }
                       }
                     }
                   }
@@ -96,7 +99,7 @@
     "fluid_level_spread": 0.0,
     "initial_density_without_jaggedness": {
       "type": "minecraft:add",
-      "argument1": 0.1271875,
+      "argument1": 0.5271875,
       "argument2": {
         "type": "minecraft:mul",
         "argument1": {
@@ -104,14 +107,14 @@
           "from_value": 0.0,
           "from_y": -224,
           "to_value": 1.0,
-          "to_y": -200
+          "to_y": -190
         },
         "argument2": {
           "type": "minecraft:add",
-          "argument1": -0.1271875,
+          "argument1": -0.5271875,
           "argument2": {
             "type": "minecraft:add",
-            "argument1": -0.158425,
+            "argument1": -0.198425,
             "argument2": {
               "type": "minecraft:mul",
               "argument1": {
@@ -119,11 +122,11 @@
                 "from_value": 1.0,
                 "from_y": 103,
                 "to_value": 0.0,
-                "to_y": 131
+                "to_y": 140
               },
               "argument2": {
                 "type": "minecraft:add",
-                "argument1": 0.158425,
+                "argument1": 0.198425,
                 "argument2": {
                   "type": "minecraft:clamp",
                   "input": {
@@ -145,8 +148,8 @@
                       }
                     }
                   },
-                  "max": 72.0,
-                  "min": -72.0
+                  "max": 128.0,
+                  "min": -128.0
                 }
               }
             }
@@ -253,9 +256,18 @@
                     "surface_type": "floor"
                   },
                   "then_run": {
-                    "type": "minecraft:block",
-                    "result_state": {
-                      "Name": "chaosawakens:dense_dirt"
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:not",
+                      "invert": {
+                        "type": "minecraft:hole"
+                      }
+                    },
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "chaosawakens:dense_dirt"
+                      }
                     }
                   }
                 }

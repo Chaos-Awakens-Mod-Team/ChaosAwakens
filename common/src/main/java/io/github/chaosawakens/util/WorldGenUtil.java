@@ -47,6 +47,7 @@ public final class WorldGenUtil {
         return CubicSpline.builder(continentSplineCoord, NO_TRANSFORM)
                 .addPoint(-0.19F, 1.95F)
                 .addPoint(-0.15F, erosionFactorSpline)
+                .addPoint(-0.11F, 0.0F)
                 .addPoint(-0.1F, amplifiedErosionFactorSpline)
                 .addPoint(0.03F, erosionFactorSplineContinued)
                 .addPoint(0.06F, erosionFactorSplineFinal)
