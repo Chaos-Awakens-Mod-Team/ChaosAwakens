@@ -36,10 +36,10 @@ public class DensePlainsBiomeConfig implements BiomeConfig {
     @Override
     public @Nullable BiomeSpecialEffects getSpecialEffects() {
         return new BiomeSpecialEffects.Builder()
-                .fogColor(2989342)
+                .fogColor(4080490)
                 .waterColor(4159204)
                 .waterFogColor(429011)
-                .skyColor(343499)
+                .skyColor(3622254)
                 .build();
     }
 
