@@ -45,8 +45,8 @@ loom {
         }
     }
 
-    if (project(":common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
-        accessWidenerPath.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
+    if (project(":common").file("src/main/resources/${mod_id}.accessWidener").exists()) {
+        accessWidenerPath.set(project(":common").file("src/main/resources/${mod_id}.accessWidener"))
     }
 
     mixin { defaultRefmapName.set("${mod_id}.refmap.json") }

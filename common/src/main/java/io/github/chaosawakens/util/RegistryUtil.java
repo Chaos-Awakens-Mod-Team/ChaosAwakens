@@ -153,14 +153,15 @@ public final class RegistryUtil {
                             .filter(curPath -> curPath.toString().endsWith(".png"))
                             .forEach(curVerifiedPath -> {
                                 File curVerifiedFile = curVerifiedPath.toFile();
+                                String seprataorChar = File.separator;
 
-                                if (curVerifiedFile.getPath().contains("textures\\item")) {
-                                    String name = curVerifiedFile.getPath().replace("\\", "/");
+                                if (curVerifiedFile.getPath().contains("textures" + seprataorChar + "item")) {
+                                    String name = curVerifiedFile.getPath().replace(seprataorChar, "/");
                                     name = name.substring(name.indexOf("item") + "item/".length(), name.indexOf(".png"));
 
                                     CACHED_PNG_TEXTURES.add(new ResourceLocation(baseModId, name));
-                                } else if (curVerifiedFile.getPath().contains("textures\\block")) {
-                                    String name = curVerifiedFile.getPath().replace("\\", "/");
+                                } else if (curVerifiedFile.getPath().contains("textures" + seprataorChar + "block")) {
+                                    String name = curVerifiedFile.getPath().replace(seprataorChar, "/");
                                     name = name.substring(name.indexOf("block") + "block/".length(), name.indexOf(".png"));
 
                                     CACHED_PNG_TEXTURES.add(new ResourceLocation(baseModId, name));

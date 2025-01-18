@@ -9,8 +9,8 @@ base {
 minecraft {
     version(minecraft_version)
 
-    if (file("src/main/resources/${mod_id}.accesswidener").exists()){
-        accessWideners(file("src/main/resources/${mod_id}.accesswidener"))
+    if (file("src/main/resources/${mod_id}.accessWidener").exists()){
+        accessWideners(file("src/main/resources/${mod_id}.accessWidener"))
     }
 }
 

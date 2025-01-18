@@ -12,6 +12,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.biome.FixedBiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -51,7 +52,7 @@ public class MiningParadiseDimensionConfig implements DimensionLevelStemConfig {
     }
 
     public static Supplier<NoiseGeneratorSettings> createMiningParadiseNoiseGenSettings(BootstapContext<NoiseGeneratorSettings> regCtx) {
-        return () -> new NoiseGeneratorSettings(BASE_MP_NOISE_SETTINGS, Blocks.STONE.defaultBlockState(), Blocks.WATER.defaultBlockState(), createMiningParadiseNoiseRouter(regCtx), createMiningParadiseSurfaceRules(), ObjectArrayList.of(), 121, false, true, true, false);
+        return () -> new NoiseGeneratorSettings(BASE_MP_NOISE_SETTINGS, Blocks.STONE.defaultBlockState(), Blocks.WATER.defaultBlockState(), createMiningParadiseNoiseRouter(regCtx), createMiningParadiseSurfaceRules(), createMiningParadiseBiomes(regCtx), 121, false, true, true, false);
     }
 
     protected static SurfaceRules.RuleSource createMiningParadiseSurfaceRules() {
@@ -114,5 +115,9 @@ public class MiningParadiseDimensionConfig implements DimensionLevelStemConfig {
                 zero,
                 zero,
                 zero);
+    }
+
+    protected static ObjectArrayList<Climate.ParameterPoint> createMiningParadiseBiomes(BootstapContext<NoiseGeneratorSettings> regCtx) {
+        return ObjectArrayList.of();
     }
 }
