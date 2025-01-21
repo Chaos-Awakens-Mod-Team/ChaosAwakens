@@ -26,26 +26,26 @@
       "type": "minecraft:squeeze",
       "argument": {
         "type": "minecraft:mul",
-        "argument1": 0.96,
+        "argument1": 0.16,
         "argument2": {
           "type": "minecraft:interpolated",
           "argument": {
             "type": "minecraft:blend_density",
             "argument": {
               "type": "minecraft:add",
-              "argument1": 0.5271875,
+              "argument1": 0.1271875,
               "argument2": {
                 "type": "minecraft:mul",
                 "argument1": {
                   "type": "minecraft:y_clamped_gradient",
                   "from_value": 0.0,
-                  "from_y": -224,
+                  "from_y": -201,
                   "to_value": 1.0,
-                  "to_y": -190
+                  "to_y": -168
                 },
                 "argument2": {
                   "type": "minecraft:add",
-                  "argument1": -0.5271875,
+                  "argument1": -0.1271875,
                   "argument2": {
                     "type": "minecraft:add",
                     "argument1": -0.198425,
@@ -82,8 +82,8 @@
                               }
                             }
                           },
-                          "max": 128.0,
-                          "min": -128.0
+                          "max": 32.0,
+                          "min": -32.0
                         }
                       }
                     }
@@ -99,19 +99,19 @@
     "fluid_level_spread": 0.0,
     "initial_density_without_jaggedness": {
       "type": "minecraft:add",
-      "argument1": 0.5271875,
+      "argument1": 0.1271875,
       "argument2": {
         "type": "minecraft:mul",
         "argument1": {
           "type": "minecraft:y_clamped_gradient",
           "from_value": 0.0,
-          "from_y": -224,
+          "from_y": -201,
           "to_value": 1.0,
-          "to_y": -190
+          "to_y": -168
         },
         "argument2": {
           "type": "minecraft:add",
-          "argument1": -0.5271875,
+          "argument1": -0.1271875,
           "argument2": {
             "type": "minecraft:add",
             "argument1": -0.198425,
@@ -148,8 +148,8 @@
                       }
                     }
                   },
-                  "max": 128.0,
-                  "min": -128.0
+                  "max": 32.0,
+                  "min": -32.0
                 }
               }
             }

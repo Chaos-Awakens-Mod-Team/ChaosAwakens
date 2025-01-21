@@ -16,18 +16,18 @@
           "argument2": {
             "type": "minecraft:spline",
             "spline": {
-              "coordinate": "chaosawakens:vanilla/land/continents",
+              "coordinate": "chaosawakens:vanilla/land/erosion",
               "points": [
                 {
                   "derivative": 0.0,
                   "location": -0.19,
-                  "value": 1.95
+                  "value": 4.95
                 },
                 {
                   "derivative": 0.0,
                   "location": -0.15,
                   "value": {
-                    "coordinate": "chaosawakens:vanilla/land/erosion",
+                    "coordinate": "chaosawakens:vanilla/land/continents",
                     "points": [
                       {
                         "derivative": 0.0,
@@ -43,7 +43,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 3.65
+                              "value": 8.65
                             }
                           ]
                         }
@@ -81,7 +81,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 3.65
+                              "value": 8.65
                             }
                           ]
                         }
@@ -100,7 +100,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 3.65
+                              "value": 8.65
                             }
                           ]
                         }
@@ -138,7 +138,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 3.65
+                              "value": 8.65
                             }
                           ]
                         }
@@ -146,7 +146,7 @@
                       {
                         "derivative": 0.0,
                         "location": 0.35,
-                        "value": 3.65
+                        "value": 8.65
                       },
                       {
                         "derivative": 0.0,
@@ -157,7 +157,7 @@
                             {
                               "derivative": 0.0,
                               "location": -0.9,
-                              "value": 3.65
+                              "value": 8.65
                             },
                             {
                               "derivative": 0.0,
@@ -168,7 +168,7 @@
                                   {
                                     "derivative": 0.0,
                                     "location": 0.0,
-                                    "value": 3.65
+                                    "value": 8.65
                                   },
                                   {
                                     "derivative": 0.0,
@@ -190,7 +190,7 @@
                             {
                               "derivative": 0.0,
                               "location": -0.9,
-                              "value": 3.65
+                              "value": 8.65
                             },
                             {
                               "derivative": 0.0,
@@ -201,7 +201,7 @@
                                   {
                                     "derivative": 0.0,
                                     "location": 0.0,
-                                    "value": 3.65
+                                    "value": 8.65
                                   },
                                   {
                                     "derivative": 0.0,
@@ -217,21 +217,16 @@
                       {
                         "derivative": 0.0,
                         "location": 0.62,
-                        "value": 3.65
+                        "value": 8.65
                       }
                     ]
                   }
                 },
                 {
                   "derivative": 0.0,
-                  "location": -0.11,
-                  "value": 0.0
-                },
-                {
-                  "derivative": 0.0,
                   "location": -0.1,
                   "value": {
-                    "coordinate": "chaosawakens:vanilla/land/erosion",
+                    "coordinate": "chaosawakens:vanilla/land/continents",
                     "points": [
                       {
                         "derivative": 0.0,
@@ -247,7 +242,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 2.97
+                              "value": 5.97
                             }
                           ]
                         }
@@ -285,7 +280,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 2.97
+                              "value": 5.97
                             }
                           ]
                         }
@@ -304,7 +299,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 2.97
+                              "value": 5.97
                             }
                           ]
                         }
@@ -342,7 +337,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 2.97
+                              "value": 5.97
                             }
                           ]
                         }
@@ -350,7 +345,7 @@
                       {
                         "derivative": 0.0,
                         "location": 0.35,
-                        "value": 2.97
+                        "value": 5.97
                       },
                       {
                         "derivative": 0.0,
@@ -361,7 +356,7 @@
                             {
                               "derivative": 0.0,
                               "location": -0.9,
-                              "value": 2.97
+                              "value": 5.97
                             },
                             {
                               "derivative": 0.0,
@@ -372,7 +367,7 @@
                                   {
                                     "derivative": 0.0,
                                     "location": 0.0,
-                                    "value": 2.97
+                                    "value": 5.97
                                   },
                                   {
                                     "derivative": 0.0,
@@ -394,7 +389,7 @@
                             {
                               "derivative": 0.0,
                               "location": -0.9,
-                              "value": 2.97
+                              "value": 5.97
                             },
                             {
                               "derivative": 0.0,
@@ -405,7 +400,7 @@
                                   {
                                     "derivative": 0.0,
                                     "location": 0.0,
-                                    "value": 2.97
+                                    "value": 5.97
                                   },
                                   {
                                     "derivative": 0.0,
@@ -421,7 +416,7 @@
                       {
                         "derivative": 0.0,
                         "location": 0.62,
-                        "value": 2.97
+                        "value": 5.97
                       }
                     ]
                   }
@@ -430,7 +425,7 @@
                   "derivative": 0.0,
                   "location": 0.03,
                   "value": {
-                    "coordinate": "chaosawakens:vanilla/land/erosion",
+                    "coordinate": "chaosawakens:vanilla/land/continents",
                     "points": [
                       {
                         "derivative": 0.0,
@@ -446,7 +441,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 1.68
+                              "value": 5.68
                             }
                           ]
                         }
@@ -484,7 +479,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 1.68
+                              "value": 5.68
                             }
                           ]
                         }
@@ -503,7 +498,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 1.68
+                              "value": 5.68
                             }
                           ]
                         }
@@ -541,7 +536,7 @@
                             {
                               "derivative": 0.0,
                               "location": 0.2,
-                              "value": 1.68
+                              "value": 5.68
                             }
                           ]
                         }
@@ -549,7 +544,7 @@
                       {
                         "derivative": 0.0,
                         "location": 0.35,
-                        "value": 1.68
+                        "value": 5.68
                       },
                       {
                         "derivative": 0.0,
@@ -560,7 +555,7 @@
                             {
                               "derivative": 0.0,
                               "location": -0.9,
-                              "value": 1.68
+                              "value": 5.68
                             },
                             {
                               "derivative": 0.0,
@@ -571,7 +566,7 @@
                                   {
                                     "derivative": 0.0,
                                     "location": 0.0,
-                                    "value": 1.68
+                                    "value": 5.68
                                   },
                                   {
                                     "derivative": 0.0,
@@ -593,7 +588,7 @@
                             {
                               "derivative": 0.0,
                               "location": -0.9,
-                              "value": 1.68
+                              "value": 5.68
                             },
                             {
                               "derivative": 0.0,
@@ -604,7 +599,7 @@
                                   {
                                     "derivative": 0.0,
                                     "location": 0.0,
-                                    "value": 1.68
+                                    "value": 5.68
                                   },
                                   {
                                     "derivative": 0.0,
@@ -620,7 +615,7 @@
                       {
                         "derivative": 0.0,
                         "location": 0.62,
-                        "value": 1.68
+                        "value": 5.68
                       }
                     ]
                   }
@@ -629,7 +624,7 @@
                   "derivative": 0.0,
                   "location": 0.06,
                   "value": {
-                    "coordinate": "chaosawakens:vanilla/land/erosion",
+                    "coordinate": "chaosawakens:vanilla/land/continents",
                     "points": [
                       {
                         "derivative": 0.0,
