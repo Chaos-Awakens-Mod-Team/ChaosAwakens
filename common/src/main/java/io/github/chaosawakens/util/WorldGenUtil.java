@@ -17,20 +17,25 @@ public final class WorldGenUtil {
     public static <C, I extends ToFloatFunction<C>> CubicSpline<C, I> miningParadiseOffset(I continentSplineCoord, I erosionSplineCoord, I foldedRidgesSplineCoord) {
         ToFloatFunction<Float> noTransform = NO_TRANSFORM;
 
-        CubicSpline<C, I> erosionOffsetSplineFromDeepWater = TerrainProvider.buildErosionOffsetSpline(erosionSplineCoord, foldedRidgesSplineCoord, -0.312F, 0.0F, 0.01F, 0.0F, 0.0F, -0.02763F, false, false, noTransform);
-        CubicSpline<C, I> erosionOffsetSplineFromShallowWater = TerrainProvider.buildErosionOffsetSpline(erosionSplineCoord, foldedRidgesSplineCoord, -0.223F, 0.03F, 0.1F, 0.124F, 0.01F, -0.0334F, false, false, noTransform);
-        CubicSpline<C, I> erosionOffsetSplineFromLand = TerrainProvider.buildErosionOffsetSpline(erosionSplineCoord, foldedRidgesSplineCoord, -0.632F, 0.03F, 0.1F, 0.7F, 0.019F, -0.0334F, true, true, noTransform);
-        CubicSpline<C, I> erosionOffsetSplineFromExtremeLand = TerrainProvider.buildErosionOffsetSpline(erosionSplineCoord, foldedRidgesSplineCoord, -0.18F, 0.016F, 0.04F, 1.0F, 0.02F, 0.011F, true, true, noTransform);
+        CubicSpline<C, I> erosionOffsetSplineFromDeepWater = TerrainProvider.buildErosionOffsetSpline(erosionSplineCoord, foldedRidgesSplineCoord, -0.312F, 0.0F, 0.01F, -0.32F, 0.083F, -0.2763F, true, false, noTransform);
+        CubicSpline<C, I> erosionOffsetSplineFromShallowWater = TerrainProvider.buildErosionOffsetSpline(erosionSplineCoord, foldedRidgesSplineCoord, -0.223F, 0.03F, 0.1F, -0.124F, 0.1F, -0.0334F, false, false, noTransform);
+        CubicSpline<C, I> erosionOffsetSplineFromLand = TerrainProvider.buildErosionOffsetSpline(erosionSplineCoord, foldedRidgesSplineCoord, -0.132F, 0.03F, 0.1F, 0.95F, 0.19F, 0.334F, true, true, noTransform);
+        CubicSpline<C, I> erosionOffsetSplineFromExtremeLand = TerrainProvider.buildErosionOffsetSpline(erosionSplineCoord, foldedRidgesSplineCoord, -0.18F, 0.26F, 1.4F, 1.5F, 0.3F, 0.011F, true, true, noTransform);
 
         return CubicSpline.builder(continentSplineCoord, noTransform) // Depth
-                .addPoint(-1.02F, 0.4222F)
-                .addPoint(-0.51F, -0.4222F)
-                .addPoint(-0.44F, -0.24F)
-                .addPoint(-0.18F, -0.024F)
-                .addPoint(-0.16F, erosionOffsetSplineFromDeepWater)
-                .addPoint(-0.01F, erosionOffsetSplineFromShallowWater)
-                .addPoint(0.25F, erosionOffsetSplineFromLand)
-                .addPoint(1.0F, erosionOffsetSplineFromExtremeLand)
+                .addPoint(-1.009F, 0.217F)
+                .addPoint(-0.888F, -0.254F)
+                .addPoint(-0.338F, -0.256F, 0.01F)
+                .addPoint(-0.262F, -0.015F, -0.213F)
+                .addPoint(-0.054F, -0.005F, -0.519F)
+                .addPoint(0.0F, erosionOffsetSplineFromDeepWater)
+                .addPoint(0.16F, erosionOffsetSplineFromShallowWater)
+                .addPoint(0.24F, erosionOffsetSplineFromLand)
+                .addPoint(0.36F, erosionOffsetSplineFromExtremeLand)
+                .addPoint(0.38F, erosionOffsetSplineFromLand)
+                .addPoint(0.4F, erosionOffsetSplineFromExtremeLand)
+                .addPoint(0.78F, erosionOffsetSplineFromShallowWater)
+                .addPoint(1.0F, erosionOffsetSplineFromDeepWater)
                 .build();
     }
 
