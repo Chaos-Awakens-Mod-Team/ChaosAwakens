@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "chaosawakens:block/king_protea_bottom"
+    },
+    "half=upper": {
+      "model": "chaosawakens:block/king_protea_top"
+    }
+  }
+}
