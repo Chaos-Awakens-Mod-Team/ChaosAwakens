@@ -17,7 +17,7 @@ public class CustomizableFlowerBlock extends FlowerBlock {
     private final Supplier<MobEffect> suspiciousStewEffect;
 
     public CustomizableFlowerBlock(Supplier<MobEffect> suspiciousStewEffect, int effectDurationSeconds, Properties properties, Supplier<PlantVegetationConfig> plantCnfg) {
-        super(suspiciousStewEffect == null ? MobEffects.CONFUSION : suspiciousStewEffect.get(), effectDurationSeconds, properties); // Need to plug a default value  in (not gonna be used anyway but screw you Vanilla nullity checks!!!)
+        super(suspiciousStewEffect == null ? MobEffects.CONFUSION : suspiciousStewEffect.get(), effectDurationSeconds, properties); // Need to plug a default value in (not gonna be used anyway but screw you (lack of) Vanilla nullity checks!!!)
         this.plantCnfg = plantCnfg;
         this.suspiciousStewEffect = suspiciousStewEffect;
     }

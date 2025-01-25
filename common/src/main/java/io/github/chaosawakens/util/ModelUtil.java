@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import io.github.chaosawakens.api.datagen.block.BlockModelDefinition;
 import io.github.chaosawakens.api.datagen.block.BlockStateDefinition;
 import io.github.chaosawakens.api.datagen.item.ItemModelDefinition;
+import io.github.chaosawakens.common.block.base.general.MultiLayerPlantBlock;
 import io.github.chaosawakens.common.registry.CABlockStateProperties;
 import io.github.chaosawakens.common.registry.CAModelTemplates;
 import io.github.chaosawakens.common.registry.CATextureSlots;
@@ -2853,9 +2854,9 @@ public final class ModelUtil {
         return grassBlock(dirtLoc, dirtLoc, grassBlockReferenceTextureLoc.withSuffix("_top"), grassBlockReferenceTextureLoc.withSuffix("_side"), grassBlockReferenceTextureLoc.withSuffix("_side_overlay"));
     }
 
-    public static BlockModelDefinition crystalGrassBlock(ResourceLocation grassBlockReferenceTextureLoc) {
-        ResourceLocation sideLoc = grassBlockReferenceTextureLoc.withSuffix("_bottom");
-        return grassBlock(sideLoc, sideLoc, grassBlockReferenceTextureLoc.withSuffix("_top"), grassBlockReferenceTextureLoc.withSuffix("_side"), grassBlockReferenceTextureLoc.withSuffix("_side"));
+    public static BlockModelDefinition crystalGrassBlock(ResourceLocation grassBlockReferenceTexture) {
+        ResourceLocation sideLoc = grassBlockReferenceTexture.withSuffix("_bottom");
+        return grassBlock(sideLoc, sideLoc, grassBlockReferenceTexture.withSuffix("_top"), grassBlockReferenceTexture.withSuffix("_side"), grassBlockReferenceTexture.withSuffix("_side"));
     }
 
     public static ObjectArrayList<BlockModelDefinition> doublePlant(ResourceLocation topPlantTexture, ResourceLocation bottomPlantTexture) {
@@ -2914,5 +2915,76 @@ public final class ModelUtil {
                 .withBlockStateSupplier(MultiVariantGenerator.multiVariant(targetBlock.get())
                         .with(PropertyDispatch.property(BlockStateProperties.MOISTURE)
                                 .generate(moistureLevel -> moistureLevel.compareTo(7) >= 0 ? Variant.variant().with(VariantProperties.MODEL, moistureFarmlandModelLoc) : Variant.variant().with(VariantProperties.MODEL, dryFarmlandModelLoc))));
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> multiLayerPlant(ResourceLocation bottomPlantTexture, ResourceLocation middlePlantBaseTexture, ResourceLocation topPlantTexture, int middleLayerCount, boolean numberMiddleLayers) {
+        ObjectArrayList<BlockModelDefinition> defaultedMultiLayerPlantModels = ObjectArrayList.of(crossCutout(bottomPlantTexture).withCustomModelName(bottomPlantTexture.getPath().substring(bottomPlantTexture.getPath().lastIndexOf("/") + 1)).withCustomItemModel(generatedBlock(topPlantTexture)), crossCutout(topPlantTexture).withCustomModelName(topPlantTexture.getPath().substring(topPlantTexture.getPath().lastIndexOf("/") + 1)));
+
+        if (numberMiddleLayers && middleLayerCount > 1) {
+            for (int i = 1; i < middleLayerCount; i++) {
+                ResourceLocation numberedMiddlePlantBaseTexture = middlePlantBaseTexture.withSuffix("_middle_" + i);
+
+                defaultedMultiLayerPlantModels.add(crossCutout(numberedMiddlePlantBaseTexture).withCustomModelName(numberedMiddlePlantBaseTexture.getPath().substring(numberedMiddlePlantBaseTexture.getPath().lastIndexOf("/") + 1)).withCustomItemModel(generatedBlock(topPlantTexture)));
+            }
+        } else defaultedMultiLayerPlantModels.add(crossCutout(middlePlantBaseTexture).withCustomModelName(middlePlantBaseTexture.getPath().substring(middlePlantBaseTexture.getPath().lastIndexOf("/") + 1)).withCustomItemModel(generatedBlock(topPlantTexture)));
+
+        return defaultedMultiLayerPlantModels;
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> multiLayerPlant(ResourceLocation basePlantTexture, int middleLayerCount, boolean numberMiddleLayers) {
+        return multiLayerPlant(basePlantTexture.withSuffix("_bottom"), basePlantTexture.withSuffix("_middle"), basePlantTexture.withSuffix("_top"), middleLayerCount, numberMiddleLayers);
+    }
+
+
+    public static ObjectArrayList<BlockModelDefinition> multiLayerPlant(ResourceLocation basePlantTexture) {
+        return multiLayerPlant(basePlantTexture, 1, false);
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> tintedMultiLayerPlant(ResourceLocation bottomPlantTexture, ResourceLocation middlePlantBaseTexture, ResourceLocation topPlantTexture, int middleLayerCount, boolean numberMiddleLayers) {
+        ObjectArrayList<BlockModelDefinition> defaultedMultiLayerPlantModels = ObjectArrayList.of(tintedCrossCutout(bottomPlantTexture).withCustomModelName(bottomPlantTexture.getPath().substring(bottomPlantTexture.getPath().lastIndexOf("/") + 1)).withCustomItemModel(generatedBlock(topPlantTexture)), tintedCrossCutout(topPlantTexture).withCustomModelName(topPlantTexture.getPath().substring(topPlantTexture.getPath().lastIndexOf("/") + 1)));
+
+        if (numberMiddleLayers && middleLayerCount > 1) {
+            for (int i = 1; i < middleLayerCount; i++) {
+                ResourceLocation numberedMiddlePlantBaseTexture = middlePlantBaseTexture.withSuffix("_middle_" + i);
+
+                defaultedMultiLayerPlantModels.add(tintedCrossCutout(numberedMiddlePlantBaseTexture).withCustomModelName(numberedMiddlePlantBaseTexture.getPath().substring(numberedMiddlePlantBaseTexture.getPath().lastIndexOf("/") + 1)).withCustomItemModel(generatedBlock(topPlantTexture)));
+            }
+        } else defaultedMultiLayerPlantModels.add(tintedCrossCutout(middlePlantBaseTexture).withCustomModelName(middlePlantBaseTexture.getPath().substring(middlePlantBaseTexture.getPath().lastIndexOf("/") + 1)).withCustomItemModel(generatedBlock(topPlantTexture)));
+
+        return defaultedMultiLayerPlantModels;
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> tintedMultiLayerPlant(ResourceLocation basePlantTexture, int middleLayerCount, boolean numberMiddleLayers) {
+        return tintedMultiLayerPlant(basePlantTexture.withSuffix("_bottom"), basePlantTexture.withSuffix("_middle"), basePlantTexture.withSuffix("_top"), middleLayerCount, numberMiddleLayers);
+    }
+
+    public static ObjectArrayList<BlockModelDefinition> tintedMultiLayerPlant(ResourceLocation basePlantTexture) {
+        return tintedMultiLayerPlant(basePlantTexture, 1, false);
+    }
+
+    public static BlockStateDefinition multiLayerPlantBlock(Supplier<Block> targetBlock) {
+        MultiVariantGenerator stateGen = MultiVariantGenerator.multiVariant(targetBlock.get());
+
+        if (targetBlock.get() instanceof MultiLayerPlantBlock targetMultiLayerPlantBlock) {
+            int maxPlantLayerLevel = targetMultiLayerPlantBlock.getPossibleLevels().asList().get(targetMultiLayerPlantBlock.getPossibleLevels().size() - 1);
+            PropertyDispatch.C1<Integer> plantLayerLevelDispatch = PropertyDispatch.property(targetMultiLayerPlantBlock.getLevelProperty());
+
+            plantLayerLevelDispatch
+                    .select(0, Variant.variant().with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(targetBlock.get()).withSuffix("_bottom")))
+                    .select(maxPlantLayerLevel, Variant.variant().with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(targetBlock.get()).withSuffix("_top")));
+
+            if (maxPlantLayerLevel > 1) {
+                if (maxPlantLayerLevel > 2) {
+                    for (int i = 1; i < maxPlantLayerLevel - 1; i++) {
+                        plantLayerLevelDispatch.select(i, Variant.variant().with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(targetBlock.get()).withSuffix("_middle_" + i)));
+                    }
+                } else plantLayerLevelDispatch.select(1, Variant.variant().with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(targetBlock.get()).withSuffix("_middle")));
+            }
+
+            stateGen.with(plantLayerLevelDispatch);
+        }
+
+        return BlockStateDefinition.of(targetBlock)
+                .withBlockStateSupplier(stateGen);
     }
 }

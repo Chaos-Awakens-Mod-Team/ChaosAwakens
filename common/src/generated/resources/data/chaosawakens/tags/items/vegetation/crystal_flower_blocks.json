@@ -1,3 +1,10 @@
 {
-  "values": []
+  "values": [
+    "chaosawakens:blue_crystal_flower",
+    "chaosawakens:green_crystal_flower",
+    "chaosawakens:orange_crystal_flower",
+    "chaosawakens:pink_crystal_flower",
+    "chaosawakens:red_crystal_flower",
+    "chaosawakens:yellow_crystal_flower"
+  ]
 }

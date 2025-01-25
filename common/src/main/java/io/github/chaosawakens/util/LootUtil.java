@@ -1,10 +1,8 @@
 package io.github.chaosawakens.util;
 
 import io.github.chaosawakens.common.block.vegetation.general.FruitableLeavesBlock;
-import net.minecraft.advancements.critereon.EnchantmentPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.MinMaxBounds;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -263,9 +261,9 @@ public final class LootUtil {
      */
     public static LootTable.Builder dropLeaves(Supplier<Block> targetBlock) {
         return LootTable.lootTable().withPool(LootPool.lootPool()
-                .setRolls(ConstantValue.exactly(1.0F))
-                .when(HAS_SHEARS_OR_SILK_TOUCH)
-                .add(LootItem.lootTableItem(targetBlock.get())
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .when(HAS_SHEARS_OR_SILK_TOUCH)
+                        .add(LootItem.lootTableItem(targetBlock.get())
                     /*    .otherwise(LootItem.lootTableItem(RegistryUtil.getSaplingFrom(targetBlock).get())
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, NORMAL_LEAVES_SAPLING_CHANCES))
                                 .when(ExplosionCondition.survivesExplosion())) */))
@@ -327,7 +325,7 @@ public final class LootUtil {
                 .setRolls(ConstantValue.exactly(1.0F))
                 .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(targetBlock.get())
                         .setProperties(StatePropertiesPredicate.Builder.properties()
-                        .hasProperty(FruitableLeavesBlock.RIPE, true)))
+                                .hasProperty(FruitableLeavesBlock.RIPE, true)))
                 .add(LootItem.lootTableItem(((FruitableLeavesBlock) targetBlock.get()).getFruitItem().get())
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(((FruitableLeavesBlock) targetBlock.get()).calculateRandomFruitDrop())))));
     }
@@ -346,11 +344,11 @@ public final class LootUtil {
 
     public static LootTable.Builder dropComponents(Supplier<Block> targetBlock, int minCount, int maxCount) {
         return LootTable.lootTable().withPool(LootPool.lootPool()
-                .setRolls(ConstantValue.exactly(1.0F))
-                .apply(ApplyExplosionDecay.explosionDecay())
-                .when(HAS_SILK_TOUCH)
-                .add(LootItem.lootTableItem(targetBlock.get())
-                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1), true))))
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .apply(ApplyExplosionDecay.explosionDecay())
+                        .when(HAS_SILK_TOUCH)
+                        .add(LootItem.lootTableItem(targetBlock.get())
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1), true))))
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
                         .apply(ApplyExplosionDecay.explosionDecay())
@@ -390,10 +388,29 @@ public final class LootUtil {
 
     public static LootTable.Builder dropDoublePlantShearsOrSilkTouch(Supplier<Block> targetBlock) {
         return LootTable.lootTable().withPool(LootPool.lootPool()
-                .setRolls(ConstantValue.exactly(1.0F))
-                .when(ExplosionCondition.survivesExplosion())
-                .add(LootItem.lootTableItem(targetBlock.get())
-                        .when(HAS_SHEARS_OR_SILK_TOUCH)
-                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(targetBlock.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)))));
+                        .add(LootItem.lootTableItem(targetBlock.get())
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
+                                .when(HAS_SHEARS_OR_SILK_TOUCH)
+                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(targetBlock.get())
+                                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)))
+                                .when(LocationCheck.checkLocation(LocationPredicate.Builder.location()
+                                        .setBlock(BlockPredicate.Builder.block()
+                                                .of(targetBlock.get())
+                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                        .hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER)
+                                                        .build())
+                                                .build()), new BlockPos(0, 1, 0)))))
+                .withPool(LootPool.lootPool().add(LootItem.lootTableItem(targetBlock.get())
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
+                                .when(HAS_SHEARS_OR_SILK_TOUCH))
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(targetBlock.get())
+                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                        .hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER)))
+                        .when(LocationCheck.checkLocation(LocationPredicate.Builder.location()
+                                .setBlock(BlockPredicate.Builder.block().of(targetBlock.get())
+                                        .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                .hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)
+                                                .build())
+                                        .build()), new BlockPos(0, -1, 0))));
     }
 }

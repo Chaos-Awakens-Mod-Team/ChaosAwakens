@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "chaosawakens:block/vegetation/dense/large_ginkgo_bush_top"
+  }
+}

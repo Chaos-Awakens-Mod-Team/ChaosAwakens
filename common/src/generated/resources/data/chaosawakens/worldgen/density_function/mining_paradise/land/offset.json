@@ -8,7 +8,7 @@
         "type": "minecraft:mul",
         "argument1": {
           "type": "minecraft:add",
-          "argument1": -1.8141592653,
+          "argument1": -0.3141592653,
           "argument2": {
             "type": "minecraft:spline",
             "spline": {

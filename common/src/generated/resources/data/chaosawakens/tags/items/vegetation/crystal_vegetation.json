@@ -1,5 +1,13 @@
 {
   "values": [
+    "chaosawakens:crystal_grass",
+    "chaosawakens:tall_crystal_grass",
+    "chaosawakens:black_crystal_growth",
+    "chaosawakens:brown_crystal_growth",
+    "chaosawakens:green_crystal_growth",
+    "chaosawakens:pink_crystal_growth",
+    "chaosawakens:purple_crystal_growth",
+    "chaosawakens:yellow_crystal_growth",
     "#chaosawakens:vegetation/crystal_flower_blocks"
   ]
 }

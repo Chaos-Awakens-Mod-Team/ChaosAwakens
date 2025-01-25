@@ -33,39 +33,39 @@
             "type": "minecraft:blend_density",
             "argument": {
               "type": "minecraft:add",
-              "argument1": 0.1271875,
+              "argument1": -0.1271875,
               "argument2": {
                 "type": "minecraft:mul",
                 "argument1": {
                   "type": "minecraft:y_clamped_gradient",
                   "from_value": 0.0,
-                  "from_y": -201,
+                  "from_y": -234,
                   "to_value": 1.0,
-                  "to_y": -168
+                  "to_y": -212
                 },
                 "argument2": {
                   "type": "minecraft:add",
-                  "argument1": -0.1271875,
+                  "argument1": 0.1271875,
                   "argument2": {
                     "type": "minecraft:add",
-                    "argument1": -0.198425,
+                    "argument1": -0.538425,
                     "argument2": {
                       "type": "minecraft:mul",
                       "argument1": {
                         "type": "minecraft:y_clamped_gradient",
                         "from_value": 1.0,
-                        "from_y": 103,
+                        "from_y": 73,
                         "to_value": 0.0,
-                        "to_y": 140
+                        "to_y": 224
                       },
                       "argument2": {
                         "type": "minecraft:add",
-                        "argument1": 0.198425,
+                        "argument1": 0.538425,
                         "argument2": {
                           "type": "minecraft:clamp",
                           "input": {
                             "type": "minecraft:add",
-                            "argument1": -0.803125,
+                            "argument1": -0.603125,
                             "argument2": {
                               "type": "minecraft:mul",
                               "argument1": 4.0,
@@ -82,8 +82,8 @@
                               }
                             }
                           },
-                          "max": 32.0,
-                          "min": -32.0
+                          "max": 64.0,
+                          "min": -66.0
                         }
                       }
                     }
@@ -99,39 +99,39 @@
     "fluid_level_spread": 0.0,
     "initial_density_without_jaggedness": {
       "type": "minecraft:add",
-      "argument1": 0.1271875,
+      "argument1": -0.1271875,
       "argument2": {
         "type": "minecraft:mul",
         "argument1": {
           "type": "minecraft:y_clamped_gradient",
           "from_value": 0.0,
-          "from_y": -201,
+          "from_y": -234,
           "to_value": 1.0,
-          "to_y": -168
+          "to_y": -212
         },
         "argument2": {
           "type": "minecraft:add",
-          "argument1": -0.1271875,
+          "argument1": 0.1271875,
           "argument2": {
             "type": "minecraft:add",
-            "argument1": -0.198425,
+            "argument1": -0.538425,
             "argument2": {
               "type": "minecraft:mul",
               "argument1": {
                 "type": "minecraft:y_clamped_gradient",
                 "from_value": 1.0,
-                "from_y": 103,
+                "from_y": 73,
                 "to_value": 0.0,
-                "to_y": 140
+                "to_y": 224
               },
               "argument2": {
                 "type": "minecraft:add",
-                "argument1": 0.198425,
+                "argument1": 0.538425,
                 "argument2": {
                   "type": "minecraft:clamp",
                   "input": {
                     "type": "minecraft:add",
-                    "argument1": -0.803125,
+                    "argument1": -0.603125,
                     "argument2": {
                       "type": "minecraft:mul",
                       "argument1": 4.0,
@@ -148,8 +148,8 @@
                       }
                     }
                   },
-                  "max": 32.0,
-                  "min": -32.0
+                  "max": 64.0,
+                  "min": -66.0
                 }
               }
             }

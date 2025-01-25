@@ -1,6 +1,7 @@
 package io.github.chaosawakens.common.registry;
 
 import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
+import io.github.chaosawakens.common.block.base.general.MultiLayerPlantBlock;
 import io.github.chaosawakens.util.*;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.data.models.model.ModelLocationUtils;
@@ -333,11 +334,13 @@ public final class CABlockPropertyWrappers {
             .withLootTable(LootUtil::dropDoublePlant)
             .build();
 
-    public static final BlockPropertyWrapper NO_TINT_PLANT = BlockPropertyWrapper.ofTemplate(BASIC_PLANT)
+    public static final BlockPropertyWrapper MULTI_LAYER_PLANT = BlockPropertyWrapper.ofTemplate(BASIC_PLANT)
             .cachedBuilder()
-            .withBlockColor(null)
+            .withCustomModelDefinitions(parentBlock -> ModelUtil.tintedMultiLayerPlant(RegistryUtil.getTexture(RegistryUtil.getItemKey(parentBlock.get()).withSuffix("_bottom")), RegistryUtil.getItemKey(parentBlock.get()).withSuffix("_middle"), RegistryUtil.getItemKey(parentBlock.get()).withSuffix("_top"), Math.min(((MultiLayerPlantBlock) parentBlock.get()).getPossibleLevels().asList().get(((MultiLayerPlantBlock) parentBlock.get()).getPossibleLevels().size() - 1) - 2, 1), true))
+            .withBlockStateDefinition(ModelUtil::multiLayerPlantBlock)
             .build();
-    public static final BlockPropertyWrapper NO_TINT_FLOWER = BlockPropertyWrapper.ofTemplate(BASIC_FLOWER)
+
+    public static final BlockPropertyWrapper NO_TINT_PLANT = BlockPropertyWrapper.ofTemplate(BASIC_PLANT)
             .cachedBuilder()
             .withBlockColor(null)
             .build();
@@ -346,31 +349,69 @@ public final class CABlockPropertyWrappers {
             .cachedBuilder()
             .withBlockColor(null)
             .build();
-    public static final BlockPropertyWrapper NO_TINT_TALL_FLOWER = BlockPropertyWrapper.ofTemplate(TALL_FLOWER)
+
+    public static final BlockPropertyWrapper NO_TINT_MULTI_LAYER_PLANT = BlockPropertyWrapper.ofTemplate(MULTI_LAYER_PLANT)
             .cachedBuilder()
+            .withCustomModelDefinitions(parentBlock -> ModelUtil.multiLayerPlant(RegistryUtil.getTexture(RegistryUtil.getItemKey(parentBlock.get()).withSuffix("_bottom")), RegistryUtil.getTexture(RegistryUtil.getItemKey(parentBlock.get()).withSuffix("_middle")), RegistryUtil.getTexture(RegistryUtil.getItemKey(parentBlock.get()).withSuffix("_top")), Math.min(((MultiLayerPlantBlock) parentBlock.get()).getPossibleLevels().asList().get(((MultiLayerPlantBlock) parentBlock.get()).getPossibleLevels().size() - 1) - 2, 1), true))
             .withBlockColor(null)
             .build();
 
     public static final BlockPropertyWrapper CRYSTAL_PLANT = BlockPropertyWrapper.ofTemplate(NO_TINT_PLANT)
             .cachedBuilder()
             .withSetTags(ObjectArrayList.of())
-            .withSetBlockTags(ObjectArrayList.of(CATags.CABlockTags.CRYSTAL_VEGETATION))
+            .withBlockTag(CATags.CABlockTags.CRYSTAL_VEGETATION)
+            .withItemTag(CATags.CAItemTags.CRYSTAL_VEGETATION)
             .build();
-    public static final BlockPropertyWrapper CRYSTAL_FLOWER = BlockPropertyWrapper.ofTemplate(NO_TINT_FLOWER)
+    public static final BlockPropertyWrapper CRYSTAL_FLOWER = BlockPropertyWrapper.ofTemplate(BASIC_FLOWER)
             .cachedBuilder()
             .withSetTags(ObjectArrayList.of())
-            .withSetBlockTags(ObjectArrayList.of(CATags.CABlockTags.CRYSTAL_FLOWER_BLOCKS))
+            .withBlockTag(CATags.CABlockTags.CRYSTAL_FLOWER_BLOCKS)
+            .withItemTag(CATags.CAItemTags.CRYSTAL_FLOWER_BLOCKS)
+            .build();
+    public static final BlockPropertyWrapper SMALL_CRYSTAL_FLOWER = BlockPropertyWrapper.ofTemplate(SMALL_FLOWER)
+            .cachedBuilder()
+            .withBlockTag(CATags.CABlockTags.CRYSTAL_FLOWER_BLOCKS)
+            .withItemTag(CATags.CAItemTags.CRYSTAL_FLOWER_BLOCKS)
             .build();
 
     public static final BlockPropertyWrapper TALL_CRYSTAL_PLANT = BlockPropertyWrapper.ofTemplate(NO_TINT_TALL_PLANT)
             .cachedBuilder()
             .withSetTags(ObjectArrayList.of())
-            .withSetBlockTags(ObjectArrayList.of(CATags.CABlockTags.CRYSTAL_VEGETATION))
+            .withBlockTag(CATags.CABlockTags.CRYSTAL_VEGETATION)
+            .withItemTag(CATags.CAItemTags.CRYSTAL_VEGETATION)
             .build();
-    public static final BlockPropertyWrapper TALL_CRYSTAL_FLOWER = BlockPropertyWrapper.ofTemplate(NO_TINT_TALL_FLOWER)
+    public static final BlockPropertyWrapper TALL_CRYSTAL_FLOWER = BlockPropertyWrapper.ofTemplate(TALL_FLOWER)
             .cachedBuilder()
             .withSetTags(ObjectArrayList.of())
-            .withSetBlockTags(ObjectArrayList.of(CATags.CABlockTags.CRYSTAL_FLOWER_BLOCKS))
+            .withBlockTag(CATags.CABlockTags.CRYSTAL_FLOWER_BLOCKS)
+            .withItemTag(CATags.CAItemTags.CRYSTAL_FLOWER_BLOCKS)
+            .build();
+
+    public static final BlockPropertyWrapper DENSE_PLANT = BlockPropertyWrapper.ofTemplate(NO_TINT_PLANT)
+            .cachedBuilder()
+            .withBlockTag(CATags.CABlockTags.DENSE_VEGETATION)
+            .withItemTag(CATags.CAItemTags.DENSE_VEGETATION)
+            .build();
+    public static final BlockPropertyWrapper DENSE_FLOWER = BlockPropertyWrapper.ofTemplate(BASIC_FLOWER)
+            .cachedBuilder()
+            .withBlockTag(CATags.CABlockTags.DENSE_FLOWER_BLOCKS)
+            .withItemTag(CATags.CAItemTags.DENSE_FLOWER_BLOCKS)
+            .build();
+    public static final BlockPropertyWrapper SMALL_DENSE_FLOWER = BlockPropertyWrapper.ofTemplate(SMALL_FLOWER)
+            .cachedBuilder()
+            .withBlockTag(CATags.CABlockTags.DENSE_FLOWER_BLOCKS)
+            .withItemTag(CATags.CAItemTags.DENSE_FLOWER_BLOCKS)
+            .build();
+
+    public static final BlockPropertyWrapper TALL_DENSE_PLANT = BlockPropertyWrapper.ofTemplate(NO_TINT_TALL_PLANT)
+            .cachedBuilder()
+            .withBlockTag(CATags.CABlockTags.DENSE_VEGETATION)
+            .withItemTag(CATags.CAItemTags.DENSE_VEGETATION)
+            .build();
+    public static final BlockPropertyWrapper TALL_DENSE_FLOWER = BlockPropertyWrapper.ofTemplate(TALL_FLOWER)
+            .cachedBuilder()
+            .withBlockTag(CATags.CABlockTags.DENSE_FLOWER_BLOCKS)
+            .withItemTag(CATags.CAItemTags.DENSE_FLOWER_BLOCKS)
             .build();
 
     // Solid

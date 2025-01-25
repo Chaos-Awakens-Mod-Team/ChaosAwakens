@@ -96,7 +96,7 @@ public class MiningParadiseDimensionConfig implements DimensionLevelStemConfig {
         DensityFunction terrainFactor = CADensityFunctions.getWrappedDensityFunctionHolder(regCtx, CADensityFunctions.MINING_PARADISE_FACTOR);
         DensityFunction terrainDepth = CADensityFunctions.getWrappedDensityFunctionHolder(regCtx, CADensityFunctions.MINING_PARADISE_DEPTH);
         DensityFunction continentRidges = CADensityFunctions.getWrappedDensityFunctionHolder(regCtx, CADensityFunctions.RIDGES);
-        DensityFunction initialLandDensity = NoiseRouterData.slide(DensityFunctions.add(NoiseRouterData.noiseGradientDensity(DensityFunctions.cache2d(terrainFactor), terrainDepth), DensityFunctions.constant(-0.803125D)).clamp(-32.0D, 32.0D), -256, 480, 121, 84, -0.198425D, 55, 88, 0.1271875D);
+        DensityFunction initialLandDensity = NoiseRouterData.slide(DensityFunctions.add(NoiseRouterData.noiseGradientDensity(DensityFunctions.cache2d(terrainFactor), terrainDepth), DensityFunctions.constant(-0.603125D)).clamp(-66.0D, 64.0D), -256, 480, 151, 0, -0.538425D, 22, 44, -0.1271875D);
         DensityFunction finalLandDensity = DensityFunctions.mul(DensityFunctions.interpolated(DensityFunctions.blendDensity(initialLandDensity)), DensityFunctions.constant(0.16D)).squeeze();
 
         return new NoiseRouter(

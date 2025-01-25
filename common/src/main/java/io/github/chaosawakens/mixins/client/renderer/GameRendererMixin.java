@@ -35,7 +35,7 @@ public abstract class GameRendererMixin {
 
             float delta = Minecraft.getInstance().getDeltaFrameTime();
             float ticksExistedDelta = (float) mainCam.getEntity().tickCount + delta;
-            float finalAmount = shake.getData().getMagnitude() * (shake.getData().getDuration() / shake.getData().getFadeOut());
+            float finalAmount = shake.getData().getMagnitude() * (shake.getData().getDuration() / (shake.getData().getFadeOut() == 0 ? 1 : shake.getData().getFadeOut())); // Avoid division by 0
 
             mainCam.setRotation((float) (mainCam.getYRot() + finalAmount * Math.cos(ticksExistedDelta * 5.0F + 1.0F) * 25.0D), (float) (mainCam.getXRot() + finalAmount * Math.cos(ticksExistedDelta * 3.0F + 2.0F) * 25.0D));
             stack.mulPose(Axis.ZP.rotationDegrees((float) (finalAmount * Math.cos(ticksExistedDelta * 4.0F) * 25.0D)));

@@ -32,7 +32,7 @@ public class ForgeRegistrar implements IRegistrar {
 
         CACHED_DATAPACK_OBJECT_ENTRIES.asMap().forEach((registryKey, objSupMappingFuncs) -> {
             getDatapackRegistrySetBuilder().add(tCastRegistryKey(registryKey), b -> objSupMappingFuncs.forEach(mappedObjKey -> {
-                b.register(tCastObjectKey(mappedObjKey.left()), tCastObsSupMappingFunc(mappedObjKey.right(), b).get());
+                b.register(tCastObjectKey(mappedObjKey.left()), tCastObjSupMappingFunc(mappedObjKey.right(), b).get());
             }));
         });
     }
@@ -62,7 +62,7 @@ public class ForgeRegistrar implements IRegistrar {
         return () -> targetObject;
     }
 
-    protected <T> Supplier<T> tCastObsSupMappingFunc(Function<? extends BootstapContext<?>, ? extends Supplier<?>> objSupMappingFunc, BootstapContext<T> bootstapContext) { // I love wildcard casts
+    protected <T> Supplier<T> tCastObjSupMappingFunc(Function<? extends BootstapContext<?>, ? extends Supplier<?>> objSupMappingFunc, BootstapContext<T> bootstapContext) { // I love wildcard casts
         return ((Function<BootstapContext<T>, Supplier<T>>) objSupMappingFunc).apply(bootstapContext);
     }
 

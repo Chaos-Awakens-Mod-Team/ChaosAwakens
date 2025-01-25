@@ -44,7 +44,7 @@ import java.util.stream.Stream;
  * Utility class providing shortcut methods for commonly used registry operations (primarily arbitrary).
  */
 public final class RegistryUtil {
-    private static final ObjectArrayList<ResourceLocation> CACHED_PNG_TEXTURES = new ObjectArrayList<>(); // Cache datagen found textures instead of creating a new list for each iteration/method call
+    private static final ObjectArrayList<ResourceLocation> CACHED_PNG_TEXTURES = new ObjectArrayList<>(); // Cache datagen-discovered textures instead of creating a new list for each iteration/method call
 
     private RegistryUtil() {
         throw new IllegalAccessError("Attempted to construct Utility Class!");

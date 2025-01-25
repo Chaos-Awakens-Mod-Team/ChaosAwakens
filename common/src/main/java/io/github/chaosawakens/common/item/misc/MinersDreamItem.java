@@ -47,7 +47,7 @@ public class MinersDreamItem extends Item {
             }
             return InteractionResult.FAIL;
         }
-        if (targetDirection == Direction.UP || targetDirection == Direction.DOWN) return InteractionResult.FAIL;
+        if (targetDirection == Direction.UP || targetDirection == Direction.DOWN) return InteractionResult.FAIL; // Never reached anyway, but whatevs
 
         int targetY = ((breakPos.getY() % 8) + 8) % 8;
         Player currentPlayer = ctx.getPlayer();

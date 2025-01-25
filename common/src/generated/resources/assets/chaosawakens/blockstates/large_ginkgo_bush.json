@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "chaosawakens:block/large_ginkgo_bush_bottom"
+    },
+    "level=1": {
+      "model": "chaosawakens:block/large_ginkgo_bush_middle"
+    },
+    "level=2": {
+      "model": "chaosawakens:block/large_ginkgo_bush_top"
+    }
+  }
+}

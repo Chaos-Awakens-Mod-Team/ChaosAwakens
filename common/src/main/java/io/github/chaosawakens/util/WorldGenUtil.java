@@ -45,7 +45,7 @@ public final class WorldGenUtil {
         CubicSpline<C, I> erosionFactorSpline = TerrainProvider.getErosionFactor(continentSplineCoord, ridgesSplineCoord, foldedRidgesSplineCoord, 8.65F, true, noTransform);
         CubicSpline<C, I> amplifiedErosionFactorSpline = TerrainProvider.getErosionFactor(continentSplineCoord, ridgesSplineCoord, foldedRidgesSplineCoord, 5.97F, true, noTransform);
         CubicSpline<C, I> erosionFactorSplineContinued = TerrainProvider.getErosionFactor(continentSplineCoord, ridgesSplineCoord, foldedRidgesSplineCoord, 5.68F, true, noTransform);
-        CubicSpline<C, I> erosionFactorSplineFinal = TerrainProvider.getErosionFactor(continentSplineCoord, ridgesSplineCoord, foldedRidgesSplineCoord, 1.19F, false, noTransform);
+        CubicSpline<C, I> erosionFactorSplineFinal = TerrainProvider.getErosionFactor(continentSplineCoord, ridgesSplineCoord, foldedRidgesSplineCoord, 1.19F, true, noTransform);
 
         return CubicSpline.builder(erosionSplineCoord, NO_TRANSFORM)
                 .addPoint(-0.19F, 4.95F)
