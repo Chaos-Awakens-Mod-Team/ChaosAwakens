@@ -224,7 +224,7 @@ public class ItemPropertyWrapper {
 
     /**
      * Gets the cached {@link IPWBuilder} instance from the {@link #builder} if it exists. May be {@code null}. Useful for
-     * overriding specific properties after having copied another IPW instance/already set a IPWBuilder.
+     * overriding specific properties after having copied another IPW instance/already set an IPWBuilder.
      *
      * @return The cached {@link IPWBuilder} instance, or {@code null} if the {@link #builder} is {@code null}.
      *

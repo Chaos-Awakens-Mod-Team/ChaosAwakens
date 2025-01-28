@@ -28,17 +28,21 @@ public abstract class GameRendererMixin {
         if (ScreenShakeEffect.getEnqueuedShakes().isEmpty()) return;
 
         Camera mainCam = getMainCamera();
-        ScreenShakeEffect shake = ScreenShakeEffect.getEnqueuedShakes().first();
+        ScreenShakeEffect.getEnqueuedShakes().removeIf(shake -> shake == null || shake.getData().getDuration() <= 0);
 
-        if (shake != null && shake.getData().getDuration() > 0 && mainCam.getEntity().distanceToSqr(Vec3.atCenterOf(shake.getData().getOriginPos())) <= Math.pow(shake.getData().getRange(), 2)) {
-            shake.getData().setDuration(shake.getData().getDuration() - 1);
+        for (ScreenShakeEffect shake : ScreenShakeEffect.getEnqueuedShakes()) {
+            if (shake != null && shake.getData().getDuration() > 0 && !Minecraft.getInstance().isPaused()) {
+                shake.getData().setDuration(shake.getData().getDuration() - 1); // Allow screen shake to continue updating even if the player is out of range
 
-            float delta = Minecraft.getInstance().getDeltaFrameTime();
-            float ticksExistedDelta = (float) mainCam.getEntity().tickCount + delta;
-            float finalAmount = shake.getData().getMagnitude() * (shake.getData().getDuration() / (shake.getData().getFadeOut() == 0 ? 1 : shake.getData().getFadeOut())); // Avoid division by 0
+                if (mainCam.getEntity().distanceToSqr(Vec3.atCenterOf(shake.getData().getOriginPos())) <= Math.pow(shake.getData().getRange(), 2)) {
+                    float delta = Minecraft.getInstance().getDeltaFrameTime();
+                    float ticksExistedDelta = (float) mainCam.getEntity().tickCount + delta;
+                    float finalAmount = shake.getData().getMagnitude() * (shake.getData().getDuration() / (shake.getData().getFadeOut() == 0 ? 1 : shake.getData().getFadeOut())); // Avoid division by 0
 
-            mainCam.setRotation((float) (mainCam.getYRot() + finalAmount * Math.cos(ticksExistedDelta * 5.0F + 1.0F) * 25.0D), (float) (mainCam.getXRot() + finalAmount * Math.cos(ticksExistedDelta * 3.0F + 2.0F) * 25.0D));
-            stack.mulPose(Axis.ZP.rotationDegrees((float) (finalAmount * Math.cos(ticksExistedDelta * 4.0F) * 25.0D)));
-        } else if (shake == null || shake.getData().getDuration() <= 0) ScreenShakeEffect.getEnqueuedShakes().dequeue();
+                    mainCam.setRotation((float) (mainCam.getYRot() + finalAmount * Math.cos(ticksExistedDelta * 5.0F + 1.0F) * 25.0D), (float) (mainCam.getXRot() + finalAmount * Math.cos(ticksExistedDelta * 3.0F + 2.0F) * 25.0D));
+                    stack.mulPose(Axis.ZP.rotationDegrees((float) (finalAmount * Math.cos(ticksExistedDelta * 4.0F) * 25.0D)));
+                }
+            }
+        }
     }
 }

@@ -383,7 +383,8 @@ public final class LootUtil {
                 .setRolls(ConstantValue.exactly(1.0F))
                 .when(ExplosionCondition.survivesExplosion())
                 .add(LootItem.lootTableItem(targetBlock.get())
-                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(targetBlock.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)))));
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(targetBlock.get())
+                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)))));
     }
 
     public static LootTable.Builder dropDoublePlantShearsOrSilkTouch(Supplier<Block> targetBlock) {
@@ -392,7 +393,8 @@ public final class LootUtil {
                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
                                 .when(HAS_SHEARS_OR_SILK_TOUCH)
                                 .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(targetBlock.get())
-                                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)))
+                                        .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                .hasProperty(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER)))
                                 .when(LocationCheck.checkLocation(LocationPredicate.Builder.location()
                                         .setBlock(BlockPredicate.Builder.block()
                                                 .of(targetBlock.get())

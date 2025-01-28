@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.Supplier;
 
-public class CustomizableMultiLayerPlantBlock extends MultiLayerPlantBlock{
+public class CustomizableMultiLayerPlantBlock extends MultiLayerPlantBlock {
     private final Supplier<PlantVegetationConfig> plantCnfg;
 
     public CustomizableMultiLayerPlantBlock(Properties properties, int maxLevel, IntOpenHashSet modularLevels, Supplier<PlantVegetationConfig> plantCnfg) {

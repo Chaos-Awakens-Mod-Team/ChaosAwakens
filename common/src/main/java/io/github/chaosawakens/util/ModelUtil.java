@@ -2935,7 +2935,6 @@ public final class ModelUtil {
         return multiLayerPlant(basePlantTexture.withSuffix("_bottom"), basePlantTexture.withSuffix("_middle"), basePlantTexture.withSuffix("_top"), middleLayerCount, numberMiddleLayers);
     }
 
-
     public static ObjectArrayList<BlockModelDefinition> multiLayerPlant(ResourceLocation basePlantTexture) {
         return multiLayerPlant(basePlantTexture, 1, false);
     }

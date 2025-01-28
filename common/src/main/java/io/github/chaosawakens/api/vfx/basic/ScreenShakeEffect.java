@@ -2,15 +2,16 @@ package io.github.chaosawakens.api.vfx.basic;
 
 import io.github.chaosawakens.api.platform.CAServices;
 import io.github.chaosawakens.common.networking.packets.s2c.ScreenShakePacket;
-import it.unimi.dsi.fastutil.objects.ObjectArrayFIFOQueue;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Oneshot VFX effect for basic screenshake. Will be part of the larger/more comprehensive VFXL system later on.
  */
 public class ScreenShakeEffect {
-    private static final ObjectArrayFIFOQueue<ScreenShakeEffect> SHAKES = new ObjectArrayFIFOQueue<>();
+    private static final ConcurrentLinkedQueue<ScreenShakeEffect> SHAKES = new ConcurrentLinkedQueue<>();
     private final ShakeData data;
 
     public ScreenShakeEffect(ShakeData data) {
@@ -26,11 +27,11 @@ public class ScreenShakeEffect {
     }
 
     public void enqueue(Level curLevel) {
-        if (curLevel == null || curLevel.isClientSide) SHAKES.enqueue(this);
+        if (curLevel == null || curLevel.isClientSide) SHAKES.add(this);
         if (curLevel != null && !curLevel.isClientSide) CAServices.NETWORK_MANAGER.sendToAllClients(new ScreenShakePacket(data.getOriginPos(), data.getRange(), data.getMagnitude(), data.getDuration(), data.getFadeOut()));
     }
 
-    public static ObjectArrayFIFOQueue<ScreenShakeEffect> getEnqueuedShakes() {
+    public static ConcurrentLinkedQueue<ScreenShakeEffect> getEnqueuedShakes() {
         return SHAKES;
     }
 
