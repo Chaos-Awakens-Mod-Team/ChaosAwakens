@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-25T02:43:08.8947192	Loot Tables
+// 1.20.1	2025-01-31T18:40:59.3106397	Loot Tables
 fd5e1bc80521d0475feba0a763a4477dafb97aa2 data/chaosawakens/loot_tables/blocks/acacia_gate_block.json
 da9b4c2ed45126af19c82b0d58a8c8627c8fef0f data/chaosawakens/loot_tables/blocks/acacia_leaf_carpet.json
 4d3db4f92f67deb769d5bd31d80b918cf577c90f data/chaosawakens/loot_tables/blocks/alstroemeriat.json
@@ -8,7 +8,7 @@ e0ee511bca34f9c60bdb2af23a96292e96f0a64c data/chaosawakens/loot_tables/blocks/ap
 8c99e199e0b40ad1396752996afc0d4285a6b5a9 data/chaosawakens/loot_tables/blocks/apple_fence_gate.json
 522a3576da4ffa7d786d8a1faa97c5a04d209006 data/chaosawakens/loot_tables/blocks/apple_gate_block.json
 8d3f572ca1c61e5bba0360b1df6d3d263dae56a5 data/chaosawakens/loot_tables/blocks/apple_leaf_carpet.json
-6e1b39941e0e0a93e1dda40bb087e4a3a4a4c3b2 data/chaosawakens/loot_tables/blocks/apple_leaves.json
+6222f46d7878f63dc3e8c18dea11a707975a95e4 data/chaosawakens/loot_tables/blocks/apple_leaves.json
 cfb52e349a4376dc3ba93e980d78c45c4f7a906c data/chaosawakens/loot_tables/blocks/apple_log.json
 90ab07c0ce2256593cb9fb583e7fa316b077a868 data/chaosawakens/loot_tables/blocks/apple_planks.json
 4f577291cf4b6980779a71ab70ce50d47b3866d2 data/chaosawakens/loot_tables/blocks/apple_pressure_plate.json

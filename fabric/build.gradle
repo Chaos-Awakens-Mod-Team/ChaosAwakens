@@ -24,9 +24,6 @@ dependencies {
     // Dependencies (Mandatory)
     modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
 
-    modImplementation("software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${fabric_geckolib_version}")
-    implementation("com.eliotlash.mclib:mclib:20")
-
     // Dependencies (Optional)
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-common-api:${fabric_jei_version}")
     modCompileOnlyApi("mezz.jei:jei-${minecraft_version}-fabric-api:${fabric_jei_version}")

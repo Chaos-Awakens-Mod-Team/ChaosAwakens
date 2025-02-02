@@ -1,13 +1,18 @@
 package io.github.chaosawakens;
 
+import io.github.chaosawakens.api.entity.EntityTypePropertyWrapper;
 import io.github.chaosawakens.datagen.*;
 import io.github.chaosawakens.events.common.ChaosAwakensForgeCommonMiscEvents;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,6 +40,13 @@ public class ChaosAwakensForge {
     }
 
     @SubscribeEvent
+    public static void onEntityAttributeCreationEvent(EntityAttributeCreationEvent event) {
+        EntityTypePropertyWrapper.getMappedEtpws().forEach((parentEntityTypeSup, curEtpw) -> {
+            if (curEtpw.getAttributeBuilder() != null && !parentEntityTypeSup.get().getCategory().equals(MobCategory.MISC)) event.put((EntityType<? extends LivingEntity>) parentEntityTypeSup.get(), curEtpw.getAttributeBuilder().get().build());
+        });
+    }
+
+    @SubscribeEvent
     public static void onGatherDataEvent(GatherDataEvent event) {
         DataGenerator datagen = event.getGenerator();
         PackOutput datagenPackOutput = datagen.getPackOutput();
@@ -55,6 +67,7 @@ public class ChaosAwakensForge {
 
         datagen.addProvider(event.includeServer(), cachedBlockTagsProvider);
         datagen.addProvider(event.includeServer(), new CAItemTagsProvider(datagenPackOutput, lookupProvider, cachedBlockTagsProvider.contentsGetter(), curFileHelper));
+        datagen.addProvider(event.includeServer(), new CAEntityTypeTagsProvider(datagenPackOutput, lookupProvider, curFileHelper));
 
         datagen.addProvider(event.includeServer(), new CARecipeProvider(datagenPackOutput));
 

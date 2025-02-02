@@ -2,11 +2,16 @@ package io.github.chaosawakens;
 
 import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
 import io.github.chaosawakens.api.datagen.block.BlockModelDefinition;
+import io.github.chaosawakens.api.entity.EntityTypePropertyWrapper;
+import io.github.chaosawakens.common.registry.CAClientDataEntries;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 
 import java.util.List;
@@ -20,10 +25,22 @@ public class ChaosAwakensClientFabric implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        handleClientEntityData();
         handleBlockRenderLayers();
 
         registerBlockColorProviders();
         registerItemColorProviders();
+    }
+
+    private static void handleClientEntityData() {
+        CAClientDataEntries.getClientDataEntries().forEach(((curEntry) -> EntityModelLayerRegistry.registerModelLayer(curEntry.get().modelPair().left().get(), () -> curEntry.get().modelPair().right().get())));
+
+        EntityTypePropertyWrapper.getMappedEtpws().forEach((parentEntityTypeSup, curEtpw) -> {
+            CAClientDataEntries.getClientDataEntries().stream()
+                    .filter(curEntry -> BuiltInRegistries.ENTITY_TYPE.getKey(parentEntityTypeSup.get()).equals(curEntry.get().entityTypeId()))
+                    .findFirst()
+                    .ifPresent(curEntry -> EntityRendererRegistry.register(parentEntityTypeSup.get(), (ctx) -> curEntry.get().renderFactory().apply(() -> ctx).get()));
+        });
     }
 
     private static void handleBlockRenderLayers() {

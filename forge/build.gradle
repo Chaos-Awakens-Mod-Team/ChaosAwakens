@@ -104,10 +104,6 @@ dependencies {
 
     compileOnly project(":common")
 
-    // Dependencies (Mandatory)
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${forge_geckolib_version}")
-    implementation("com.eliotlash.mclib:mclib:20")
-
     // Dependencies (Optional)
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${forge_jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${forge_jei_version}")

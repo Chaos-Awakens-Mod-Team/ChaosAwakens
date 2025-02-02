@@ -10,6 +10,7 @@ import net.minecraftforge.forgespi.language.ModFileScanData;
 import org.objectweb.asm.Type;
 
 import java.lang.annotation.Annotation;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -34,7 +35,8 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public List<Class<?>> discoverAnnotatedClasses(Class<? extends Annotation> annotationTypeClazz) {
         return ModList.get().getAllScanData().stream()
-                .flatMap(scanData -> scanData.getAnnotations().stream())
+                .map(ModFileScanData::getAnnotations)
+                .flatMap(Collection::stream)
                 .filter(annotationData -> Objects.equals(annotationData.annotationType(), Type.getType(annotationTypeClazz)))
                 .map(ModFileScanData.AnnotationData::clazz)
                 .map(Type::getClassName)

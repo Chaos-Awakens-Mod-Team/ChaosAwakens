@@ -1,13 +1,18 @@
 package io.github.chaosawakens;
 
 import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
+import io.github.chaosawakens.api.entity.EntityTypePropertyWrapper;
 import io.github.chaosawakens.api.item.ItemPropertyWrapper;
 import io.github.chaosawakens.api.tag.TagWrapper;
 import it.unimi.dsi.fastutil.ints.IntIntMutablePair;
 import it.unimi.dsi.fastutil.objects.ObjectObjectMutablePair;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.registry.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
@@ -55,6 +60,12 @@ public final class FabricVanillaIntegration {
 
             if (tagFuelCookTime != 0 && curTagKey.isFor(Registries.ITEM)) FuelRegistry.INSTANCE.add((TagKey<Item>) curTagKey, tagFuelCookTime);
             if (tagFlammabilitySettings != null && curTagKey.isFor(Registries.BLOCK)) FlammableBlockRegistry.getDefaultInstance().add((TagKey<Block>) curTagKey, Math.abs(tagFlammabilitySettings.leftInt()), Math.abs(tagFlammabilitySettings.rightInt()));
+        });
+    }
+
+    static void handleMiscellaneousRegistration() {
+        EntityTypePropertyWrapper.getMappedEtpws().forEach((parentEntityTypeSup, curEtpw) -> {
+            if (curEtpw.getAttributeBuilder() != null && !parentEntityTypeSup.get().getCategory().equals(MobCategory.MISC)) FabricDefaultAttributeRegistry.register((EntityType<? extends LivingEntity>) parentEntityTypeSup.get(), curEtpw.getAttributeBuilder().get().build());
         });
     }
 }

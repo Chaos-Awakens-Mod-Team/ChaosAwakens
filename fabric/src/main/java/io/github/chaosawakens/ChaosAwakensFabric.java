@@ -9,6 +9,8 @@ public class ChaosAwakensFabric implements ModInitializer {
         ChaosAwakens.setup();
 
         FabricServerHooks.handleServerLifecycleHooks();
+
+        FabricVanillaIntegration.handleMiscellaneousRegistration();
         FabricVanillaIntegration.handleVanillaIntegration();
     }
 }

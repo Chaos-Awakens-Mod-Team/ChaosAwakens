@@ -88,3 +88,6 @@ accessible method net/minecraft/data/worldgen/TerrainProvider buildErosionJagged
 accessible method net/minecraft/data/worldgen/TerrainProvider buildMountainRidgeSplineWithPoints (Lnet/minecraft/util/ToFloatFunction;FZLnet/minecraft/util/ToFloatFunction;)Lnet/minecraft/util/CubicSpline;
 accessible method net/minecraft/data/worldgen/TerrainProvider mountainContinentalness (FFF)F
 accessible method net/minecraft/data/worldgen/TerrainProvider calculateMountainRidgeZeroContinentalnessPoint (F)F
+
+# HierarchicalModel
+accessible field net/minecraft/client/model/HierarchicalModel ANIMATION_VECTOR_CACHE Lorg/joml/Vector3f;

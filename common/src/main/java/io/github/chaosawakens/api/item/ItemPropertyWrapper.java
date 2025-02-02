@@ -80,7 +80,7 @@ public class ItemPropertyWrapper {
     }
 
     /**
-     * Creates a new {@link ItemPropertyWrapper} instance as a template. Template BPWs are not stored in {@link #MAPPED_IPWS} and do not store a parent {@link Item}.
+     * Creates a new {@link ItemPropertyWrapper} instance as a template. Template IPWs are not stored in {@link #MAPPED_IPWS} and do not store a parent {@link Item}.
      * They're particularly useful for re-using across multiple {@linkplain Item Items}.
      *
      * @return A new {@link ItemPropertyWrapper} instance, set as a template.
@@ -94,7 +94,7 @@ public class ItemPropertyWrapper {
     }
 
     /**
-     * Creates a new {@link ItemPropertyWrapper} instance as a template, inheriting data from the provided BPW template. Template IPWs are not stored in {@link #MAPPED_IPWS} and do not store a parent {@link Item}.
+     * Creates a new {@link ItemPropertyWrapper} instance as a template, inheriting data from the provided IPW template. Template IPWs are not stored in {@link #MAPPED_IPWS} and do not store a parent {@link Item}.
      * They're particularly useful for re-using across multiple {@linkplain Item Items}.
      *
      * @param parentTemplateWrapper The parent {@link ItemPropertyWrapper} template from which {{@link #builder()}} data should be copied.
@@ -425,7 +425,7 @@ public class ItemPropertyWrapper {
          *              AlgorithmLanguageProvider.validateNullity(unlocalizedName); // Checks whether the provided 'unlocalizedName' is empty/all whitespaces/you get the point
          *              AlgorithmLanguageProvider.validateRegex(unlocalizedName); // Checks whether the provided 'unlocalizedName' has the signature registry name separator character "."
          *              AlgorithmLanguageProvider.formatCaps(unlocalizedName); // Output: "Item.Chaosawakens.Royal_Guardian_Sword" <-- Capitalizes the first letter of each word based on regex-checks for special separators ("." and "_") (First character all the way to the left is always capitalized (duh), not that it matters)
-         *              AlgorithmLanguageProvider.formatSeparators(unlocalizedName); // Output: "Block.Chaosawakens.Royal_Guardian_Sword" <-- Any defined "separator" Strings are lowercased, see #withCustomSeparatorWords(List). In this case, there aren't any, so this step does nothing
+         *              AlgorithmLanguageProvider.formatSeparators(unlocalizedName); // Output: "Item.Chaosawakens.Royal_Guardian_Sword" <-- Any defined "separator" Strings are lowercased, see #withCustomSeparatorWords(List). In this case, there aren't any, so this step does nothing
          *              AlgorithmLanguageProvider.formatSpecialSeparators(unlocalizedName); // Output: "Royal Guardian Sword" <-- All characters preceding the last "." are substringed/removed, and then any "_" characters are replaced with whitespaces
          *
          *              // End result
@@ -533,7 +533,7 @@ public class ItemPropertyWrapper {
         }
 
         /**
-         * Tags this IPWBuilder's parent block with the provided {@linkplain TagKey<Item> Tags}. Overwrites the existing list.
+         * Tags this IPWBuilder's parent item with the provided {@linkplain TagKey<Item> Tags}. Overwrites the existing list.
          *
          * @param parentItemTags The {@linkplain TagKey<Item> TagKeys} with which this IPW's parent {@link Item} will be tagged. May only be of type {@link Item}.
          *

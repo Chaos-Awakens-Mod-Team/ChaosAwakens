@@ -51,15 +51,6 @@ subprojects {
         }
 
         maven {
-            name = "GeckoLib Maven"
-            url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/"
-            content {
-                includeGroupByRegex("software\\.bernie.*")
-                includeGroup("com.eliotlash.mclib")
-            }
-        }
-
-        maven {
             name = "CurseMaven"
             url = "https://www.cursemaven.com"
         }
@@ -161,14 +152,8 @@ subprojects {
                 "fabric_loader_version_range"           : fabric_loader_version_range,
                 "fabric_minecraft_version_range"        : fabric_minecraft_version_range,
 
-                // Mandatory (Forge)
-                "forge_geckolib_version"                : forge_geckolib_version,
-
-                "forge_geckolib_version_range"          : forge_geckolib_version_range,
-
                 // Mandatory (Fabric)
                 "fabric_api_version_range"              : fabric_api_version_range,
-                "fabric_geckolib_version"               : fabric_geckolib_version,
 
                 // Optional (Forge)
                 "forge_jei_version"                     : forge_jei_version,

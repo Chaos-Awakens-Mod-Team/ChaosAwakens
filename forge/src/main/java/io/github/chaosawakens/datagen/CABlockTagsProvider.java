@@ -32,9 +32,9 @@ public class CABlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         if (!BlockPropertyWrapper.getMappedBpws().isEmpty()) {
-            BlockPropertyWrapper.getMappedBpws().forEach((blockSupEntry, curBwp) -> {
-                List<TagKey<?>> parentTags = curBwp.getParentTags().stream().map(Supplier::get).collect(Collectors.toCollection(ObjectArrayList::new));
-                List<TagKey<Block>> parentBlockTags = curBwp.getParentBlockTags().stream().map(Supplier::get).collect(Collectors.toCollection(ObjectArrayList::new));
+            BlockPropertyWrapper.getMappedBpws().forEach((blockSupEntry, curBpw) -> {
+                List<TagKey<?>> parentTags = curBpw.getParentTags().stream().map(Supplier::get).collect(Collectors.toCollection(ObjectArrayList::new));
+                List<TagKey<Block>> parentBlockTags = curBpw.getParentBlockTags().stream().map(Supplier::get).collect(Collectors.toCollection(ObjectArrayList::new));
 
                 if (!parentTags.isEmpty()) {
                     parentTags.forEach(curBlockTag -> {

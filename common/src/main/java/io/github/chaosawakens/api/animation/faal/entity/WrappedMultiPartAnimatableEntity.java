@@ -1,4 +1,4 @@
 package io.github.chaosawakens.api.animation.faal.entity;
 
-public interface IMultiPartAnimatableEntity {
+public interface WrappedMultiPartAnimatableEntity {
 }

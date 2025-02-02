@@ -5,13 +5,16 @@ import com.google.common.collect.Lists;
 import io.github.chaosawakens.CAConstants;
 import io.github.chaosawakens.api.block.standard.BlockPropertyWrapper;
 import io.github.chaosawakens.api.damage_type.DamageTypeWrapper;
+import io.github.chaosawakens.api.entity.EntityTypePropertyWrapper;
 import io.github.chaosawakens.api.item.ItemPropertyWrapper;
 import io.github.chaosawakens.common.registry.CABlocks;
 import io.github.chaosawakens.common.registry.CACreativeModeTabs;
+import io.github.chaosawakens.common.registry.CAEntityTypes;
 import io.github.chaosawakens.common.registry.CAItems;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -221,11 +224,35 @@ public class CALanguageProvider extends LanguageProvider {
         }
     }
 
+    protected void translateEntityTypes() {
+        if (!EntityTypePropertyWrapper.getMappedEtpws().isEmpty()) {
+            EntityTypePropertyWrapper.getMappedEtpws().forEach((entityTypeRegNameEntry, curEtpw) -> { //TODO Optimize and update logging :trol:
+                if (!curEtpw.getManuallyLocalizedItemName().isBlank()) addManualTranslation(entityTypeRegNameEntry.get().getDescriptionId(), curEtpw.getManuallyLocalizedItemName());
+                else if (!curEtpw.getDefinedSeparatorWords().isEmpty() && curEtpw.getEntityTypeTranslationFunc() == null && !curEtpw.hasLiteralTranslation()) localizeGeneralRegistryName(entityTypeRegNameEntry.get().getDescriptionId(), Lists.asList(DEFAULT_SEPARATORS.get(0), DEFAULT_SEPARATORS.get(1), curEtpw.getDefinedSeparatorWords().toArray(String[]::new)), ObjectArrayList.of());
+            });
+        }
+
+        CAEntityTypes.getEntityTypes().forEach(entityTypeRegEntry -> {
+            EntityType<?> entityTypeEntry = entityTypeRegEntry.get();
+            String entityTypeRegName = entityTypeEntry.getDescriptionId();
+            EntityTypePropertyWrapper<?> mappedEtpw = EntityTypePropertyWrapper.getMappedEtpws().entrySet().stream().anyMatch(curEntry -> curEntry.getKey().get().getDescriptionId().equals(entityTypeRegName)) ? EntityTypePropertyWrapper.getMappedEtpws().entrySet().stream().filter(curEntry -> curEntry.getKey().get().getDescriptionId().equals(entityTypeRegName)).findFirst().get().getValue() : null;
+            String translatedEntityTypeName = MANUAL_TRANSLATIONS.containsKey(entityTypeRegName) ? MANUAL_TRANSLATIONS.get(entityTypeRegName) : getTranslatedRegistryName(entityTypeRegName);
+
+            CAConstants.LOGGER.debug("[Currently Translating EntityType]: {} -> {}", entityTypeRegName, translatedEntityTypeName);
+
+            if (mappedEtpw != null && mappedEtpw.getEntityTypeTranslationFunc() != null) {
+                CAConstants.LOGGER.debug("[Currently Modifying Localized EntityType]: {} -> {}", translatedEntityTypeName, mappedEtpw.getEntityTypeTranslationFunc().apply(translatedEntityTypeName));
+
+                add(entityTypeEntry, mappedEtpw.getEntityTypeTranslationFunc().apply(translatedEntityTypeName));
+            } else localizeGeneralRegistryName(entityTypeRegName);
+        });
+    }
+
     protected void translateItems() {
         if (!ItemPropertyWrapper.getMappedIpws().isEmpty()) {
-            ItemPropertyWrapper.getMappedIpws().forEach((itemRegNameEntry, curIwp) -> { //TODO Optimize and update logging :trol:
-                if (!curIwp.getManuallyLocalizedItemName().isBlank()) addManualTranslation(itemRegNameEntry.get().getDescriptionId(), curIwp.getManuallyLocalizedItemName());
-                else if (!curIwp.getDefinedSeparatorWords().isEmpty() && curIwp.getItemTranslationFunc() == null && !curIwp.hasLiteralTranslation()) localizeGeneralRegistryName(itemRegNameEntry.get().getDescriptionId(), Lists.asList(DEFAULT_SEPARATORS.get(0), DEFAULT_SEPARATORS.get(1), curIwp.getDefinedSeparatorWords().toArray(String[]::new)), ObjectArrayList.of());
+            ItemPropertyWrapper.getMappedIpws().forEach((itemRegNameEntry, curIpw) -> { //TODO Optimize and update logging :trol:
+                if (!curIpw.getManuallyLocalizedItemName().isBlank()) addManualTranslation(itemRegNameEntry.get().getDescriptionId(), curIpw.getManuallyLocalizedItemName());
+                else if (!curIpw.getDefinedSeparatorWords().isEmpty() && curIpw.getItemTranslationFunc() == null && !curIpw.hasLiteralTranslation()) localizeGeneralRegistryName(itemRegNameEntry.get().getDescriptionId(), Lists.asList(DEFAULT_SEPARATORS.get(0), DEFAULT_SEPARATORS.get(1), curIpw.getDefinedSeparatorWords().toArray(String[]::new)), ObjectArrayList.of());
             });
         }
 
@@ -258,6 +285,7 @@ public class CALanguageProvider extends LanguageProvider {
         translateBlocks();
         translateCreativeModeTabs();
         translateDamageTypes();
+        translateEntityTypes();
         translateItems();
 
         handleManualTranslations();
