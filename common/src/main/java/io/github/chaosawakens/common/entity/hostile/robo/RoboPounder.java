@@ -5,8 +5,10 @@ import io.github.chaosawakens.api.vfx.basic.ScreenShakeEffect;
 import io.github.chaosawakens.common.entity.ai.goal.hostile.AnimatableAttackGoal;
 import io.github.chaosawakens.common.entity.ai.goal.hostile.BandaidMoveToTargetGoal;
 import io.github.chaosawakens.common.entity.base.AnimatableMonster;
+import io.github.chaosawakens.util.EntityUtil;
 import io.github.chaosawakens.util.MathUtil;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -24,8 +26,8 @@ import org.jetbrains.annotations.NotNull;
 public class RoboPounder extends AnimatableMonster {
     public static final byte PISTON_PUNCH_ATTACK_ID = 1;
     public static final byte SIDE_SWEEP_ATTACK_ID = 2;
-    public static final byte DASH_ATTACK_ID = 3;
-    public static final byte STOMP_ATTACK_ID = 4;
+    public static final byte DYSON_DASH_ATTACK_ID = 3;
+    public static final byte DOME_STOMP_ATTACK_ID = 4;
     public static final byte GROUND_SLAM_ATTACK_ID = 5;
     public static final byte RAGE_RUN_ATTACK_ID = 6;
     public static final String IDLE_ANIM = "Idle";
@@ -69,7 +71,7 @@ public class RoboPounder extends AnimatableMonster {
 
     @Override
     public boolean isFunctionallyAnimatingAttack() {
-        return (leftPistonPunchAttackAnim.isStarted() && leftPistonPunchAttackAnim.getAccumulatedTime() <= 1850L) || (rightPistonPunchAttackAnim.isStarted() && rightPistonPunchAttackAnim.getAccumulatedTime() <= 1850L) || (leftSideSweepAttackAnim.isStarted() && leftSideSweepAttackAnim.getAccumulatedTime() <= 2160L) || (rightSideSweepAttackAnim.isStarted() && rightSideSweepAttackAnim.getAccumulatedTime() <= 2160L);
+        return (leftPistonPunchAttackAnim.isStarted() && leftPistonPunchAttackAnim.getAccumulatedTime() <= 1950L) || (rightPistonPunchAttackAnim.isStarted() && rightPistonPunchAttackAnim.getAccumulatedTime() <= 1950L) || (leftSideSweepAttackAnim.isStarted() && leftSideSweepAttackAnim.getAccumulatedTime() <= 2160L) || (rightSideSweepAttackAnim.isStarted() && rightSideSweepAttackAnim.getAccumulatedTime() <= 2160L) || (leftDomeStompAttackAnim.isStarted() && leftDomeStompAttackAnim.getAccumulatedTime() <= 1770L) || (rightDomeStompAttackAnim.isStarted() && rightDomeStompAttackAnim.getAccumulatedTime() <= 1770L);
     }
 
     @Override
@@ -101,6 +103,25 @@ public class RoboPounder extends AnimatableMonster {
                 .additionalStartConditions(animatable -> animatable.getRandom().nextDouble() < 0.3D)
                 .actionOnStart((animatable, target, potentialTargets, curTick) -> animatable.stopAnimation(idleAnimState))
                 .actionOnEnd((animatable, target, potentialTargets, curTick) -> animatable.playAnimation(idleAnimState, true)));
+        goalSelector.addGoal(0, new AnimatableAttackGoal<RoboPounder>(this, ObjectArrayList.of(() -> leftDomeStompAttackAnim, () -> rightDomeStompAttackAnim), 34, true, DOME_STOMP_ATTACK_ID)
+                .performDefaultAttack(false)
+                .forcePose(true)
+                .potentialTargetRadius(7.0D)
+                .attackFrame(7.0D, 13.0D)
+                .attackTickCooldown(30.0D)
+                .initiationRange(5.0D)
+                .additionalStartConditions(animatable -> animatable.getRandom().nextDouble() < 0.6D && EntityUtil.getAllEntitiesAround(animatable, 7.0D, 5.0D, 7.0D, 7.0D).size() >= 2)
+                .actionOnStart((animatable, target, potentialTargets, curTick) -> {
+                    //      animatable.playSound(getRandom().nextBoolean() ? DRSoundEvents.REDSTONE_GOLEM_SIDE_SWEEP_ATTACK_RIGHT.get() : DRSoundEvents.REDSTONE_GOLEM_SIDE_SWEEP_ATTACK_LEFT.get(), 1.0F, 1.0F);
+                    animatable.stopAnimation(idleAnimState);
+                })
+                .actionOnAttack((animatable, target, potentialTargets, curTick) -> {
+                    if (curTick == 7.0D) animatable.playSound(SoundEvents.GENERIC_EXPLODE);
+
+                    potentialTargets.forEach(animatable::doHurtTarget);
+                    new ScreenShakeEffect(animatable.blockPosition(), 15.5D, 0.0028F, 12.5F, 1.0F).enqueue(animatable.level());
+                })
+                .actionOnEnd((animatable, target, potentialTargets, curTick) -> animatable.playAnimation(idleAnimState, true)));
 
         goalSelector.addGoal(0, new BandaidMoveToTargetGoal(this)
                 .satisfactoryDist(3.5D));
@@ -125,6 +146,7 @@ public class RoboPounder extends AnimatableMonster {
     @Override
     public void tickClientAnimations() {
         if (!isMoving() && !isFunctionallyAnimatingAttack() && !isDeadOrDying()) playAnimation(idleAnimState);
+        else if (isMoving()) stopAnimation(idleAnimState);
 
         if (isDeadOrDying()) playAnimation(deathAnimState, true);
         else stopAnimation(deathAnimState);

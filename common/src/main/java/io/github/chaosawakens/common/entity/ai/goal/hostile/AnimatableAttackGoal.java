@@ -46,6 +46,7 @@ public class AnimatableAttackGoal<AO extends Mob & WrappedAnimatableEntity> exte
     protected boolean performDefaultAttack = true;
     @Nullable
     protected Predicate<AO> additionalStartConditions;
+    protected boolean forcePose = false;
 
     public AnimatableAttackGoal(AO animatableOwner, ObjectArrayList<Supplier<ExtendedAnimationState>> attackAnimations, double attackTickDuration, boolean staticAttack, byte attackId) {
         this.animatableOwner = animatableOwner;
@@ -117,6 +118,11 @@ public class AnimatableAttackGoal<AO extends Mob & WrappedAnimatableEntity> exte
         return this;
     }
 
+    public AnimatableAttackGoal<AO> forcePose(boolean forcePose) {
+        this.forcePose = forcePose;
+        return this;
+    }
+
     @Override
     public boolean canUse() {
         LivingEntity target = animatableOwner.getTarget();
@@ -141,7 +147,7 @@ public class AnimatableAttackGoal<AO extends Mob & WrappedAnimatableEntity> exte
         this.preciseAttackTick = 0.0D;
 
         if (animatableOwner instanceof AnimatableMonster monsterOwner) monsterOwner.setAttackId(attackId);
-        if (selectedAttackAnimation != null && selectedAttackAnimation.get() != null) animatableOwner.playAnimation(selectedAttackAnimation.get(), false);
+        if (selectedAttackAnimation != null && selectedAttackAnimation.get() != null) animatableOwner.playAnimation(selectedAttackAnimation.get(), forcePose);
 
         if (actionOnStart != null) actionOnStart.accept(animatableOwner, target, EntityUtil.getAllEntitiesAround(animatableOwner, potentialTargetRadius, potentialTargetRadius, potentialTargetRadius, potentialTargetRadius), 0.0D);
         if (staticAttack) {

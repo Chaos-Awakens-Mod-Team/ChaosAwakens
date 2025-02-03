@@ -373,11 +373,10 @@ public class RoboPounderModel<RP extends RoboPounder> extends WrappedHierarchica
 		animate(pEntity.leftDomeStompAttackAnim, RoboPounderAOEAttackAnimation.DOME_STOMP_ATTACK_LEFT, pAgeInTicks);
 		animate(pEntity.rightDomeStompAttackAnim, RoboPounderAOEAttackAnimation.DOME_STOMP_ATTACK_RIGHT, pAgeInTicks);
 
+		animate(pEntity.groundSlamAttackAnim, RoboPounderAOEAttackAnimation.GROUND_SLAM_ATTACK, pAgeInTicks);
+
 		// Walk Cycle
-		if (pEntity.isMoving() && !pEntity.isFunctionallyAnimatingAttack()) {
-	//		animateWalk(RoboPounderBaseAnimation.WALK_BODY, pLimbSwing, pLimbSwingAmount, 1.0F, 1.0F);
-	//		animateWalk(RoboPounderBaseAnimation.WALK_LEGS, pLimbSwing, pLimbSwingAmount, 1.0F, 1.0F);
-		}
+		if (pEntity.isMoving() && !pEntity.isFunctionallyAnimatingAttack()) animateWalk(RoboPounderBaseAnimation.WALK, pLimbSwing, pLimbSwingAmount, 1.0F, 1.0F);
 	}
 
 	@Override

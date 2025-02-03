@@ -11,7 +11,7 @@ public class RoboPounderAltMiscAnimation {
 					new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 2.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
 			))
 			.addAnimation("LowerBody", new AnimationChannel(AnimationChannel.Targets.POSITION,
-					new Keyframe(0.0F, KeyframeAnimations.posVec(0.0F, -11.7321F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+					new Keyframe(0.0F, KeyframeAnimations.posVec(0.0F, -10.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
 			))
 			.addAnimation("FistAttack", new AnimationChannel(AnimationChannel.Targets.SCALE,
 					new Keyframe(0.0F, KeyframeAnimations.scaleVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
