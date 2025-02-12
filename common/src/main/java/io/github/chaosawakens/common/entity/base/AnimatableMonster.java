@@ -29,7 +29,7 @@ public abstract class AnimatableMonster extends Monster implements WrappedAnimat
     private static final EntityDataAccessor<Byte> ATTACK_ID = SynchedEntityData.defineId(AnimatableMonster.class, EntityDataSerializers.BYTE);
     private final ObjectArrayList<ExtendedAnimationState> cachedAnimationStates = new ObjectArrayList<>();
     public static final byte NO_ATTACK_ID = 0;
-    protected int customDeathTime = 20;
+    protected int customDeathTime = 0;
     protected float yDeathRot = 0.0F;
     private boolean requiresServerAnimTicking = true;
 

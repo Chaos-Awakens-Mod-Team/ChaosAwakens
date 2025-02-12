@@ -25,6 +25,15 @@ public interface ExtendedAnimationState {
     double getAnimationSpeedMultiplier();
 
     /**
+     * Defines a speed multiplier by which progress is multiplied.
+     *
+     * @param animationSpeed The animation speed by which animation tick count is incremented/multiplied.
+     *
+     * @return {@code this} (builder method).
+     */
+    ExtendedAnimationState withAnimSpeed(double animationSpeed);
+
+    /**
      * Gets the arbitrarily-set tick duration of this animation instance. This is controlled by the server and set on the client based on that.
      * <br></br>
      * If no duration is specified by the server (more specifically, this instance), the client assumes its own pre-defined length and the animation is not ticked (though it can be triggered and modified) on the server.

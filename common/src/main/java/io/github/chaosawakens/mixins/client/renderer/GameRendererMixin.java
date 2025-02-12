@@ -37,10 +37,14 @@ public abstract class GameRendererMixin {
                 if (mainCam.getEntity().distanceToSqr(Vec3.atCenterOf(shake.getData().getOriginPos())) <= Math.pow(shake.getData().getRange(), 2)) {
                     float delta = Minecraft.getInstance().getDeltaFrameTime();
                     float ticksExistedDelta = (float) mainCam.getEntity().tickCount + delta;
-                    float finalAmount = shake.getData().getMagnitude() * (shake.getData().getDuration() / (shake.getData().getFadeOut() == 0 ? 1 : shake.getData().getFadeOut())); // Avoid division by 0
 
-                    mainCam.setRotation((float) (mainCam.getYRot() + finalAmount * Math.cos(ticksExistedDelta * 5.0F + 1.0F) * 25.0D), (float) (mainCam.getXRot() + finalAmount * Math.cos(ticksExistedDelta * 3.0F + 2.0F) * 25.0D));
-                    stack.mulPose(Axis.ZP.rotationDegrees((float) (finalAmount * Math.cos(ticksExistedDelta * 4.0F) * 25.0D)));
+                    double distance = mainCam.getEntity().getEyePosition().distanceTo(Vec3.atCenterOf(shake.getData().getOriginPos()));
+                    float distanceScale = Math.max(0, 1 - (float)(distance / shake.getData().getRange()));
+
+                    float finalAmp = (float) ((shake.getData().getMagnitude() * (shake.getData().getDuration() / (shake.getData().getFadeOut() == 0 ? 1 : shake.getData().getFadeOut()))) * Math.pow(distanceScale, 2)); // Avoid division by 0
+
+                    mainCam.setRotation((float) (mainCam.getYRot() + finalAmp * Math.cos(ticksExistedDelta * 5.0F + 1.0F) * 25.0D), (float) (mainCam.getXRot() + finalAmp * Math.cos(ticksExistedDelta * 3.0F + 2.0F) * 25.0D));
+                    stack.mulPose(Axis.ZP.rotationDegrees((float) (finalAmp * Math.cos(ticksExistedDelta * 4.0F) * 25.0D)));
                 }
             }
         }

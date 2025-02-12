@@ -10,7 +10,7 @@ package io.github.chaosawakens.api.animation.faal.base;
  * by means of optimization and end-developer implementation without necessarily bringing some of the cons GeckoLib suffers from (inadequate animation control outside the model/renderer, render optimizations, etc.).
  * <br></br>
  * The idea behind this concept is to allow for further iterations/updates made to FAAL to support more complex ideas, such as inverse kinematics, without needing to hack into the existing GeckoLib source code and potentially
- * breaking other mods using GeckoLib. In other words, animations here may either be baked keyframe animations that can be considered forward kinematics at best, or they may be data-driven dynamic animations primarily defined
+ * break other mods using GeckoLib. In other words, animations here may either be baked keyframe animations that can be considered forward kinematics at best, or they may be data-driven dynamic animations primarily defined
  * by mathematical functions and molang that support inverse kinematics if need be.
  * <br></br>
  * Another key point to take note of is the added support of item/block-entity vanilla keyframe animations. Since those objects seldom require the complexity of inverse kinematics and/or per-frame computations,

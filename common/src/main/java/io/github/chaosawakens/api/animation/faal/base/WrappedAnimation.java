@@ -26,13 +26,7 @@ public class WrappedAnimation extends AnimationState implements ExtendedAnimatio
         this.animationTickDuration = animationTickDuration;
     }
 
-    /**
-     * Defines a speed multiplier by which progress is multiplied.
-     *
-     * @param animationSpeed The animation speed by which animation tick count is incremented/multiplied.
-     *
-     * @return {@code this} (builder method).
-     */
+    @Override
     public WrappedAnimation withAnimSpeed(double animationSpeed) {
         this.animationSpeed = animationSpeed;
         return this;

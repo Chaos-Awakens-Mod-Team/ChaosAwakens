@@ -76,11 +76,13 @@ public class RoboPounder extends AnimatableMonster {
 
     @Override
     protected void registerGoals() {
+        // Targeting
         targetSelector.addGoal(0, new HurtByTargetGoal(this));
         targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
         targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractGolem.class, false));
         targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
 
+        // Melee Attacks
         goalSelector.addGoal(0, new AnimatableAttackGoal<RoboPounder>(this, ObjectArrayList.of(() -> leftPistonPunchAttackAnim, () -> rightPistonPunchAttackAnim), 34, true, PISTON_PUNCH_ATTACK_ID)
                 .attackArc(95.0D)
                 .potentialTargetRadius(5.0D)
@@ -103,6 +105,8 @@ public class RoboPounder extends AnimatableMonster {
                 .additionalStartConditions(animatable -> animatable.getRandom().nextDouble() < 0.3D)
                 .actionOnStart((animatable, target, potentialTargets, curTick) -> animatable.stopAnimation(idleAnimState))
                 .actionOnEnd((animatable, target, potentialTargets, curTick) -> animatable.playAnimation(idleAnimState, true)));
+
+        // AOE Attacks
         goalSelector.addGoal(0, new AnimatableAttackGoal<RoboPounder>(this, ObjectArrayList.of(() -> leftDomeStompAttackAnim, () -> rightDomeStompAttackAnim), 34, true, DOME_STOMP_ATTACK_ID)
                 .performDefaultAttack(false)
                 .forcePose(true)
@@ -123,6 +127,7 @@ public class RoboPounder extends AnimatableMonster {
                 })
                 .actionOnEnd((animatable, target, potentialTargets, curTick) -> animatable.playAnimation(idleAnimState, true)));
 
+        // Navigation
         goalSelector.addGoal(0, new BandaidMoveToTargetGoal(this)
                 .satisfactoryDist(3.5D));
         goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1.2D, 0.2F) {
