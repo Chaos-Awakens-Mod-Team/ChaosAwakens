@@ -2,6 +2,7 @@ package io.github.chaosawakens.util;
 
 import com.google.common.base.Suppliers;
 import io.github.chaosawakens.CAConstants;
+import io.github.chaosawakens.api.platform.CAServices;
 import io.github.chaosawakens.common.registry.CABlocks;
 import it.unimi.dsi.fastutil.ints.IntIntMutablePair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -214,7 +215,7 @@ public final class RegistryUtil {
     public static ResourceLocation getTexture(String modid, String targetBlockFileName) {
         populateCachedPNGTextures(modid);
 
-        return CACHED_PNG_TEXTURES.stream().filter(curRL -> !modid.isBlank() && curRL.getPath().endsWith(targetBlockFileName) && curRL.getNamespace().equals(modid)).findFirst().orElse(null);
+        return CACHED_PNG_TEXTURES.stream().filter(curRL -> !modid.isBlank() && curRL.getPath().endsWith(targetBlockFileName) && curRL.getNamespace().equals(modid)).findFirst().orElse(CAServices.PLATFORM.isDevelopmentEnvironment() ? null : CAConstants.prefix("null_tex")); // Fabric uses BMDs to assign render types cuz it doesn't parse them directly from the block's model file (Thanks Fabric :skull:)
     }
 
     @Nullable

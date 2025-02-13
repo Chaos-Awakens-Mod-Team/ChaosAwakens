@@ -11,6 +11,7 @@
         "homepage": "${homepage_url}",
         "sources": "${source_code_url}"
     },
+    "accessWidener" : "chaosawakens.accessWidener",
     "license": "${mod_license}",
     "icon": "${mod_icon_path}",
     "environment": "*",

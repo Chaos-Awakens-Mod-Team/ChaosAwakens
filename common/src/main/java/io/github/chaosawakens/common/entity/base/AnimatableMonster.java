@@ -163,7 +163,7 @@ public abstract class AnimatableMonster extends Monster implements WrappedAnimat
 
     @Override
     public double getMovementThreshold() {
-        return 2.500000277905201E-7;
+        return ReinforcedMoveControl.MIN_SPEED_SQR;
     }
 
     public double getCustomDeathTime() {

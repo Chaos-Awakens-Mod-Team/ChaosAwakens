@@ -40,6 +40,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
                 .filter(annotationData -> Objects.equals(annotationData.annotationType(), Type.getType(annotationTypeClazz)))
                 .map(ModFileScanData.AnnotationData::clazz)
                 .map(Type::getClassName)
+                .sorted(String::compareTo)
                 .map(ClassFinder::forName)
                 .collect(Collectors.toCollection(ObjectArrayList::new));
     }

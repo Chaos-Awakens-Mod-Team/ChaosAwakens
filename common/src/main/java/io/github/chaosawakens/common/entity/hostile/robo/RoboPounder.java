@@ -31,6 +31,7 @@ public class RoboPounder extends AnimatableMonster {
     public static final byte GROUND_SLAM_ATTACK_ID = 5;
     public static final byte RAGE_RUN_ATTACK_ID = 6;
     public static final String IDLE_ANIM = "Idle";
+    public static final String WALK_ANIM = "Walk";
     public static final String DEATH_ANIM = "Death";
     public static final String LEFT_PISTON_PUNCH_ATTACK_ANIM = "Piston Punch Attack (Left)";
     public static final String RIGHT_PISTON_PUNCH_ATTACK_ANIM = "Piston Punch Attack (Right)";
@@ -41,6 +42,7 @@ public class RoboPounder extends AnimatableMonster {
     public static final String RIGHT_DOME_STOMP_ATTACK_ANIM = "Dome Stomp Attack (Right)";
     public static final String GROUND_SLAM_ATTACK_ANIM = "Ground Slam Attack";
     public final ExtendedAnimationState idleAnimState = wrapState(IDLE_ANIM);
+    public final ExtendedAnimationState walkAnimState = wrapState(WALK_ANIM);
     public final ExtendedAnimationState deathAnimState = wrapState(DEATH_ANIM);
     public final ExtendedAnimationState leftPistonPunchAttackAnim = wrapState(LEFT_PISTON_PUNCH_ATTACK_ANIM);
     public final ExtendedAnimationState rightPistonPunchAttackAnim = wrapState(RIGHT_PISTON_PUNCH_ATTACK_ANIM);
@@ -155,6 +157,9 @@ public class RoboPounder extends AnimatableMonster {
 
         if (isDeadOrDying()) playAnimation(deathAnimState, true);
         else stopAnimation(deathAnimState);
+
+        if (isMoving() && !isFunctionallyAnimatingAttack() && !isDeadOrDying()) playAnimation(walkAnimState);
+        else stopAnimation(walkAnimState);
     }
 
     @Override

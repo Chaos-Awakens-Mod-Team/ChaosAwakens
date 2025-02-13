@@ -34,6 +34,7 @@ public class RoboPounderMiscAnimation {
 					new Keyframe(0.9167F, KeyframeAnimations.degreeVec(-20.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 					new Keyframe(1.0F, KeyframeAnimations.degreeVec(-22.01F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 					new Keyframe(1.0833F, KeyframeAnimations.degreeVec(25.62F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+					new Keyframe(1.1667F, KeyframeAnimations.degreeVec(14.48F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 					new Keyframe(1.25F, KeyframeAnimations.degreeVec(3.34F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 					new Keyframe(1.4167F, KeyframeAnimations.degreeVec(7.57F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 					new Keyframe(1.75F, KeyframeAnimations.degreeVec(7.5F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),

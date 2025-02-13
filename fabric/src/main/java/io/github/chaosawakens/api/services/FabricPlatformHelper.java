@@ -7,6 +7,7 @@ import io.github.chaosawakens.api.platform.services.IPlatformHelper;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
+import net.fabricmc.loader.api.metadata.ModOrigin;
 import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.*;
 
@@ -18,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Stream;
@@ -49,6 +51,8 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
         FabricLoader.getInstance().getAllMods().stream()
                 .map(ModContainer::getOrigin) // getRootPaths() is completely useless, returns weird ahh paths consisting of a singular "/" or null :sob:
+                .filter(Objects::nonNull)
+                .filter(curOrigin -> curOrigin.getKind() == ModOrigin.Kind.PATH) //TODO Perhaps add support for nested mods
                 .flatMap(curOrigin -> curOrigin.getPaths().stream())
                 .map(Path::toString)
                 .forEach(pathString -> {
@@ -58,6 +62,8 @@ public class FabricPlatformHelper implements IPlatformHelper {
                                     .map(JarEntry::getName)
                                     .filter(name -> name.endsWith(".class"))
                                     .filter(name -> hasAnnotation(annotationTypeClazz, name, true, jarFile))
+                                    .sorted(String::compareTo)
+                                    .map(name -> name.replace('/', '.').replace(".class", "")) // No need to use File.separatorChar since JAR files will always use / as one anyway
                                     .map(ClassFinder::forName)
                                     .forEach(filteredClasses::add);
                         } catch (IOException e) {
@@ -68,7 +74,9 @@ public class FabricPlatformHelper implements IPlatformHelper {
                             allExistingPaths.filter(Files::isRegularFile)
                                     .filter(curPath -> curPath.toString().endsWith(".class"))
                                     .filter(curPath -> hasAnnotation(annotationTypeClazz, Paths.get(pathString).relativize(curPath).toString().replace(File.separatorChar, '.').replace(".class", ""), false, null))
-                                    .map(curPath -> ClassFinder.forName(Paths.get(pathString).relativize(curPath).toString().replace(File.separatorChar, '.').replace(".class", "")))
+                                    .map(curPath -> Paths.get(pathString).relativize(curPath).toString().replace(File.separatorChar, '.').replace(".class", ""))
+                                    .sorted(String::compareTo)
+                                    .map(ClassFinder::forName)
                                     .forEach(filteredClasses::add);
                         } catch (IOException e) {
                             CAConstants.LOGGER.error("Failed to walk path: {}", pathString, e);
